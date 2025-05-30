@@ -1,5 +1,17 @@
-import Image from "next/image";
+import { sanityFetch } from "@/sanity/lib/client";
+import { HOME_QUERY } from "@/sanity/lib/queries";
+import { PortableText } from "@portabletext/react";
 
-export default function Home() {
-  return <div>Hello World</div>;
+export default async function Home() {
+  // Fetch all home content
+  const home = await sanityFetch({
+    query: HOME_QUERY,
+    revalidate: 60,
+  });
+
+  if (!home) {
+    return <div>No content found.</div>;
+  }
+
+  return <PortableText value={home.introduction} />;
 }
