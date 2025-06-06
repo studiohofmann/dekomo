@@ -3,7 +3,6 @@ import { HOME_QUERY } from "@/sanity/lib/queries";
 import { PortableText } from "@portabletext/react";
 
 export default async function Home() {
-  // Fetch all home content
   const home = await sanityFetch({
     query: HOME_QUERY,
     revalidate: 60,
@@ -13,5 +12,5 @@ export default async function Home() {
     return <div>No content found.</div>;
   }
 
-  return <PortableText value={home.introduction} />;
+  return <PortableText value={home.introduction ?? []} />;
 }
