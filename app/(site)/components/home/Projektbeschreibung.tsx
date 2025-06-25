@@ -1,7 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { PROJEKTBESCHREIBUNG_QUERY } from "@/sanity/lib/queries";
 import type { PROJEKTBESCHREIBUNG_QUERYResult } from "@/sanity/types";
-import PortableTextRenderer from "../PortableTextRenderer";
+import { PortableText } from "@portabletext/react";
 import SanityImage from "../SanityImage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -20,7 +20,9 @@ export default async function Projektbeschreibung() {
     <section>
       <h2>{projektbeschreibung.ueberschrift}</h2>
       {projektbeschreibung.text && (
-        <PortableTextRenderer value={projektbeschreibung.text} />
+        <div className="prose prose-lg max-w-none">
+          <PortableText value={projektbeschreibung.text || []} />
+        </div>
       )}
 
       {projektbeschreibung.zusatzinfos && (
@@ -36,9 +38,11 @@ export default async function Projektbeschreibung() {
           )}
 
           {projektbeschreibung.zusatzinfos.text && (
-            <PortableTextRenderer
-              value={projektbeschreibung.zusatzinfos.text}
-            />
+            <div className="prose prose-lg max-w-none">
+              <PortableText
+                value={projektbeschreibung.zusatzinfos.text || []}
+              />
+            </div>
           )}
         </div>
       )}
@@ -80,7 +84,9 @@ export default async function Projektbeschreibung() {
                         )}
 
                         {projekt.text && (
-                          <PortableTextRenderer value={projekt.text} />
+                          <div className="prose prose-lg max-w-none">
+                            <PortableText value={projekt.text || []} />
+                          </div>
                         )}
                       </div>
                     </div>

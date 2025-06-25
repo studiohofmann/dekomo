@@ -25,7 +25,7 @@ export default async function Netzwerkkarte() {
       {/* Render text */}
       {netzwerkkarte.text && (
         <div className="prose">
-          <PortableText value={netzwerkkarte.text} />
+          <PortableText value={netzwerkkarte.text || []} />
         </div>
       )}
       <div className="h-96 w-full" id="map">
