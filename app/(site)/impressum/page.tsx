@@ -1,16 +1,23 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { HOME_QUERY } from "@/sanity/lib/queries";
+import { IMPRESSUM_SEITE_QUERY } from "@/sanity/lib/queries";
+import type { IMPRESSUM_SEITE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 
-export default async function Home() {
-  const home = await sanityFetch({
-    query: HOME_QUERY,
+export default async function Impressum() {
+  const impressumSeite: IMPRESSUM_SEITE_QUERYResult = await sanityFetch({
+    query: IMPRESSUM_SEITE_QUERY,
     revalidate: 60,
   });
 
-  if (!home) {
+  if (!impressumSeite) {
     return <div>No content found.</div>;
   }
 
-  return <PortableText value={home.introduction ?? []} />;
+  return (
+    <div className="pt-48">
+      {impressumSeite.seitentitelMenue}
+      <PortableText value={impressumSeite.angabenText ?? []} />
+      <PortableText value={impressumSeite.impressumText ?? []} />
+    </div>
+  );
 }

@@ -1,9 +1,9 @@
 import { defineField } from "sanity";
 import { EnvelopeIcon } from "@sanity/icons";
 
-const kontakt = {
-  name: "kontakt",
-  title: "Kontakt",
+const kontaktSeite = {
+  name: "kontaktSeite",
+  title: "Kontakt Seite",
   type: "document",
   icon: EnvelopeIcon,
 
@@ -35,7 +35,18 @@ const kontakt = {
       type: "array",
       of: [{ type: "block" }],
     }),
+    defineField({
+      name: "ueberschriftAnsprechpersonen",
+      title: "Überschrift Ansprechpersonen",
+      type: "string",
+    }),
+    defineField({
+      name: "textAnsprechpersonen",
+      title: "Text Ansprechpersonen",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
   ],
 };
 
-export default kontakt;
+export default kontaktSeite;

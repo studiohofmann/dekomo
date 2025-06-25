@@ -1,9 +1,9 @@
 import { defineField } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
 
-const impressum = {
-  name: "impressum",
-  title: "Impressum",
+const impressumSeite = {
+  name: "impressumSeite",
+  title: "Impressum Seite",
   type: "document",
   icon: InfoOutlineIcon,
 
@@ -30,12 +30,18 @@ const impressum = {
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "text",
-      title: "Text",
+      name: "angabenText",
+      title: "Angaben Text",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+    defineField({
+      name: "impressumText",
+      title: "Impressum Text",
       type: "array",
       of: [{ type: "block" }],
     }),
   ],
 };
 
-export default impressum;
+export default impressumSeite;

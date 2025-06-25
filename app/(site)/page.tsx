@@ -1,16 +1,19 @@
-import { sanityFetch } from "@/sanity/lib/client";
-import { HOME_QUERY } from "@/sanity/lib/queries";
-import { PortableText } from "@portabletext/react";
+import Einleitung from "./components/home/Einleitung";
+import Vision from "./components/home/Vision";
+import Projektbeschreibung from "./components/home/Projektbeschreibung";
+import Zugangswege from "./components/home/Zugangswege";
+import Auswirkungen from "./components/home/Auswirkungen";
+import Netzwerkkarte from "./components/home/Netzwerkkarte";
 
-export default async function Home() {
-  const home = await sanityFetch({
-    query: HOME_QUERY,
-    revalidate: 60,
-  });
-
-  if (!home) {
-    return <div>No content found.</div>;
-  }
-
-  return <PortableText value={home.introduction ?? []} />;
+export default function Home() {
+  return (
+    <div className="pt-48">
+      <Einleitung />
+      <Vision />
+      <Projektbeschreibung />
+      <Zugangswege />
+      <Auswirkungen />
+      <Netzwerkkarte />
+    </div>
+  );
 }
