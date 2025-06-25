@@ -1,50 +1,68 @@
 import { PortableText } from "@portabletext/react";
+import { PortableTextBlock } from "@portabletext/types";
+
+interface PortableTextComponentProps {
+  children?: React.ReactNode;
+}
 
 const portableTextComponents = {
   block: {
-    normal: ({ children }: any) => <p className="mb-4">{children}</p>,
-    h1: ({ children }: any) => (
+    normal: ({ children }: PortableTextComponentProps) => (
+      <p className="mb-4">{children}</p>
+    ),
+    h1: ({ children }: PortableTextComponentProps) => (
       <h1 className="text-3xl font-bold mb-4">{children}</h1>
     ),
-    h2: ({ children }: any) => (
+    h2: ({ children }: PortableTextComponentProps) => (
       <h2 className="text-2xl font-bold mb-3">{children}</h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }: PortableTextComponentProps) => (
       <h3 className="text-xl font-bold mb-2">{children}</h3>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }: PortableTextComponentProps) => (
       <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4">
         {children}
       </blockquote>
     ),
   },
   list: {
-    // Changed from list-inside to list-outside with proper margins
-    bullet: ({ children }: any) => (
+    bullet: ({ children }: PortableTextComponentProps) => (
       <ul className="list-disc list-outside mb-4 space-y-2 ml-6">{children}</ul>
     ),
-    number: ({ children }: any) => (
+    number: ({ children }: PortableTextComponentProps) => (
       <ol className="list-decimal list-outside mb-4 space-y-2 ml-6">
         {children}
       </ol>
     ),
   },
   listItem: {
-    bullet: ({ children }: any) => <li className="mb-2">{children}</li>,
-    number: ({ children }: any) => <li className="mb-2">{children}</li>,
+    bullet: ({ children }: PortableTextComponentProps) => (
+      <li className="mb-2">{children}</li>
+    ),
+    number: ({ children }: PortableTextComponentProps) => (
+      <li className="mb-2">{children}</li>
+    ),
   },
   marks: {
-    strong: ({ children }: any) => (
+    strong: ({ children }: PortableTextComponentProps) => (
       <strong className="font-bold">{children}</strong>
     ),
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-    code: ({ children }: any) => (
+    em: ({ children }: PortableTextComponentProps) => (
+      <em className="italic">{children}</em>
+    ),
+    code: ({ children }: PortableTextComponentProps) => (
       <code className="bg-gray-100 px-1 rounded">{children}</code>
     ),
   },
 };
 
-export default function PortableTextRenderer({ value }: { value: any }) {
+interface PortableTextRendererProps {
+  value: PortableTextBlock[] | null | undefined;
+}
+
+export default function PortableTextRenderer({
+  value,
+}: PortableTextRendererProps) {
   return (
     <PortableText value={value ?? []} components={portableTextComponents} />
   );
