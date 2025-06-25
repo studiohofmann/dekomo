@@ -19,7 +19,9 @@ export default async function Projektbeschreibung() {
   return (
     <section>
       <h2>{projektbeschreibung.ueberschrift}</h2>
-      <PortableTextRenderer value={projektbeschreibung.text ?? []} />
+      {projektbeschreibung.text && (
+        <PortableTextRenderer value={projektbeschreibung.text} />
+      )}
 
       {projektbeschreibung.zusatzinfos && (
         <div className="flex flex-col gap-8">
@@ -41,11 +43,9 @@ export default async function Projektbeschreibung() {
         </div>
       )}
 
-      {/* Updated to use the new nested structure */}
       {projektbeschreibung.teilprojekte?.projekte &&
         projektbeschreibung.teilprojekte.projekte.length > 0 && (
           <div>
-            {/* Show the section title */}
             {projektbeschreibung.teilprojekte.ueberschrift && (
               <h3 className="text-xl font-bold mb-4">
                 {projektbeschreibung.teilprojekte.ueberschrift}
@@ -53,7 +53,6 @@ export default async function Projektbeschreibung() {
             )}
 
             <Tabs defaultValue={`teilprojekt-0`}>
-              {/* Tab Triggers */}
               <TabsList className="flex flex-col">
                 {projektbeschreibung.teilprojekte.projekte.map(
                   (projekt, index) => (
@@ -64,7 +63,6 @@ export default async function Projektbeschreibung() {
                 )}
               </TabsList>
 
-              {/* Tab Content */}
               {projektbeschreibung.teilprojekte.projekte.map(
                 (projekt, index) => (
                   <TabsContent key={index} value={`teilprojekt-${index}`}>
@@ -82,9 +80,7 @@ export default async function Projektbeschreibung() {
                         )}
 
                         {projekt.text && (
-                          <div>
-                            <PortableTextRenderer value={projekt.text} />
-                          </div>
+                          <PortableTextRenderer value={projekt.text} />
                         )}
                       </div>
                     </div>

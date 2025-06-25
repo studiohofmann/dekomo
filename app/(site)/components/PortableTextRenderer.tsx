@@ -1,5 +1,4 @@
 import { PortableText } from "@portabletext/react";
-import { PortableTextBlock } from "@portabletext/types";
 
 interface PortableTextComponentProps {
   children?: React.ReactNode;
@@ -57,13 +56,13 @@ const portableTextComponents = {
 };
 
 interface PortableTextRendererProps {
-  value: PortableTextBlock[] | null | undefined;
+  value: unknown; // Changed from PortableTextBlock[] to unknown
 }
 
 export default function PortableTextRenderer({
   value,
 }: PortableTextRendererProps) {
   return (
-    <PortableText value={value ?? []} components={portableTextComponents} />
+    <PortableText value={value as any} components={portableTextComponents} />
   );
 }
