@@ -21,7 +21,7 @@ export default async function Netzwerkkarte() {
 
   return (
     <section>
-      <h1>{netzwerkkarte.ueberschrift}</h1>
+      <h2>{netzwerkkarte.ueberschrift}</h2>
       {/* Render text */}
       {netzwerkkarte.text && (
         <div className="prose">

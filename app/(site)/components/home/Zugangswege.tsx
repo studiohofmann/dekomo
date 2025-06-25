@@ -14,12 +14,12 @@ export default async function Zugangswege() {
   }
 
   return (
-    <div className="pb-48 bg-green-200">
-      <h1>{zugangswege.ueberschrift}</h1>
+    <section>
+      <h2>{zugangswege.ueberschrift}</h2>
       <SanityImage
         image={zugangswege.grafik}
         altFallback="Zugangswege Grafik"
       />
-    </div>
+    </section>
   );
 }

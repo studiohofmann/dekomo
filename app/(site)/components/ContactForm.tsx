@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function ContactForm() {
   const [recipientEmail, setRecipientEmail] = useState("peter@example.com");
@@ -13,14 +14,10 @@ export default function ContactForm() {
     <form
       method="POST"
       action="https://api.web3forms.com/submit"
-      className="space-y-4 max-w-md mx-auto"
+      className="space-y-6 max-w-md mx-auto"
     >
-      {/* Required Web3Forms fields */}
-      <input
-        type="hidden"
-        name="access_key"
-        value="bdb3eaa5-bf50-4463-a211-f21a5b466e55"
-      />
+      {/* Web3Forms hidden fields */}
+      <input type="hidden" name="access_key" value="YOUR_API_KEY_HERE" />
       <input type="hidden" name="from_name" value="Website Contact" />
       <input type="hidden" name="subject" value="New Contact Message" />
       <input
@@ -28,59 +25,66 @@ export default function ContactForm() {
         name="redirect"
         value="https://yourwebsite.com/thanks"
       />
-
-      {/* Dynamic recipient */}
       <input type="hidden" name="to" value={recipientEmail} />
 
-      {/* Radio buttons for choosing recipient */}
-      <fieldset className="flex gap-4">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="recipient"
-            value="peter@example.com"
-            checked={recipientEmail === "peter@example.com"}
-            onChange={handleRecipientChange}
-          />
-          Peter
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="recipient"
-            value="lisa@example.com"
-            checked={recipientEmail === "lisa@example.com"}
-            onChange={handleRecipientChange}
-          />
-          Lisa
-        </label>
-      </fieldset>
+      {/* 📧 Recipient Cards */}
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { label: "Peter", email: "peter@example.com" },
+          { label: "Lisa", email: "lisa@example.com" },
+        ].map((person) => (
+          <label
+            key={person.email}
+            className={`cursor-pointer rounded-xl border p-4 text-center font-medium transition-all ${
+              recipientEmail === person.email
+                ? "border-black bg-zinc-100 shadow-md"
+                : "border-zinc-300 hover:bg-zinc-50"
+            }`}
+          >
+            <input
+              type="radio"
+              name="recipient"
+              value={person.email}
+              checked={recipientEmail === person.email}
+              onChange={handleRecipientChange}
+              className="sr-only"
+            />
+            {person.label}
+          </label>
+        ))}
+      </div>
 
-      {/* User inputs */}
+      {/* ✍️ Contact Info */}
       <input
         type="text"
         name="name"
         placeholder="Your Name"
         required
-        className="border p-2 w-full"
+        className="border p-2 w-full rounded"
       />
       <input
         type="email"
         name="email"
         placeholder="Your Email"
         required
-        className="border p-2 w-full"
+        className="border p-2 w-full rounded"
       />
       <textarea
         name="message"
         placeholder="Your Message"
         required
-        className="border p-2 w-full"
+        className="border p-2 w-full rounded h-32"
       />
 
-      <button type="submit" className="bg-black text-white px-4 py-2">
+      {/* ✅ Submit Button */}
+      <Button
+        variant="default"
+        disabled={!recipientEmail}
+        type="submit"
+        className="bg-black text-white px-4 py-2 rounded hover:bg-zinc-800 transition"
+      >
         Send Message
-      </button>
+      </Button>
     </form>
   );
 }

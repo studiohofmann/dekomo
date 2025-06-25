@@ -20,11 +20,6 @@ const vision = {
       of: [{ type: "block" }],
     }),
   ],
-  preview: {
-    select: {
-      title: "vision.ueberschrift",
-    },
-  },
 };
 
 export default vision;

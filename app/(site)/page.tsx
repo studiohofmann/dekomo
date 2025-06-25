@@ -7,7 +7,7 @@ import Netzwerkkarte from "./components/home/Netzwerkkarte";
 
 export default function Home() {
   return (
-    <div className="pt-48">
+    <div className="page-section">
       <Einleitung />
       <Vision />
       <Projektbeschreibung />

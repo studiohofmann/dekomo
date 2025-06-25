@@ -22,31 +22,25 @@ export const PROJEKTBESCHREIBUNG_QUERY =
   ueberschrift,
   text,
   grafik{
-    asset->{
-      _id,
-      url
-    },
+    asset->{_id, url},
     alt
   },
   zusatzinfos{
     grafik{
-      asset->{
-        _id,
-        url
-      },
+      asset->{_id, url},
       alt
     },
     text
   },
-  teilprojekte[]{
+  teilprojekte{
     ueberschrift,
-    text,
-    grafik{
-      asset->{
-        _id,
-        url
-      },
-      alt
+    projekte[]{
+      ueberschrift,
+      text,
+      grafik{
+        asset->{_id, url},
+        alt
+      }
     }
   }
 }`);

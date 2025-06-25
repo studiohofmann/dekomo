@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function LogoDeKoMo() {
   return (
-    <Link href="/" className="flex items-center justify-center">
-      <LogoDeKoMoSvg className="h-24 w-auto" />
+    <Link href="/" className="px-0 py-0 flex items-center justify-center">
+      <LogoDeKoMoSvg className="h-32 w-auto" />
     </Link>
   );
 }

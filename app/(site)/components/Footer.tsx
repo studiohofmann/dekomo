@@ -14,8 +14,8 @@ export default async function Footer() {
 
   return (
     <div className="pb-48">
-      <h1>{footer.partner}</h1>
-      <h1>{footer.netzwerk}</h1>
+      <div>{footer.partner}</div>
+      <div>{footer.netzwerk}</div>
     </div>
   );
 }

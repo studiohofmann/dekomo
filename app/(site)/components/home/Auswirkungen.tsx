@@ -14,12 +14,12 @@ export default async function Auswirkungen() {
   }
 
   return (
-    <div className="pb-48 bg-red-200">
-      <h1>{auswirkungen.ueberschrift}</h1>
+    <section>
+      <h2>{auswirkungen.ueberschrift}</h2>
       <SanityImage
         image={auswirkungen.grafik}
         altFallback="Auswirkungen Grafik"
       />
-    </div>
+    </section>
   );
 }
