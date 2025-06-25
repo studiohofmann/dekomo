@@ -14,7 +14,7 @@ export default async function Zugangswege() {
   }
 
   return (
-    <section>
+    <section className="bg-gray-400">
       <h2>{zugangswege.ueberschrift}</h2>
       <SanityImage
         image={zugangswege.grafik}

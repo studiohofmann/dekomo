@@ -20,7 +20,7 @@ export default async function Netzwerkkarte() {
   }
 
   return (
-    <section>
+    <section className="bg-gray-200">
       <h2>{netzwerkkarte.ueberschrift}</h2>
       {/* Render text */}
       {netzwerkkarte.text && (
