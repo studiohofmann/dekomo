@@ -53,7 +53,7 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("bg-red-300", className)}
+      className={cn("bg-[#ffd75d] rounded-2xl", className)}
       {...props}
     />
   );

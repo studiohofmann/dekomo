@@ -3,7 +3,6 @@ import { PROJEKTBESCHREIBUNG_QUERY } from "@/sanity/lib/queries";
 import type { PROJEKTBESCHREIBUNG_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import SanityImage from "../SanityImage";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function Projektbeschreibung() {
   const projektbeschreibung: PROJEKTBESCHREIBUNG_QUERYResult =
@@ -17,10 +16,10 @@ export default async function Projektbeschreibung() {
   }
 
   return (
-    <section>
+    <section className="bg-[#f7f1a9]">
       <h2>{projektbeschreibung.ueberschrift}</h2>
       {projektbeschreibung.text && (
-        <div className="prose prose-lg max-w-none">
+        <div className="portable-text">
           <PortableText value={projektbeschreibung.text || []} />
         </div>
       )}
@@ -38,7 +37,7 @@ export default async function Projektbeschreibung() {
           )}
 
           {projektbeschreibung.zusatzinfos.text && (
-            <div className="prose prose-lg max-w-none">
+            <div className="portable-text">
               <PortableText
                 value={projektbeschreibung.zusatzinfos.text || []}
               />
@@ -46,56 +45,6 @@ export default async function Projektbeschreibung() {
           )}
         </div>
       )}
-
-      {projektbeschreibung.teilprojekte?.projekte &&
-        projektbeschreibung.teilprojekte.projekte.length > 0 && (
-          <div>
-            {projektbeschreibung.teilprojekte.ueberschrift && (
-              <h3 className="text-xl font-bold mb-4">
-                {projektbeschreibung.teilprojekte.ueberschrift}
-              </h3>
-            )}
-
-            <Tabs defaultValue={`teilprojekt-0`}>
-              <TabsList className="flex flex-col">
-                {projektbeschreibung.teilprojekte.projekte.map(
-                  (projekt, index) => (
-                    <TabsTrigger key={index} value={`teilprojekt-${index}`}>
-                      {projekt.ueberschrift}
-                    </TabsTrigger>
-                  )
-                )}
-              </TabsList>
-
-              {projektbeschreibung.teilprojekte.projekte.map(
-                (projekt, index) => (
-                  <TabsContent key={index} value={`teilprojekt-${index}`}>
-                    <div>
-                      <div>
-                        {projekt.grafik && (
-                          <div>
-                            <SanityImage
-                              image={projekt.grafik}
-                              altFallback={`${projekt.ueberschrift} Grafik`}
-                              aspectRatio="aspect-4/3"
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
-
-                        {projekt.text && (
-                          <div className="prose prose-lg max-w-none">
-                            <PortableText value={projekt.text || []} />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </TabsContent>
-                )
-              )}
-            </Tabs>
-          </div>
-        )}
     </section>
   );
 }

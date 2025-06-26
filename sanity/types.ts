@@ -20,7 +20,35 @@ export type Footer = {
   _updatedAt: string;
   _rev: string;
   partner?: string;
+  partnerLogos?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "logo";
+    _key: string;
+  }>;
   netzwerk?: string;
+  netzwerkLogos?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "logo";
+    _key: string;
+  }>;
 };
 
 export type ImpressumSeite = {
@@ -145,7 +173,8 @@ export type Netzwerkkarte = {
   }>;
   standorte?: Array<{
     titel?: string;
-    coordinates?: Geopoint;
+    latitude?: number;
+    longitude?: number;
     _type: "standort";
     _key: string;
   }>;
@@ -220,19 +249,6 @@ export type Projektbeschreibung = {
     _type: "block";
     _key: string;
   }>;
-  grafik?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
   zusatzinfos?: {
     grafik?: {
       asset?: {
@@ -538,13 +554,7 @@ export type PROJEKTBESCHREIBUNG_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
-  grafik: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-  } | null;
+  grafik: null;
   zusatzinfos: {
     grafik: {
       asset: {
@@ -629,7 +639,7 @@ export type AUSWIRKUNGEN_QUERYResult = {
   } | null;
 } | null;
 // Variable: NETZWERKKARTE_QUERY
-// Query: *[_type == "netzwerkkarte"][0]{  ueberschrift,  text,  standorte[]{    titel,    coordinates  }}
+// Query: *[_type == "netzwerkkarte"][0]{  ueberschrift,  text,  standorte[]{    titel,    latitude,    longitude  }}
 export type NETZWERKKARTE_QUERYResult = {
   ueberschrift: string | null;
   text: Array<{
@@ -652,7 +662,8 @@ export type NETZWERKKARTE_QUERYResult = {
   }> | null;
   standorte: Array<{
     titel: string | null;
-    coordinates: Geopoint | null;
+    latitude: number | null;
+    longitude: number | null;
   }> | null;
 } | null;
 // Variable: KONTAKT_SEITE_QUERY
@@ -739,10 +750,28 @@ export type IMPRESSUM_SEITE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: FOOTER_QUERY
-// Query: *[_type == "footer"][0]{  partner, netzwerk}
+// Query: *[_type == "footer"][0]{  partner,  netzwerk,  partnerLogos[]{    asset->{_id, url},    alt,    name,    url  },  netzwerkLogos[]{    asset->{_id, url},    alt,    name,    url  }}
 export type FOOTER_QUERYResult = {
   partner: string | null;
   netzwerk: string | null;
+  partnerLogos: Array<{
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+    name: null;
+    url: null;
+  }> | null;
+  netzwerkLogos: Array<{
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+    name: null;
+    url: null;
+  }> | null;
 } | null;
 
 // Query TypeMap
@@ -756,9 +785,9 @@ declare module "@sanity/client" {
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n  zusatzinfos{\n    grafik{\n      asset->{_id, url},\n      alt\n    },\n    text\n  },\n  teilprojekte{\n    ueberschrift,\n    projekte[]{\n      ueberschrift,\n      text,\n      grafik{\n        asset->{_id, url},\n        alt\n      }\n    }\n  }\n}": PROJEKTBESCHREIBUNG_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
-    "*[_type == \"netzwerkkarte\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    coordinates\n  }\n}": NETZWERKKARTE_QUERYResult;
+    "*[_type == \"netzwerkkarte\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERKKARTE_QUERYResult;
     "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"impressumSeite\"][0]{\n seitentitelMenue, angabenText, impressumText,\n}": IMPRESSUM_SEITE_QUERYResult;
-    "*[_type == \"footer\"][0]{\n  partner, netzwerk\n}": FOOTER_QUERYResult;
+    "*[_type == \"footer\"][0]{\n  partner,\n  netzwerk,\n  partnerLogos[]{\n    asset->{_id, url},\n    alt,\n    name,\n    url\n  },\n  netzwerkLogos[]{\n    asset->{_id, url},\n    alt,\n    name,\n    url\n  }\n}": FOOTER_QUERYResult;
   }
 }

@@ -70,7 +70,8 @@ export const NETZWERKKARTE_QUERY = defineQuery(`*[_type == "netzwerkkarte"][0]{
   text,
   standorte[]{
     titel,
-    coordinates
+    latitude,
+    longitude
   }
 }`);
 
@@ -84,5 +85,18 @@ export const IMPRESSUM_SEITE_QUERY =
 }`);
 
 export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
-  partner, netzwerk
+  partner,
+  netzwerk,
+  partnerLogos[]{
+    asset->{_id, url},
+    alt,
+    name,
+    url
+  },
+  netzwerkLogos[]{
+    asset->{_id, url},
+    alt,
+    name,
+    url
+  }
 }`);

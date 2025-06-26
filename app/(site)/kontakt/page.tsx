@@ -15,12 +15,22 @@ export default async function Kontakt() {
   }
 
   return (
-    <div className="pt-48">
-      {kontaktSeite.seitentitelMenue}
-      <PortableText value={kontaktSeite.text ?? []} />
-      {kontaktSeite.ueberschriftAnsprechpersonen}
-      <PortableText value={kontaktSeite.textAnsprechpersonen ?? []} />
-      <ContactForm />
+    <div className="page-section">
+      <section>
+        <h1 className="text-center">{kontaktSeite.seitentitelMenue}</h1>
+        <div className="portable-text">
+          <PortableText value={kontaktSeite.text ?? []} />
+        </div>
+      </section>
+      <section>
+        <div className="flex flex-col gap-4">
+          <h2>{kontaktSeite.ueberschriftAnsprechpersonen}</h2>
+          <div className="portable-text">
+            <PortableText value={kontaktSeite.textAnsprechpersonen ?? []} />
+          </div>
+        </div>
+        <ContactForm />
+      </section>
     </div>
   );
 }

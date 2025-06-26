@@ -3,7 +3,7 @@ import Navigation from "./Navigation";
 
 export default function Header() {
   return (
-    <div className="bg-[#e1e8f0] p-4">
+    <div className="bg-neutral-200 p-4">
       <div className="top-0 left-0  w-full z-50">
         <div className="flex justify-center">
           <LogoDeKoMo />

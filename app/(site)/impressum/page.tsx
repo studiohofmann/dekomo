@@ -14,10 +14,18 @@ export default async function Impressum() {
   }
 
   return (
-    <div className="pt-48">
-      {impressumSeite.seitentitelMenue}
-      <PortableText value={impressumSeite.angabenText ?? []} />
-      <PortableText value={impressumSeite.impressumText ?? []} />
+    <div className="page-section">
+      <section>
+        <h1 className="text-center">{impressumSeite.seitentitelMenue}</h1>
+        <div className="portable-text">
+          <PortableText value={impressumSeite.angabenText ?? []} />
+        </div>
+      </section>
+      <section>
+        <div className="portable-text">
+          <PortableText value={impressumSeite.impressumText ?? []} />
+        </div>
+      </section>
     </div>
   );
 }

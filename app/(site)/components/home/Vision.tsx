@@ -13,9 +13,9 @@ export default async function Vision() {
   }
 
   return (
-    <section className="bg-[#5e6b78] text-[#f9f9f9]">
+    <section className="bg-[#5a7cbe] text-[#f9f9f9]">
       <h2>{vision.ueberschrift}</h2>
-      <div className="prose prose-lg max-w-none prose-headings:text-[#f9f9f9] prose-p:text-[#f9f9f9] prose-li:text-[#f9f9f9] prose-strong:text-[#f9f9f9]">
+      <div className="portable-text">
         <PortableText value={vision.text || []} />
       </div>
     </section>

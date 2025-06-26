@@ -2,12 +2,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { NETZWERKKARTE_QUERY } from "@/sanity/lib/queries";
 import type { NETZWERKKARTE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
-import dynamic from "next/dynamic";
-
-const DynamicMap = dynamic(() => import("./Map"), {
-  loading: () => <p>Loading map...</p>,
-  ssr: !!false,
-});
+import MapWrapper from "./MapWrapper";
 
 export default async function Netzwerkkarte() {
   const netzwerkkarte: NETZWERKKARTE_QUERYResult = await sanityFetch({
@@ -24,13 +19,18 @@ export default async function Netzwerkkarte() {
       <h2>{netzwerkkarte.ueberschrift}</h2>
       {/* Render text */}
       {netzwerkkarte.text && (
-        <div className="prose">
-          <PortableText value={netzwerkkarte.text || []} />
+        <div className="portable-text">
+          <PortableText value={netzwerkkarte.text} />
         </div>
       )}
-      <div className="h-96 w-full" id="map">
-        <DynamicMap />
-      </div>
+      {/* Use the client wrapper component */}
+      <MapWrapper
+        standorte={(netzwerkkarte.standorte || []).map((s) => ({
+          titel: s.titel ?? "",
+          latitude: s.latitude ?? 0,
+          longitude: s.longitude ?? 0,
+        }))}
+      />
     </section>
   );
 }

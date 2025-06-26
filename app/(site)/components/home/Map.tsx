@@ -1,57 +1,42 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import L from "leaflet";
 
-const Map = () => {
+// Define the type for locations from Sanity
+type StandortType = {
+  titel: string;
+  latitude: number;
+  longitude: number;
+};
+
+type MapProps = {
+  standorte: StandortType[];
+};
+
+const Map = ({ standorte }: MapProps) => {
   const markerIcon = new L.Icon({
     iconUrl: "/marker-icon.png",
     shadowUrl: "/marker-shadow.png",
     iconSize: [22, 32],
-    shadowSize: [41, 41], // size of the shadow
-    iconAnchor: [22, 64], // point of the icon which will correspond to marker's location
-    shadowAnchor: [24, 72], // the same for the shadow
-    popupAnchor: [-11, -62], // point from which the popup should open relative to the iconAnchor
+    shadowSize: [41, 41],
+    iconAnchor: [11, 32], // Fixed anchor point
+    shadowAnchor: [12, 41],
+    popupAnchor: [0, -32], // Fixed popup position
   });
-  type MarkerType = {
-    id: number;
-    position: [number, number];
-    title: string;
-    description: string;
-  };
 
-  const markers: MarkerType[] = [
-    {
-      id: 1,
-      position: [43.56295237, 1.46810716],
-      title: "Toulouse",
-      description: "Beautiful city in France",
-    },
-    {
-      id: 2,
-      position: [48.8566, 2.3522],
-      title: "Paris",
-      description: "Capital of France",
-    },
-    {
-      id: 3,
-      position: [45.764, 4.8357],
-      title: "Lyon",
-      description: "Third largest city",
-    },
-    {
-      id: 4,
-      position: [43.2965, 5.3698],
-      title: "Marseille",
-      description: "Port city",
-    },
-  ];
+  // Set center to Switzerland if you have locations, otherwise default
+  const mapCenter: [number, number] =
+    standorte.length > 0
+      ? [standorte[0].latitude, standorte[0].longitude]
+      : [46.8182, 8.2275]; // Center of Switzerland
+
   return (
-    <section className=" bg-gray-200 w-full h-full">
+    <div className="w-full h-full">
       <MapContainer
-        center={[46.861505, 2.496587]}
-        zoom={6}
+        center={mapCenter}
+        zoom={7} // Adjusted for Switzerland
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer
@@ -59,19 +44,37 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Map over the markers array */}
-        {markers.map((marker) => (
-          <Marker key={marker.id} position={marker.position} icon={markerIcon}>
+        {/* Map over the Sanity locations */}
+        {standorte.map((standort, index) => (
+          <Marker
+            key={index}
+            position={[standort.latitude, standort.longitude]}
+            icon={markerIcon}
+          >
+            {/* Tooltip shows title above marker (always visible) */}
+            <Tooltip
+              permanent
+              direction="top"
+              offset={[0, -40]}
+              className="custom-tooltip"
+            >
+              <span>{standort.titel}</span>
+            </Tooltip>
+
+            {/* Popup shows on click */}
             <Popup>
               <div>
-                <h3 className="font-bold">{marker.title}</h3>
-                <p>{marker.description}</p>
+                <div>{standort.titel}</div>
+                <p>
+                  {standort.latitude.toFixed(4)},{" "}
+                  {standort.longitude.toFixed(4)}
+                </p>
               </div>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
-    </section>
+    </div>
   );
 };
 

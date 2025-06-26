@@ -36,24 +36,20 @@ const netzwerkkarte = {
               validation: (rule) => rule.required(),
             },
             {
-              name: "coordinates",
-              title: "Coordinates",
-              type: "geopoint",
-              description: "Click on the map to set the location",
-              validation: (rule) => rule.required(),
+              name: "latitude",
+              title: "Latitude (Breitengrad)",
+              type: "number",
+              description: "z.B. 46.9481 für Bern",
+              validation: (rule) => rule.required().min(-90).max(90),
+            },
+            {
+              name: "longitude",
+              title: "Longitude (Längengrad)",
+              type: "number",
+              description: "z.B. 7.4474 für Bern",
+              validation: (rule) => rule.required().min(-180).max(180),
             },
           ],
-          preview: {
-            select: {
-              title: "titel",
-            },
-            prepare(selection) {
-              const { title } = selection;
-              return {
-                title: title || "Unbenannter Standort",
-              };
-            },
-          },
         },
       ],
     }),

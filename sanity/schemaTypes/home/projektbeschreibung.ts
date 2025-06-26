@@ -20,22 +20,6 @@ const projektbeschreibung = {
       of: [{ type: "block" }],
     }),
     defineField({
-      name: "grafik",
-      title: "Grafik",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-          description: "Beschreibung des Bildes für Screenreader",
-        },
-      ],
-    }),
-    defineField({
       name: "zusatzinfos",
       title: "Zusatzinfos",
       type: "object",
