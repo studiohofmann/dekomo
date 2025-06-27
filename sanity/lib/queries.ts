@@ -26,9 +26,12 @@ export const PROJEKTBESCHREIBUNG_QUERY =
     alt
   },
 }`);
-export const TEILPROJEKTE_QUERY = defineQuery(`*[_type == "teilprojekte"]{
+export const TEILPROJEKTE_QUERY = defineQuery(`*[_type == "teilprojekte"][0]{
   ueberschrift,
-  text,
+  teilprojekt[] {
+    ueberschrift,
+    text
+  }
 }`);
 
 export const ZUGANGSWEGE_QUERY = defineQuery(`*[_type == "zugangswege"][0]{

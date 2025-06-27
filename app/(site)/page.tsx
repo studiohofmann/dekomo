@@ -10,12 +10,22 @@ export default function Home() {
   return (
     <div className="page-section">
       <Einleitung />
-      <Vision />
-      <Projektbeschreibung />
-      <Teilprojekte />
-      <Zugangswege />
+      <section className="bg-[#5a7cbe] text-gray-100">
+        <Vision />
+      </section>
+      <section>
+        <Projektbeschreibung />
+      </section>
+      <section className="bg-[#5a7cbe] text-gray-100">
+        <Teilprojekte />
+      </section>
+      <section>
+        <Zugangswege />
+      </section>
       <Auswirkungen />
-      <Netzwerk />
+      <section>
+        <Netzwerk />
+      </section>
     </div>
   );
 }

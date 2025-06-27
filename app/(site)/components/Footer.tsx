@@ -13,13 +13,12 @@ export default async function Footer() {
   }
 
   return (
-    <div className="footer mb-24">
-      <section className="gap-4">
-        <h3>{footer.partner}</h3>
-
-        <div className="flex flex-wrap gap-4">
+    <div className="footer mb-18 md:mb-0 gap-4">
+      <div className="flex flex-col gap-4">
+        <h3 className="text-gray-400">{footer.partner}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {footer.partnerLogos?.map((logo, index) => (
-            <div key={index} className="">
+            <div key={index} className="bg-gray-400 py-2 px-4">
               {logo.url ? (
                 <a
                   href={logo.url}
@@ -43,15 +42,13 @@ export default async function Footer() {
             </div>
           ))}
         </div>
-      </section>
-
+      </div>
       {/* Netzwerk Section */}
-      <section className="gap-4">
-        <h3>{footer.netzwerk}</h3>
-
-        <div className="flex flex-wrap gap-8">
+      <div className="flex flex-col gap-4">
+        <h3 className="text-gray-400">{footer.netzwerk}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {footer.netzwerkLogos?.map((logo, index) => (
-            <div key={index} className="">
+            <div key={index} className="bg-gray-400 py-2 px-4">
               {logo.url ? (
                 <a
                   href={logo.url}
@@ -75,7 +72,10 @@ export default async function Footer() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
+      <div className="text-center text-sm text-gray-400">
+        Copyright &copy; {new Date().getFullYear()} DeKoMo. All rights reserved.
+      </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className="fixed left-0 bottom-0 w-full z-50 md:hidden bg-gray-300">
+      <div className="fixed left-0 bottom-0 w-full z-50 md:hidden bg-gray-300 h-18 flex items-center justify-center">
         <Navigation />
       </div>
     </div>

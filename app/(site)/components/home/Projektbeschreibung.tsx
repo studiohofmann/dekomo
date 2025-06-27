@@ -16,7 +16,7 @@ export default async function Projektbeschreibung() {
   }
 
   return (
-    <section className="gap-4">
+    <div className="flex flex-col gap-4">
       <h2>{projektbeschreibung.ueberschrift}</h2>
       <div className="md:grid md:grid-cols-2 md:gap-4">
         {projektbeschreibung.text && (
@@ -33,6 +33,6 @@ export default async function Projektbeschreibung() {
           />
         )}
       </div>
-    </section>
+    </div>
   );
 }

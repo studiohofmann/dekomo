@@ -13,11 +13,11 @@ export default async function Vision() {
   }
 
   return (
-    <section className="bg-[#5a7cbe] text-gray-100">
+    <div className="-mb-4">
       <h2>{vision.ueberschrift}</h2>
       <div className="portable-text">
         <PortableText value={vision.text || []} />
       </div>
-    </section>
+    </div>
   );
 }

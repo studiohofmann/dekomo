@@ -28,7 +28,7 @@ export default async function Kontakt() {
       <section>
         <Ansprechpersonen />
       </section>
-      <section>
+      <section className="bg-[#fbef82]">
         <ContactForm />
       </section>
     </div>

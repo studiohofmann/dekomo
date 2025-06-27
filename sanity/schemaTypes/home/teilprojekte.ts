@@ -14,10 +14,27 @@ const teilprojekte = {
       type: "string",
     }),
     defineField({
-      name: "text",
-      title: "Text",
+      name: "teilprojekt",
+      title: "Teilprojekt",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "ueberschrift",
+              title: "Überschrift",
+              type: "string",
+            },
+            {
+              name: "text",
+              title: "Text",
+              type: "array",
+              of: [{ type: "block" }],
+            },
+          ],
+        },
+      ],
     }),
   ],
 };

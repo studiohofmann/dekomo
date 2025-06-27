@@ -39,7 +39,7 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       className={cn(
         // Replace the long className with your custom styles
-        "inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-yellow-200 hover:bg-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white border border-yellow-400 px-4 py-3 text-base font-medium transition-colors",
+        "inline-flex w-full text-gray-900 items-center justify-center bg-gray-100 hover:bg-yellow-300 data-[state=active]:bg-yellow-500 data-[state=active]:text-white px-4 py-2 text-base font-bold transition-colors",
         className
       )}
       {...props}

@@ -41,7 +41,7 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   };
 
   return (
-    <ul className="grid grid-cols-4 md:flex md:gap-8">
+    <ul className="grid grid-cols-4 md:flex md:gap-8 w-full">
       {menuItems.map((item) => {
         const href = `/${item.slug.current}`;
         const isActive =

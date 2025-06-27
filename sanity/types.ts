@@ -303,22 +303,26 @@ export type Teilprojekte = {
   _updatedAt: string;
   _rev: string;
   ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  teilprojekt?: Array<{
+    ueberschrift?: string;
+    text?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
     _key: string;
   }>;
 };
@@ -603,28 +607,31 @@ export type PROJEKTBESCHREIBUNG_QUERYResult = {
   } | null;
 } | null;
 // Variable: TEILPROJEKTE_QUERY
-// Query: *[_type == "teilprojekte"]{  ueberschrift,  text,}
-export type TEILPROJEKTE_QUERYResult = Array<{
+// Query: *[_type == "teilprojekte"][0]{  ueberschrift,  teilprojekt[] {    ueberschrift,    text  }}
+export type TEILPROJEKTE_QUERYResult = {
   ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  teilprojekt: Array<{
+    ueberschrift: string | null;
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
       _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
+    }> | null;
   }> | null;
-}>;
+} | null;
 // Variable: ZUGANGSWEGE_QUERY
 // Query: *[_type == "zugangswege"][0]{  ueberschrift,  grafik{    asset->{      _id,      url    },    alt  }}
 export type ZUGANGSWEGE_QUERYResult = {
@@ -849,7 +856,7 @@ declare module "@sanity/client" {
     "*[_type == \"einleitung\"][0]{\n  ueberschrift\n}": EINLEITUNG_QUERYResult;
     "*[_type == \"vision\"][0]{\n  ueberschrift, text\n}": VISION_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
-    "*[_type == \"teilprojekte\"]{\n  ueberschrift,\n  text,\n}": TEILPROJEKTE_QUERYResult;
+    "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;

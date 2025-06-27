@@ -14,12 +14,12 @@ export default async function Zugangswege() {
   }
 
   return (
-    <section className="bg-gray-400">
+    <div className="flex flex-col gap-4">
       <h2>{zugangswege.ueberschrift}</h2>
       <SanityImage
         image={zugangswege.grafik}
         altFallback="Zugangswege Grafik"
       />
-    </section>
+    </div>
   );
 }

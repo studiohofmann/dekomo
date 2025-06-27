@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { DownOutlined } from "@ant-design/icons";
 
 export default function ContactForm() {
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -9,6 +10,7 @@ export default function ContactForm() {
     name: "",
     email: "",
     message: "",
+    gender: "",
   });
 
   const handleRecipientClick = (email: string) => {
@@ -21,7 +23,9 @@ export default function ContactForm() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -33,6 +37,7 @@ export default function ContactForm() {
   // Check if all fields are filled
   const isFormValid =
     recipientEmail &&
+    formData.gender &&
     formData.name.trim() &&
     formData.email.trim() &&
     formData.message.trim();
@@ -41,7 +46,7 @@ export default function ContactForm() {
     <form
       method="POST"
       action="https://api.web3forms.com/submit"
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-4"
     >
       {/* Web3Forms hidden fields */}
       <input type="hidden" name="access_key" value="YOUR_API_KEY_HERE" />
@@ -66,10 +71,10 @@ export default function ContactForm() {
           <div
             key={person.email}
             onClick={() => handleRecipientClick(person.email)}
-            className={`cursor-pointer p-2 text-center transition-all border-2 ${
+            className={`cursor-pointer p-2 text-center transition-all ${
               recipientEmail === person.email
-                ? "border-black bg-zinc-100"
-                : "border-zinc-300 bg-gray-300 hover:bg-zinc-50"
+                ? "  bg-[#5a7cbe] text-sm font-bold text-gray-100 "
+                : " bg-[#94b0dd] text-gray-100 text-sm font-bold hover:bg-[#5a7cbe]"
             }`}
           >
             {/* Hidden input for form submission */}
@@ -87,7 +92,26 @@ export default function ContactForm() {
       </div>
 
       {/* ✍️ Contact Info */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
+        <div className="relative">
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+            required
+            className="bg-gray-100 px-4 py-2 pr-10 appearance-none w-full"
+          >
+            <option value="" disabled>
+              Anrede
+            </option>
+            <option value="Herr">Herr</option>
+            <option value="Frau">Frau</option>
+            <option value="Neutral">Neutral</option>
+          </select>
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+            <DownOutlined />
+          </span>
+        </div>
         <input
           type="text"
           name="name"

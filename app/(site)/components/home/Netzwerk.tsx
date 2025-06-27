@@ -15,7 +15,7 @@ export default async function Netzwerk() {
   }
 
   return (
-    <section className="bg-gray-200">
+    <div className="flex flex-col gap-4">
       <h2>{netzwerk.ueberschrift}</h2>
       {/* Render text */}
       {netzwerk.text && (
@@ -31,6 +31,6 @@ export default async function Netzwerk() {
           longitude: s.longitude ?? 0,
         }))}
       />
-    </section>
+    </div>
   );
 }
