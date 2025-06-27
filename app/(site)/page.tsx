@@ -4,7 +4,7 @@ import Projektbeschreibung from "./components/home/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
 import Auswirkungen from "./components/home/Auswirkungen";
-import Netzwerkkarte from "./components/home/Netzwerkkarte";
+import Netzwerk from "./components/home/Netzwerk";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <Teilprojekte />
       <Zugangswege />
       <Auswirkungen />
-      <Netzwerkkarte />
+      <Netzwerk />
     </div>
   );
 }

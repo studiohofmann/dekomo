@@ -17,10 +17,13 @@ export default async function Impressum() {
     <div className="page-section">
       <section>
         <h1 className="text-center">{impressumSeite.seitentitelMenue}</h1>
+      </section>
+      <section className="background-blue">
         <div className="portable-text">
           <PortableText value={impressumSeite.angabenText ?? []} />
         </div>
       </section>
+
       <section>
         <div className="portable-text">
           <PortableText value={impressumSeite.impressumText ?? []} />

@@ -16,35 +16,23 @@ export default async function Projektbeschreibung() {
   }
 
   return (
-    <section className="bg-[#f7f1a9]">
+    <section className="gap-4">
       <h2>{projektbeschreibung.ueberschrift}</h2>
-      {projektbeschreibung.text && (
-        <div className="portable-text">
-          <PortableText value={projektbeschreibung.text || []} />
-        </div>
-      )}
-
-      {projektbeschreibung.zusatzinfos && (
-        <div className="flex flex-col gap-8">
-          {projektbeschreibung.zusatzinfos.grafik && (
-            <div>
-              <SanityImage
-                image={projektbeschreibung.zusatzinfos.grafik}
-                altFallback="Zusatzinformationen Grafik"
-                aspectRatio="aspect-4/3"
-              />
-            </div>
-          )}
-
-          {projektbeschreibung.zusatzinfos.text && (
-            <div className="portable-text">
-              <PortableText
-                value={projektbeschreibung.zusatzinfos.text || []}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <div className="md:grid md:grid-cols-2 md:gap-4">
+        {projektbeschreibung.text && (
+          <div className="portable-text">
+            <PortableText value={projektbeschreibung.text || []} />
+          </div>
+        )}
+        {projektbeschreibung.grafik && (
+          <SanityImage
+            image={projektbeschreibung.grafik}
+            altFallback={projektbeschreibung.grafik.alt || "Grafik"}
+            aspectRatio="aspect-4/3"
+            className="object-cover w-full"
+          />
+        )}
+      </div>
     </section>
   );
 }

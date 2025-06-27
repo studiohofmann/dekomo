@@ -13,14 +13,13 @@ export default async function Footer() {
   }
 
   return (
-    <div className="pb-24 bg-neutral-400">
-      {/* Partner Section */}
-      <div className="mb-8">
-        <h3 className="text-lg font-bold mb-4">{footer.partner}</h3>
+    <div className="footer mb-24">
+      <section className="gap-4">
+        <h3>{footer.partner}</h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-6xl">
+        <div className="flex flex-wrap gap-4">
           {footer.partnerLogos?.map((logo, index) => (
-            <div key={index} className="flex items-center justify-center">
+            <div key={index} className="">
               {logo.url ? (
                 <a
                   href={logo.url}
@@ -44,15 +43,15 @@ export default async function Footer() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Netzwerk Section */}
-      <div className="mb-8">
-        <h3 className="text-lg font-bold mb-4">{footer.netzwerk}</h3>
+      <section className="gap-4">
+        <h3>{footer.netzwerk}</h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div className="flex flex-wrap gap-8">
           {footer.netzwerkLogos?.map((logo, index) => (
-            <div key={index} className="flex items-center justify-center">
+            <div key={index} className="">
               {logo.url ? (
                 <a
                   href={logo.url}
@@ -76,7 +75,7 @@ export default async function Footer() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

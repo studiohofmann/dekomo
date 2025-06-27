@@ -1,72 +1,48 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { PROJEKTBESCHREIBUNG_QUERY } from "@/sanity/lib/queries";
-import type { PROJEKTBESCHREIBUNG_QUERYResult } from "@/sanity/types";
+import { TEILPROJEKTE_QUERY } from "@/sanity/lib/queries";
+import type { TEILPROJEKTE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import SanityImage from "../SanityImage";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default async function Teilprojekte() {
-  const projektbeschreibung: PROJEKTBESCHREIBUNG_QUERYResult =
-    await sanityFetch({
-      query: PROJEKTBESCHREIBUNG_QUERY,
-      revalidate: 60,
-    });
+  const teilprojekte: TEILPROJEKTE_QUERYResult = await sanityFetch({
+    query: TEILPROJEKTE_QUERY,
+    revalidate: 60,
+  });
 
-  if (!projektbeschreibung) {
+  if (!teilprojekte || teilprojekte.length === 0) {
     return <div>No content found.</div>;
   }
 
   return (
-    <section className="bg-[#fbef82]">
-      {projektbeschreibung.teilprojekte?.projekte &&
-        projektbeschreibung.teilprojekte.projekte.length > 0 && (
-          <div>
-            {projektbeschreibung.teilprojekte.ueberschrift && (
-              <h3 className="text-xl font-bold mb-4">
-                {projektbeschreibung.teilprojekte.ueberschrift}
-              </h3>
+    <section className="bg-[#fbef82] py-8">
+      <Tabs defaultValue={teilprojekte[0].ueberschrift || "tab-0"}>
+        <TabsList>
+          {teilprojekte.map((teilprojekt, idx) => (
+            <TabsTrigger
+              key={idx}
+              value={teilprojekt.ueberschrift || `tab-${idx}`}
+            >
+              {teilprojekt.ueberschrift || `Teilprojekt ${idx + 1}`}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {teilprojekte.map((teilprojekt, idx) => (
+          <TabsContent
+            key={idx}
+            value={teilprojekt.ueberschrift || `tab-${idx}`}
+            className="p-4"
+          >
+            {teilprojekt.text && (
+              <div className="portable-text">
+                <PortableText value={teilprojekt.text || []} />
+              </div>
             )}
-
-            <Tabs defaultValue={`teilprojekt-0`}>
-              <TabsList className="flex flex-col">
-                {projektbeschreibung.teilprojekte.projekte.map(
-                  (projekt, index) => (
-                    <TabsTrigger key={index} value={`teilprojekt-${index}`}>
-                      {projekt.ueberschrift}
-                    </TabsTrigger>
-                  )
-                )}
-              </TabsList>
-
-              {projektbeschreibung.teilprojekte.projekte.map(
-                (projekt, index) => (
-                  <TabsContent key={index} value={`teilprojekt-${index}`}>
-                    <div>
-                      <div>
-                        {projekt.grafik && (
-                          <div>
-                            <SanityImage
-                              image={projekt.grafik}
-                              altFallback={`${projekt.ueberschrift} Grafik`}
-                              aspectRatio="aspect-4/3"
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
-
-                        {projekt.text && (
-                          <div className="portable-text px-4 py-8">
-                            <PortableText value={projekt.text || []} />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </TabsContent>
-                )
-              )}
-            </Tabs>
-          </div>
-        )}
+          </TabsContent>
+        ))}
+      </Tabs>
     </section>
   );
 }

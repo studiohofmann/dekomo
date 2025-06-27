@@ -12,8 +12,8 @@ export default async function Einleitung() {
   }
 
   return (
-    <section className="bg-neutral-200 pt-0">
-      <h2 className="text-center text-[#575756]">{einleitung.ueberschrift}</h2>
+    <section>
+      <h1>{einleitung.ueberschrift}</h1>
     </section>
   );
 }

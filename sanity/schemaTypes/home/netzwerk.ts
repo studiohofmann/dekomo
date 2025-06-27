@@ -1,9 +1,9 @@
 import { defineField } from "sanity";
 import { HomeIcon } from "@sanity/icons";
 
-const netzwerkkarte = {
-  name: "netzwerkkarte",
-  title: "Netzwerkkarte",
+const netzwerk = {
+  name: "netzwerk",
+  title: "Netzwerk",
   type: "document",
   icon: HomeIcon,
 
@@ -54,11 +54,6 @@ const netzwerkkarte = {
       ],
     }),
   ],
-  preview: {
-    select: {
-      title: "ueberschrift",
-    },
-  },
 };
 
-export default netzwerkkarte;
+export default netzwerk;
