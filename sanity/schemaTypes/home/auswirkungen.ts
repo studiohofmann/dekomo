@@ -14,6 +14,12 @@ const auswirkungen = {
       type: "string",
     }),
     defineField({
+      name: "text",
+      title: "Text",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+    defineField({
       name: "grafik",
       title: "Grafik",
       type: "image",

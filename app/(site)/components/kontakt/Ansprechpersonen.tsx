@@ -26,7 +26,7 @@ export default async function Ansprechpersonen() {
                 altFallback={person.profilbild.alt || "Profilbild"}
                 width={80}
                 height={80}
-                className="object-cover rounded-full"
+                className="object-cover rounded-full shadow-md"
               />
             )}
             {person.text && (

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LogoDeKoMo from "./LogoDeKoMo";
-import NavigationLinks from "./NavigationLinks";
+import LogoDeKoMo from "./header/LogoDeKoMo";
+import NavigationLinks from "./header/NavigationLinks";
 
 type MenuItem = {
   slug: { current: string };
@@ -28,18 +28,13 @@ export default function Header({ menuItems }: HeaderProps) {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full z-50 bg-gray-300 shadow-md transition-all duration-300 flex items-center justify-center md:justify-between px-4 md:px-8 lg:px-16 xl:px-32 ${
+        className={`fixed top-0 left-0 w-full z-50 bg-gray-300 shadow-md transition-all duration-300 flex items-center justify-center ${
           isShrunk ? "h-12" : "h-32"
         }`}
       >
         <LogoDeKoMo
           className={`transition-all duration-300 ${isShrunk ? "h-8" : "h-24"}`}
         />
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex">
-          <NavigationLinks menuItems={menuItems} />
-        </div>
       </div>
 
       {/* Mobile Navigation */}

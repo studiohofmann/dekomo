@@ -18,7 +18,10 @@ export default async function Footer() {
         <h3 className="text-gray-400">{footer.partner}</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {footer.partnerLogos?.map((logo, index) => (
-            <div key={index} className="bg-gray-400 py-2 px-4">
+            <div
+              key={index}
+              className="bg-gray-400 py-2 px-4  rounded-md shadow-md"
+            >
               {logo.url ? (
                 <a
                   href={logo.url}
@@ -48,7 +51,10 @@ export default async function Footer() {
         <h3 className="text-gray-400">{footer.netzwerk}</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {footer.netzwerkLogos?.map((logo, index) => (
-            <div key={index} className="bg-gray-400 py-2 px-4">
+            <div
+              key={index}
+              className="bg-gray-400 py-2 px-4  rounded-md shadow-md"
+            >
               {logo.url ? (
                 <a
                   href={logo.url}

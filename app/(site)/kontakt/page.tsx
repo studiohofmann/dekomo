@@ -25,12 +25,14 @@ export default async function Kontakt() {
           <PortableText value={kontaktSeite.text ?? []} />
         </div>
       </section>
-      <section>
-        <Ansprechpersonen />
-      </section>
-      <section className="bg-[#fbef82]">
-        <ContactForm />
-      </section>
+      <div className="md:grid md:grid-cols-2">
+        <section className="bg-[#f7f1a9]">
+          <Ansprechpersonen />
+        </section>
+        <section>
+          <ContactForm />
+        </section>
+      </div>
     </div>
   );
 }

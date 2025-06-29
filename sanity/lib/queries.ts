@@ -36,6 +36,7 @@ export const TEILPROJEKTE_QUERY = defineQuery(`*[_type == "teilprojekte"][0]{
 
 export const ZUGANGSWEGE_QUERY = defineQuery(`*[_type == "zugangswege"][0]{
   ueberschrift,
+  text,
   grafik{
     asset->{
       _id,
@@ -46,6 +47,7 @@ export const ZUGANGSWEGE_QUERY = defineQuery(`*[_type == "zugangswege"][0]{
 }`);
 export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
   ueberschrift,
+  text,
   grafik{
     asset->{
       _id,

@@ -14,6 +14,12 @@ const zugangswege = {
       type: "string",
     }),
     defineField({
+      name: "text",
+      title: "Text",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+    defineField({
       name: "grafik",
       title: "Grafik",
       type: "image",
@@ -30,11 +36,6 @@ const zugangswege = {
       ],
     }),
   ],
-  preview: {
-    select: {
-      title: "zugangswege.ueberschrift",
-    },
-  },
 };
 
 export default zugangswege;

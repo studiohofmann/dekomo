@@ -8,6 +8,7 @@ export default function ContactForm() {
   const [recipientEmail, setRecipientEmail] = useState("");
   const [formData, setFormData] = useState({
     name: "",
+    vorname: "",
     email: "",
     message: "",
     gender: "",
@@ -39,6 +40,7 @@ export default function ContactForm() {
     recipientEmail &&
     formData.gender &&
     formData.name.trim() &&
+    formData.vorname.trim() &&
     formData.email.trim() &&
     formData.message.trim();
 
@@ -49,7 +51,11 @@ export default function ContactForm() {
       className="flex flex-col gap-4"
     >
       {/* Web3Forms hidden fields */}
-      <input type="hidden" name="access_key" value="YOUR_API_KEY_HERE" />
+      <input
+        type="hidden"
+        name="access_key"
+        value="bdb3eaa5-bf50-4463-a211-f21a5b466e55"
+      />
       <input type="hidden" name="from_name" value="Website Contact" />
       <input type="hidden" name="subject" value="New Contact Message" />
       <input
@@ -64,18 +70,18 @@ export default function ContactForm() {
         {[
           {
             label: "Prof. Dr. med. Stefan Klöppel",
-            email: "peter@example.com",
+            email: "stefan.kloeppel@upd.ch",
           },
-          { label: "M.Sc. Giuliana Crippa", email: "lisa@example.com" },
+          { label: "M.Sc. Giuliana Crippa", email: "giuliana.crippa@unibe.ch" },
         ].map((person) => (
-          <div
+          <Button
             key={person.email}
+            variant="custom"
             onClick={() => handleRecipientClick(person.email)}
-            className={`cursor-pointer p-2 text-center transition-all ${
-              recipientEmail === person.email
-                ? "  bg-[#5a7cbe] text-sm font-bold text-gray-100 "
-                : " bg-[#94b0dd] text-gray-100 text-sm font-bold hover:bg-[#5a7cbe]"
+            className={`p-2 text-center ${
+              recipientEmail === person.email ? "bg-[#5a7cbe]" : ""
             }`}
+            type="button"
           >
             {/* Hidden input for form submission */}
             <input
@@ -87,7 +93,7 @@ export default function ContactForm() {
               className="sr-only"
             />
             {person.label}
-          </div>
+          </Button>
         ))}
       </div>
 
@@ -99,7 +105,7 @@ export default function ContactForm() {
             value={formData.gender}
             onChange={handleInputChange}
             required
-            className="bg-gray-100 px-4 py-2 pr-10 appearance-none w-full"
+            className="bg-[#f7f1a9] px-4 py-2 pr-10 appearance-none w-full rounded-md shadow-lg"
           >
             <option value="" disabled>
               Anrede
@@ -115,36 +121,46 @@ export default function ContactForm() {
         <input
           type="text"
           name="name"
-          placeholder="Your Name"
+          placeholder="Name"
           value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="text"
+          name="vorname"
+          placeholder="Vorname"
+          value={formData.vorname}
           onChange={handleInputChange}
           required
         />
         <input
           type="email"
           name="email"
-          placeholder="Your Email"
+          placeholder="Email Adresse"
           value={formData.email}
           onChange={handleInputChange}
           required
         />
         <textarea
           name="message"
-          placeholder="Your Message"
+          placeholder="Nachricht"
           value={formData.message}
           onChange={handleInputChange}
           required
+          rows={6}
         />
       </div>
 
       {/* ✅ Submit Button */}
       <Button
-        variant="default"
+        variant="custom"
+        size="custom"
         disabled={!isFormValid}
         type="submit"
-        className="bg-black text-white px-4 py-2 rounded hover:bg-zinc-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Send Message
+        Senden
       </Button>
 
       {/* Optional: Show validation message */}

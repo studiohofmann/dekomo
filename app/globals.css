@@ -150,12 +150,12 @@
   }
 
   .page-section {
-    @apply pt-48;
+    @apply pt-32;
     @apply flex flex-col;
   }
 
   section {
-    @apply px-4 py-16;
+    @apply px-4 md:px-8 lg:px-12 xl:px-32 py-16;
     @apply flex flex-col;
   }
 
@@ -172,17 +172,17 @@
   }
 
   input {
-    @apply bg-gray-100 px-4 py-2;
+    @apply bg-[#f7f1a9] px-4 py-2 rounded-md shadow-lg;
   }
   textarea {
-    @apply bg-gray-100 px-4 py-2;
+    @apply bg-[#f7f1a9] px-4 py-2 rounded-md shadow-lg;
   }
 }
 
 .footer {
   @apply px-4 pt-16 pb-4;
   @apply flex flex-col;
-  @apply bg-gray-500;
+  @apply bg-gray-700;
 }
 
 .portable-text h1,
@@ -208,6 +208,10 @@
 .portable-text p {
   margin-bottom: 1rem;
   line-height: 1.6;
+}
+
+.portable-text p:last-child {
+  margin-bottom: 0;
 }
 
 .portable-text ul {

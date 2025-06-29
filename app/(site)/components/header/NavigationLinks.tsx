@@ -41,12 +41,16 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   };
 
   return (
-    <ul className="grid grid-cols-4 md:flex md:gap-8 w-full">
+    <ul className="grid grid-cols-4 md:flex md:gap-4 lg:gap-8 w-full">
       {menuItems.map((item) => {
-        const href = `/${item.slug.current}`;
+        const href =
+          item.slug.current === "" || item.slug.current === "/"
+            ? "/"
+            : `/${item.slug.current}`;
         const isActive =
-          pathname === href ||
-          (pathname.startsWith(`${href}/`) && href !== "/");
+          (href === "/" && pathname === "/") || // Home page special case
+          (href !== "/" &&
+            (pathname === href || pathname.startsWith(`${href}/`)));
 
         return (
           <li key={item.slug.current}>
@@ -54,8 +58,8 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
               className={`transition-colors
                          ${
                            isActive
-                             ? "text-blue-600 "
-                             : "text-[#5a7cbe] hover:text-blue-600"
+                             ? "text-gray-700 "
+                             : "text-[#5a7cbe] hover:text-gray-700"
                          }`}
               href={href}
             >

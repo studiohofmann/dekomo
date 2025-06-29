@@ -17,20 +17,21 @@ export default async function Netzwerk() {
   return (
     <div className="flex flex-col gap-4">
       <h2>{netzwerk.ueberschrift}</h2>
-      {/* Render text */}
-      {netzwerk.text && (
-        <div className="portable-text">
-          <PortableText value={netzwerk.text} />
-        </div>
-      )}
-      {/* Use the client wrapper component */}
-      <MapWrapper
-        standorte={(netzwerk.standorte || []).map((s) => ({
-          titel: s.titel ?? "",
-          latitude: s.latitude ?? 0,
-          longitude: s.longitude ?? 0,
-        }))}
-      />
+      <div className="flex flex-col gap-4 lg:gap-8 lg:grid lg:grid-cols-2">
+        {netzwerk.text && (
+          <div className="portable-text">
+            <PortableText value={netzwerk.text} />
+          </div>
+        )}
+        {/* Use the client wrapper component */}
+        <MapWrapper
+          standorte={(netzwerk.standorte || []).map((s) => ({
+            titel: s.titel ?? "",
+            latitude: s.latitude ?? 0,
+            longitude: s.longitude ?? 0,
+          }))}
+        />
+      </div>
     </div>
   );
 }

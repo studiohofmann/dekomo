@@ -19,7 +19,10 @@ type MapWrapperProps = {
 
 export default function MapWrapper({ standorte }: MapWrapperProps) {
   return (
-    <div className="w-full aspect-[4/3] z-10" id="map">
+    <div
+      className="w-full aspect-[4/3] z-10 rounded-md shadow-md overflow-hidden"
+      id="map"
+    >
       <DynamicMap standorte={standorte} />
     </div>
   );

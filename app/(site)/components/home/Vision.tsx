@@ -13,7 +13,7 @@ export default async function Vision() {
   }
 
   return (
-    <div className="-mb-4">
+    <div className="-mb-4 flex flex-col gap-4">
       <h2>{vision.ueberschrift}</h2>
       <div className="portable-text">
         <PortableText value={vision.text || []} />

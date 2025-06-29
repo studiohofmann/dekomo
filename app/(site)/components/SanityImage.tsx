@@ -44,7 +44,7 @@ export default function SanityImage({
         alt={altText}
         width={width}
         height={height}
-        quality={80}
+        quality={100}
         priority={priority}
         placeholder="blur"
         blurDataURL={urlFor(image).width(24).height(24).blur(10).url()}

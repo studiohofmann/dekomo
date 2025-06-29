@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import Header from "@/app/(site)/components/header/Header";
+import { sanityFetch } from "@/sanity/lib/client";
+import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
+import type { NAVIGATION_QUERYResult } from "@/sanity/types";
+import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
@@ -22,16 +25,33 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch navigation data
+  const menuItemsRaw: NAVIGATION_QUERYResult = await sanityFetch({
+    query: NAVIGATION_QUERY,
+    revalidate: 60,
+  });
+
+  // Filter out items where slug is null
+  const menuItems = menuItemsRaw.filter(
+    (
+      item
+    ): item is typeof item & {
+      slug: { current: string };
+      seitentitelMenue: string;
+      menuReihenfolge: number;
+    } => !!item.slug && !!item.slug.current && !!item.seitentitelMenue
+  );
+
   return (
     <html lang="en">
       <body className="antialiased">
         <header>
-          <Header />
+          <Header menuItems={menuItems} />
         </header>
 
         <main>{children}</main>

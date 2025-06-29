@@ -259,6 +259,24 @@ export type Auswirkungen = {
   _updatedAt: string;
   _rev: string;
   ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   grafik?: {
     asset?: {
       _ref: string;
@@ -281,6 +299,24 @@ export type Zugangswege = {
   _updatedAt: string;
   _rev: string;
   ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   grafik?: {
     asset?: {
       _ref: string;
@@ -633,9 +669,27 @@ export type TEILPROJEKTE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: ZUGANGSWEGE_QUERY
-// Query: *[_type == "zugangswege"][0]{  ueberschrift,  grafik{    asset->{      _id,      url    },    alt  }}
+// Query: *[_type == "zugangswege"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
 export type ZUGANGSWEGE_QUERYResult = {
   ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
   grafik: {
     asset: {
       _id: string;
@@ -645,9 +699,27 @@ export type ZUGANGSWEGE_QUERYResult = {
   } | null;
 } | null;
 // Variable: AUSWIRKUNGEN_QUERY
-// Query: *[_type == "auswirkungen"][0]{  ueberschrift,  grafik{    asset->{      _id,      url    },    alt  }}
+// Query: *[_type == "auswirkungen"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
 export type AUSWIRKUNGEN_QUERYResult = {
   ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
   grafik: {
     asset: {
       _id: string;
@@ -857,8 +929,8 @@ declare module "@sanity/client" {
     "*[_type == \"vision\"][0]{\n  ueberschrift, text\n}": VISION_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
-    "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
-    "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
+    "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
+    "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
     "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;

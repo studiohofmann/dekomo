@@ -16,14 +16,16 @@ export default function Home() {
       <section>
         <Projektbeschreibung />
       </section>
-      <section className="bg-[#5a7cbe] text-gray-100">
+      <section className="bg-[#f7f1a9]">
         <Teilprojekte />
       </section>
-      <section>
+      <section className="bg-[#5a7cbe] text-gray-100">
         <Zugangswege />
       </section>
-      <Auswirkungen />
       <section>
+        <Auswirkungen />
+      </section>
+      <section className="bg-[#f7f1a9]">
         <Netzwerk />
       </section>
     </div>

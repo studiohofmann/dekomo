@@ -18,19 +18,22 @@ export default async function Projektbeschreibung() {
   return (
     <div className="flex flex-col gap-4">
       <h2>{projektbeschreibung.ueberschrift}</h2>
-      <div className="md:grid md:grid-cols-2 md:gap-4">
+      <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
         {projektbeschreibung.text && (
-          <div className="portable-text">
+          <div className="portable-text lg:w-1/2">
             <PortableText value={projektbeschreibung.text || []} />
           </div>
         )}
         {projektbeschreibung.grafik && (
-          <SanityImage
-            image={projektbeschreibung.grafik}
-            altFallback={projektbeschreibung.grafik.alt || "Grafik"}
-            aspectRatio="aspect-4/3"
-            className="object-cover w-full"
-          />
+          <div className="lg:w-1/2">
+            <SanityImage
+              image={projektbeschreibung.grafik}
+              altFallback={projektbeschreibung.grafik.alt || "Grafik"}
+              width={600}
+              height={400}
+              className="w-full h-auto rounded-md shadow-md"
+            />
+          </div>
         )}
       </div>
     </div>
