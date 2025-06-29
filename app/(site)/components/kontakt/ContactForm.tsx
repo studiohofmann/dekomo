@@ -66,7 +66,7 @@ export default function ContactForm() {
       <input type="hidden" name="to" value={recipientEmail} />
 
       {/* 📧 Recipient Cards */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {[
           {
             label: "Prof. Dr. med. Stefan Klöppel",
@@ -78,8 +78,8 @@ export default function ContactForm() {
             key={person.email}
             variant="custom"
             onClick={() => handleRecipientClick(person.email)}
-            className={`p-2 text-center ${
-              recipientEmail === person.email ? "bg-[#5a7cbe]" : ""
+            className={`px-4 py-2 text-center ${
+              recipientEmail === person.email ? "bg-gray-700" : ""
             }`}
             type="button"
           >
@@ -105,7 +105,7 @@ export default function ContactForm() {
             value={formData.gender}
             onChange={handleInputChange}
             required
-            className="bg-[#f7f1a9] px-4 py-2 pr-10 appearance-none w-full rounded-md shadow-lg"
+            className="bg-gray-300 px-4 py-2 pr-10 appearance-none w-full rounded-md shadow-lg"
           >
             <option value="" disabled>
               Anrede

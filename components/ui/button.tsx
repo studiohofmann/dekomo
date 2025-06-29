@@ -21,9 +21,9 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         custom:
-          "bg-[#94b0dd] text-gray-100 font-bold rounded-full shadow-md hover:bg-[#5a7cbe]",
+          "bg-[#5a7cbe] text-gray-100 font-bold rounded-full shadow-md hover:bg-gray-700 px-4 py-2",
         // In your button.tsx, add this variant:
-        selected: "bg-[#5a7cbe] text-gray-100 font-bold rounded-full shadow-md",
+        selected: "bg-gray-700 text-gray-100 font-bold rounded-full shadow-md",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

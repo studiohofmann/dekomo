@@ -29,7 +29,7 @@ export default async function Kontakt() {
         <section className="bg-[#f7f1a9]">
           <Ansprechpersonen />
         </section>
-        <section>
+        <section className="!pl-8">
           <ContactForm />
         </section>
       </div>
