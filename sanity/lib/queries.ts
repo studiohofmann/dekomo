@@ -14,7 +14,10 @@ export const EINLEITUNG_QUERY = defineQuery(`*[_type == "einleitung"][0]{
 }`);
 
 export const VISION_QUERY = defineQuery(`*[_type == "vision"][0]{
-  ueberschrift, text
+  ueberschrift, text, grafik{
+    asset->{_id, url},
+    alt
+  },
 }`);
 
 export const PROJEKTBESCHREIBUNG_QUERY =
@@ -87,7 +90,7 @@ export const ANSPRECHPERSONEN_QUERY =
 
 export const IMPRESSUM_SEITE_QUERY =
   defineQuery(`*[_type == "impressumSeite"][0]{
- seitentitelMenue, angabenText, impressumText,
+ seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText 
 }`);
 
 export const DATENSCHUTZ_SEITE_QUERY =
@@ -96,8 +99,18 @@ export const DATENSCHUTZ_SEITE_QUERY =
 }`);
 
 export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
+  projektfoerderung,
+  text,
   partner,
   netzwerk,
+  projektfoerderungLogo{
+    image{
+      asset->{_id, url},
+      alt
+    },
+    name,
+    url
+  },
   partnerLogos[]{
     asset->{_id, url},
     alt,
@@ -109,5 +122,33 @@ export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
     alt,
     name,
     url
+  }
+}`);
+
+export const PROJEKTFOERDERUNG_QUERY =
+  defineQuery(`*[_type == "projektfoerderung"][0]{
+  ueberschrift,
+  text,
+  logo{
+    asset->{_id, url},
+    alt
+  }
+}`);
+
+export const PROJEKTPARTNER_QUERY =
+  defineQuery(`*[_type == "projektpartner"][0]{
+  ueberschrift,
+  logos[]{
+    asset->{_id, url},
+    alt
+  }
+}`);
+
+export const ERWEITERTES_NETZWERK_QUERY =
+  defineQuery(`*[_type == "erweitertesNetzwerk"][0]{
+  ueberschrift,
+  logos[]{
+    asset->{_id, url},
+    alt
   }
 }`);

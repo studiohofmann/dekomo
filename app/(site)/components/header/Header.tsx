@@ -43,7 +43,7 @@ export default function Header({ menuItems }: HeaderProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="fixed left-0 bottom-0 w-full z-50 md:hidden bg-gray-300 h-18 flex items-center justify-center">
+      <div className="fixed left-0 bottom-0 w-full z-50 md:hidden bg-gray-300 h-18 flex items-center justify-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
         <NavigationLinks menuItems={menuItems} />
       </div>
     </>

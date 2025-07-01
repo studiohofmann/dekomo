@@ -1,11 +1,11 @@
 import { defineField } from "sanity";
-import { HomeIcon } from "@sanity/icons";
+import { ArrowDownIcon } from "@sanity/icons";
 
-const vision = {
-  name: "vision",
-  title: "Vision",
+const projektfoerderung = {
+  name: "projektfoerderung",
+  title: "Projektförderung",
   type: "document",
-  icon: HomeIcon,
+  icon: ArrowDownIcon,
 
   fields: [
     defineField({
@@ -20,8 +20,8 @@ const vision = {
       of: [{ type: "block" }],
     }),
     defineField({
-      name: "grafik",
-      title: "Grafik",
+      name: "logo",
+      title: "Logo",
       type: "image",
       options: {
         hotspot: true,
@@ -38,4 +38,4 @@ const vision = {
   ],
 };
 
-export default vision;
+export default projektfoerderung;

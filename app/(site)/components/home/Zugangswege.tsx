@@ -15,14 +15,15 @@ export default async function Zugangswege() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 lg:px-32">
       <h2>{zugangswege.ueberschrift}</h2>
-      <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
-        {zugangswege.text && (
-          <div className="portable-text lg:w-1/2 ">
-            <PortableText value={zugangswege.text || []} />
-          </div>
-        )}
+
+      {zugangswege.text && (
+        <div className="portable-text">
+          <PortableText value={zugangswege.text || []} />
+        </div>
+      )}
+      {/* 
         {zugangswege.grafik && (
           <div className="lg:w-1/2">
             <SanityImage
@@ -33,8 +34,7 @@ export default async function Zugangswege() {
               className="w-full h-auto rounded-md shadow-md"
             />
           </div>
-        )}
-      </div>
+        )}*/}
     </div>
   );
 }

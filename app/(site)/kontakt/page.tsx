@@ -17,10 +17,10 @@ export default async function Kontakt() {
 
   return (
     <div className="page-section">
-      <section>
+      <section className="background-blue">
         <h1>{kontaktSeite.seitentitelMenue}</h1>
       </section>
-      <section className="background-blue">
+      <section>
         <div className="portable-text">
           <PortableText value={kontaktSeite.text ?? []} />
         </div>

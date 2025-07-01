@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import type { NAVIGATION_QUERYResult } from "@/sanity/types";
 import Header from "./components/header/Header";
-import Footer from "./components/Footer";
+import Footer from "./components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "DeKoMo",

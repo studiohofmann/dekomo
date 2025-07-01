@@ -41,6 +41,17 @@ const impressumSeite = {
       type: "array",
       of: [{ type: "block" }],
     }),
+    defineField({
+      name: "datenschutzUeberschrift",
+      title: "Datenschutz Überschrift",
+      type: "string",
+    }),
+    defineField({
+      name: "datenschutzText",
+      title: "Datenschutz Text",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
   ],
 };
 

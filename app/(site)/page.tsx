@@ -9,24 +9,24 @@ import Netzwerk from "./components/home/Netzwerk";
 export default function Home() {
   return (
     <div className="page-section">
-      <Einleitung />
+      {/*<Einleitung />*/}
       <section className="bg-[#5a7cbe] text-gray-100">
-        <Vision />
-      </section>
-      <section>
         <Projektbeschreibung />
       </section>
-      <section className="bg-[#f7f1a9]">
+      <section>
         <Teilprojekte />
       </section>
-      <section className="bg-[#5a7cbe] text-gray-100">
+      <section className="bg-[#f7f1a9]">
         <Zugangswege />
       </section>
       <section>
         <Auswirkungen />
       </section>
-      <section className="bg-[#f7f1a9]">
+      <section className="bg-[#5a7cbe] text-gray-100">
         <Netzwerk />
+      </section>
+      <section className="bg-[#f7f1a9]">
+        <Vision />
       </section>
     </div>
   );

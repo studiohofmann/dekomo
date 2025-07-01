@@ -11,6 +11,9 @@ import kontaktSeite from "./kontakt/kontaktSeite";
 import ansprechpersonen from "./kontakt/ansprechpersonen";
 import impressumSeite from "./impressumSeite";
 import datenschutzSeite from "./datenschutzSeite";
+import projektfoerderung from "./footer/projektfoerderung";
+import projektpartner from "./footer/projektpartner";
+import erweitertesNetzwerk from "./footer/erweitertesNetzwerk";
 import footer from "./footer";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -27,6 +30,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     ansprechpersonen,
     impressumSeite,
     datenschutzSeite,
+    projektfoerderung,
+    projektpartner,
+    erweitertesNetzwerk,
     footer,
   ],
 };

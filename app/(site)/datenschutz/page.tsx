@@ -15,10 +15,10 @@ export default async function Datenschutz() {
 
   return (
     <div className="page-section">
-      <section>
+      <section className="background-blue">
         <h1 className="text-center">{datenschutzSeite.seitentitelMenue}</h1>
       </section>
-      <section className="background-blue">
+      <section>
         <div className="portable-text">
           <PortableText value={datenschutzSeite.text ?? []} />
         </div>

@@ -15,14 +15,15 @@ export default async function Auswirkungen() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4  lg:px-32">
       <h2>{auswirkungen.ueberschrift}</h2>
-      <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
-        {auswirkungen.text && (
-          <div className="portable-text lg:w-1/2">
-            <PortableText value={auswirkungen.text || []} />
-          </div>
-        )}
+
+      {auswirkungen.text && (
+        <div className="portable-text">
+          <PortableText value={auswirkungen.text || []} />
+        </div>
+      )}
+      {/* 
         {auswirkungen.grafik && (
           <div className="lg:w-1/2">
             <SanityImage
@@ -34,7 +35,7 @@ export default async function Auswirkungen() {
             />
           </div>
         )}
-      </div>
+          */}
     </div>
   );
 }
