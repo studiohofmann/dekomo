@@ -1,4 +1,3 @@
-import Einleitung from "./components/home/Einleitung";
 import Vision from "./components/home/Vision";
 import Projektbeschreibung from "./components/home/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";

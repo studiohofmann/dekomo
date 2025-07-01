@@ -1,7 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { AUSWIRKUNGEN_QUERY } from "@/sanity/lib/queries";
 import type { AUSWIRKUNGEN_QUERYResult } from "@/sanity/types";
-import SanityImage from "../SanityImage";
 import { PortableText } from "@portabletext/react";
 
 export default async function Auswirkungen() {
