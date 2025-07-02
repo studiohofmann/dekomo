@@ -6,6 +6,10 @@ import { DownOutlined } from "@ant-design/icons";
 
 export default function ContactForm() {
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [formData, setFormData] = useState({
     name: "",
     vorname: "",
@@ -35,6 +39,45 @@ export default function ContactForm() {
     }));
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recipientEmail,
+          ...formData,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        // Reset form
+        setFormData({
+          name: "",
+          vorname: "",
+          email: "",
+          message: "",
+          gender: "",
+        });
+        setRecipientEmail("");
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Check if all fields are filled
   const isFormValid =
     recipientEmail &&
@@ -45,25 +88,24 @@ export default function ContactForm() {
     formData.message.trim();
 
   return (
-    <form
-      method="POST"
-      action="https://api.web3forms.com/submit"
-      className="flex flex-col gap-4"
-    >
-      {/* Web3Forms hidden fields */}
-      <input
-        type="hidden"
-        name="access_key"
-        value="bdb3eaa5-bf50-4463-a211-f21a5b466e55"
-      />
-      <input type="hidden" name="from_name" value="Website Contact" />
-      <input type="hidden" name="subject" value="New Contact Message" />
-      <input
-        type="hidden"
-        name="redirect"
-        value="https://yourwebsite.com/thanks"
-      />
-      <input type="hidden" name="to" value={recipientEmail} />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {/* Success/Error Messages */}
+      {submitStatus === "success" && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          <h3 className="font-bold">Nachricht erfolgreich gesendet!</h3>
+          <p>
+            Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen
+            melden.
+          </p>
+        </div>
+      )}
+
+      {submitStatus === "error" && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <h3 className="font-bold">Fehler beim Senden</h3>
+          <p>Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.</p>
+        </div>
+      )}
 
       {/* 📧 Recipient Cards */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -156,15 +198,15 @@ export default function ContactForm() {
       <Button
         variant="custom"
         size="custom"
-        disabled={!isFormValid}
+        disabled={!isFormValid || isSubmitting}
         type="submit"
         className="disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Senden
+        {isSubmitting ? "Wird gesendet..." : "Senden"}
       </Button>
 
       {/* Optional: Show validation message */}
-      {!isFormValid && (
+      {!isFormValid && submitStatus === "idle" && (
         <h3 className="text-center font-normal">
           Bitte füllen Sie alle Felder aus und wählen Sie einen Empfänger
         </h3>
