@@ -36,8 +36,8 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
           SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
-          BREVO_LOGIN: ${{ secrets.BREVO_LOGIN }}
-          BREVO_PASSWORD: ${{ secrets.BREVO_PASSWORD }}
+          BREVO_SMTP_USER: ${{ secrets.BREVO_SMTP_USER }}
+          BREVO_SMTP_PASS: ${{ secrets.BREVO_SMTP_PASS }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25

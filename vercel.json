@@ -7,7 +7,7 @@
     "NEXT_PUBLIC_SANITY_PROJECT_ID": "@next_public_sanity_project_id",
     "NEXT_PUBLIC_SANITY_DATASET": "@next_public_sanity_dataset",
     "SANITY_API_READ_TOKEN": "@sanity_api_read_token",
-    "BREVO_LOGIN": "@brevo_login",
-    "BREVO_PASSWORD": "@brevo_password"
+    "BREVO_SMTP_USER": "@brevo_smtp_user",
+    "BREVO_SMTP_PASS": "@brevo_smtp_pass"
   }
 }
