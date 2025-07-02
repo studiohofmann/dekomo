@@ -14,7 +14,7 @@ export default async function Auswirkungen() {
   }
 
   return (
-    <div className="flex flex-col gap-4  lg:px-32">
+    <div className="flex flex-col gap-4">
       <h2>{auswirkungen.ueberschrift}</h2>
 
       {auswirkungen.text && (

@@ -15,13 +15,15 @@ export default function Home() {
       <section>
         <Teilprojekte />
       </section>
-      <section className="bg-[#f7f1a9]">
-        <Zugangswege />
-      </section>
+      <div className="lg:flex">
+        <section className="bg-[#f7f1a9] lg:flex-1 lg:pr-16">
+          <Zugangswege />
+        </section>
+        <section className="bg-[#5a7cbe] text-gray-100 lg:flex-1 lg:pl-16">
+          <Auswirkungen />
+        </section>
+      </div>
       <section>
-        <Auswirkungen />
-      </section>
-      <section className="bg-[#5a7cbe] text-gray-100">
         <Netzwerk />
       </section>
       <section className="bg-[#f7f1a9]">

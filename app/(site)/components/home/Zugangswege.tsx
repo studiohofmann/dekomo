@@ -14,7 +14,7 @@ export default async function Zugangswege() {
   }
 
   return (
-    <div className="flex flex-col gap-4 lg:px-32">
+    <div className="flex flex-col gap-4">
       <h2>{zugangswege.ueberschrift}</h2>
 
       {zugangswege.text && (

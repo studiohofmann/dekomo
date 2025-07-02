@@ -17,19 +17,19 @@ export default async function Projektfoerderung() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="">{projektfoerderung.ueberschrift}</h3>
-      <div className="flex flex-col gap-4 md:flex-row">
-        {projektfoerderung.text && (
-          <div className="portable-text text-sm flex-1">
-            <PortableText value={projektfoerderung.text} />
-          </div>
-        )}
+      <div className="footer-grid">
         {projektfoerderung.logo && (
-          <div className="footer-logo-container flex-1 flex justify-center items-center">
+          <div className="footer-logo-container flex justify-center items-center">
             <SanityImage
               image={projektfoerderung.logo}
               altFallback="Projektförderung Logo"
               className="object-contain"
             />
+          </div>
+        )}
+        {projektfoerderung.text && (
+          <div className="portable-text text-sm col-span-2">
+            <PortableText value={projektfoerderung.text} />
           </div>
         )}
       </div>
