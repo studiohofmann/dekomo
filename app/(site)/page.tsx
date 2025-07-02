@@ -8,7 +8,7 @@ import Netzwerk from "./components/home/Netzwerk";
 export default function Home() {
   return (
     <div className="page-section">
-      {/* AUTO-DEPLOY TEST AFTER RECONNECTION - July 2, 2025 */}
+      {/* DEPLOY HOOK TEST - Auto-deploy via webhook */}
       {/*<Einleitung />*/}
       <section className="bg-[#5a7cbe] text-gray-100">
         <Projektbeschreibung />
