@@ -8,6 +8,7 @@ import Netzwerk from "./components/home/Netzwerk";
 export default function Home() {
   return (
     <div className="page-section">
+      TEST
       {/*<Einleitung />*/}
       <section className="bg-[#5a7cbe] text-gray-100">
         <Projektbeschreibung />
