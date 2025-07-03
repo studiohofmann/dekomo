@@ -9,10 +9,6 @@ export const HOME_QUERY = defineQuery(`*[_type == "homeSeite"][0]{
   seitentitelMenue, slug
 }`);
 
-export const EINLEITUNG_QUERY = defineQuery(`*[_type == "einleitung"][0]{
-  ueberschrift
-}`);
-
 export const VISION_QUERY = defineQuery(`*[_type == "vision"][0]{
   ueberschrift, text, grafik{
     asset->{_id, url},
