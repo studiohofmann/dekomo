@@ -1,6 +1,5 @@
 import { type SchemaTypeDefinition } from "sanity";
 import homeSeite from "./home/homeSeite";
-import einleitung from "./home/einleitung";
 import vision from "./home/vision";
 import projektbeschreibung from "./home/projektbeschreibung";
 import teilprojekte from "./home/teilprojekte";
@@ -14,18 +13,16 @@ import datenschutzSeite from "./datenschutzSeite";
 import projektfoerderung from "./footer/projektfoerderung";
 import projektpartner from "./footer/projektpartner";
 import erweitertesNetzwerk from "./footer/erweitertesNetzwerk";
-import footer from "./footer";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     homeSeite,
-    einleitung,
-    vision,
     projektbeschreibung,
     teilprojekte,
     zugangswege,
     auswirkungen,
     netzwerk,
+    vision,
     kontaktSeite,
     ansprechpersonen,
     impressumSeite,
@@ -33,6 +30,5 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     projektfoerderung,
     projektpartner,
     erweitertesNetzwerk,
-    footer,
   ],
 };
