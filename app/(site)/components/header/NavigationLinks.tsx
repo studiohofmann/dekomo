@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 // Use the stricter type for filtered items
 type MenuItem = {
@@ -22,19 +23,49 @@ interface NavigationLinksProps {
 
 export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    if (pathname !== "/impressum") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+        rootMargin: "-128px 0px 0px 0px", // Offset for fixed header (8rem = 128px)
+      }
+    );
+
+    const impressumElement = document.getElementById("impressum");
+    const datenschutzElement = document.getElementById("datenschutz");
+
+    if (impressumElement) observer.observe(impressumElement);
+    if (datenschutzElement) observer.observe(datenschutzElement);
+
+    return () => {
+      if (impressumElement) observer.unobserve(impressumElement);
+      if (datenschutzElement) observer.unobserve(datenschutzElement);
+    };
+  }, [pathname]);
 
   // Function to get the correct icon based on slug
   const getIcon = (slug: string) => {
     switch (slug) {
       case "":
       case "/":
-        return <HomeFilled className="" />;
+        return <HomeFilled />;
       case "kontakt":
-        return <MailFilled className="" />;
+        return <MailFilled />;
       case "impressum":
-        return <InfoCircleFilled className="" />;
+        return <InfoCircleFilled />;
       case "datenschutz":
-        return <DatabaseFilled className="" />;
+        return <DatabaseFilled />;
       default:
         return null; // No icon for other pages
     }
@@ -43,14 +74,29 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   return (
     <ul className="grid grid-cols-4 md:flex md:gap-4 lg:gap-8 w-full">
       {menuItems.map((item) => {
-        const href =
+        let href =
           item.slug.current === "" || item.slug.current === "/"
             ? "/"
             : `/${item.slug.current}`;
-        const isActive =
-          (href === "/" && pathname === "/") || // Home page special case
-          (href !== "/" &&
-            (pathname === href || pathname.startsWith(`${href}/`)));
+
+        // Point "Datenschutz" to the Impressum section
+        if (item.slug.current === "datenschutz") {
+          href = "/impressum#datenschutz";
+        }
+
+        let isActive = false;
+        if (pathname === "/impressum") {
+          if (item.slug.current === "impressum") {
+            isActive = activeSection === "impressum";
+          } else if (item.slug.current === "datenschutz") {
+            isActive = activeSection === "datenschutz";
+          }
+        } else {
+          isActive =
+            (href === "/" && pathname === "/") || // Home page special case
+            (href !== "/" &&
+              (pathname === href || pathname.startsWith(`${href}/`)));
+        }
 
         return (
           <li key={item.slug.current}>

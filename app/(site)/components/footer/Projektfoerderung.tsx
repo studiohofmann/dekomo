@@ -16,7 +16,7 @@ export default async function Projektfoerderung() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="">{projektfoerderung.ueberschrift} - DEPLOYMENT TEST</h3>
+      <h3 className="">{projektfoerderung.ueberschrift}</h3>
       <div className="footer-grid">
         {projektfoerderung.logo && (
           <div className="footer-logo-container flex justify-center items-center">

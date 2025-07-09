@@ -2,6 +2,7 @@ import Vision from "./components/home/Vision";
 import Projektbeschreibung from "./components/home/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
+import News from "./components/home/News";
 import Auswirkungen from "./components/home/Auswirkungen";
 import Netzwerk from "./components/home/Netzwerk";
 
@@ -23,6 +24,9 @@ export default function Home() {
         </section>
       </div>
       <section>
+        <News />
+      </section>
+      <section className="bg-[#5a7cbe] text-gray-100">
         <Netzwerk />
       </section>
       <section className="bg-[#f7f1a9]">

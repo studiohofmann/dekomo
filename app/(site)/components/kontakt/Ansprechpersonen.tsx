@@ -19,7 +19,10 @@ export default async function Ansprechpersonen() {
       <h2>{ansprechpersonen.ueberschrift}</h2>
       <div className="flex flex-col gap-4">
         {(ansprechpersonen.ansprechperson ?? []).map((person, index) => (
-          <div key={index} className="flex gap-4 items-center">
+          <div
+            key={index}
+            className="flex w-full gap-4 p-4 items-center bg-gray-100 rounded-sm shadow-md border border-gray-700"
+          >
             {person.profilbild && person.profilbild.asset && (
               <SanityImage
                 image={person.profilbild}

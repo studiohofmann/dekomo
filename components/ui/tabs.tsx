@@ -39,7 +39,7 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       className={cn(
         // Replace the long className with your custom styles
-        "inline-flex w-full shadow-md text-gray-100 items-center justify-center bg-[#5a7cbe] hover:bg-gray-700 data-[state=active]:bg-gray-700 data-[state=active]:text-gray-100 px-4 py-2 text-base font-bold transition-colors rounded-full",
+        "w-full items-center justify-center rounded-sm shadow-md text-sm text-gray-700 font-bold bg-[#94b0dd] border border-gray-700 hover:bg-[#5a7cbe] hover:text-gray-100  data-[state=active]:bg-[#5a7cbe] data-[state=active]:text-gray-100 p-4 transition-colors",
         className
       )}
       {...props}
@@ -55,7 +55,7 @@ function TabsContent({
     <TabsPrimitive.Content
       data-slot="tabs-content"
       className={cn(
-        "bg-gray-700 text-gray-100 rounded-md shadow-lg",
+        "bg-[#5a7cbe] text-gray-100 rounded-sm shadow-md border border-gray-700",
         className
       )}
       {...props}

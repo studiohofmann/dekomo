@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, CloseOutlined } from "@ant-design/icons";
 
 export default function ContactForm() {
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -88,7 +88,131 @@ export default function ContactForm() {
     formData.message.trim();
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+      <h2>Kontaktformular</h2>
+      <div className="flex flex-col gap-4">
+        {/* 📧 Recipient Cards */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          {[
+            {
+              label: "Prof. Dr. med. Stefan Klöppel",
+              email: "stefan.kloeppel@upd.ch",
+            },
+            {
+              label: "M.Sc. Giuliana Crippa",
+              email: "giuliana.crippa@unibe.ch",
+            },
+          ].map((person) => (
+            <Button
+              key={person.email}
+              variant="custom"
+              size="custom"
+              onClick={() => handleRecipientClick(person.email)}
+              className={`text-center ${
+                recipientEmail === person.email
+                  ? "bg-[#5a7cbe] text-gray-100"
+                  : ""
+              }`}
+              type="button"
+            >
+              {/* Hidden input for form submission */}
+              <input
+                type="radio"
+                name="recipient"
+                value={person.email}
+                checked={recipientEmail === person.email}
+                onChange={() => {}} // Empty onChange to avoid React warning
+                className="sr-only"
+              />
+              {person.label}
+            </Button>
+          ))}
+        </div>
+
+        {/* ✍️ Contact Info */}
+        <div className="flex flex-col gap-4">
+          <div className="relative">
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+              className={`${formData.gender ? "text-gray-700" : "text-gray-400"}`}
+              required
+            >
+              <option value="" disabled>
+                Anrede *
+              </option>
+              <option value="Herr">Herr</option>
+              <option value="Frau">Frau</option>
+              <option value="Neutral">Neutral</option>
+            </select>
+            {formData.gender ? (
+              <button
+                type="button"
+                onClick={() => setFormData((prev) => ({ ...prev, gender: "" }))}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
+              >
+                <CloseOutlined />
+              </button>
+            ) : (
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <DownOutlined />
+              </span>
+            )}
+          </div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name *"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="vorname"
+            placeholder="Vorname *"
+            value={formData.vorname}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Adresse *"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+          <textarea
+            name="message"
+            placeholder="Nachricht *"
+            value={formData.message}
+            onChange={handleInputChange}
+            required
+            rows={6}
+          />
+        </div>
+
+        {/* ✅ Submit Button */}
+        <Button
+          variant="custom"
+          size="custom"
+          disabled={!isFormValid || isSubmitting}
+          type="submit"
+          className="disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? "Wird gesendet..." : "Senden"}
+        </Button>
+      </div>
+      {/* Optional: Show validation message */}
+      {!isFormValid && submitStatus === "idle" && (
+        <p className="text-sm text-gray-500 text-center">
+          <span className="text-red-500">*</span> Bitte füllen Sie alle Felder
+          aus und wählen Sie einen Empfänger
+        </p>
+      )}
+
       {/* Success/Error Messages */}
       {submitStatus === "success" && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
@@ -105,111 +229,6 @@ export default function ContactForm() {
           <h3 className="font-bold">Fehler beim Senden</h3>
           <p>Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.</p>
         </div>
-      )}
-
-      {/* 📧 Recipient Cards */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {[
-          {
-            label: "Prof. Dr. med. Stefan Klöppel",
-            email: "stefan.kloeppel@upd.ch",
-          },
-          { label: "M.Sc. Giuliana Crippa", email: "giuliana.crippa@unibe.ch" },
-        ].map((person) => (
-          <Button
-            key={person.email}
-            variant="custom"
-            onClick={() => handleRecipientClick(person.email)}
-            className={`px-4 py-2 text-center ${
-              recipientEmail === person.email ? "bg-gray-700" : ""
-            }`}
-            type="button"
-          >
-            {/* Hidden input for form submission */}
-            <input
-              type="radio"
-              name="recipient"
-              value={person.email}
-              checked={recipientEmail === person.email}
-              onChange={() => {}} // Empty onChange to avoid React warning
-              className="sr-only"
-            />
-            {person.label}
-          </Button>
-        ))}
-      </div>
-
-      {/* ✍️ Contact Info */}
-      <div className="flex flex-col gap-4">
-        <div className="relative">
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
-            required
-            className="bg-gray-300 px-4 py-2 pr-10 appearance-none w-full rounded-md shadow-lg"
-          >
-            <option value="" disabled>
-              Anrede
-            </option>
-            <option value="Herr">Herr</option>
-            <option value="Frau">Frau</option>
-            <option value="Neutral">Neutral</option>
-          </select>
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-            <DownOutlined />
-          </span>
-        </div>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="vorname"
-          placeholder="Vorname"
-          value={formData.vorname}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Adresse"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
-        <textarea
-          name="message"
-          placeholder="Nachricht"
-          value={formData.message}
-          onChange={handleInputChange}
-          required
-          rows={6}
-        />
-      </div>
-
-      {/* ✅ Submit Button */}
-      <Button
-        variant="custom"
-        size="custom"
-        disabled={!isFormValid || isSubmitting}
-        type="submit"
-        className="disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSubmitting ? "Wird gesendet..." : "Senden"}
-      </Button>
-
-      {/* Optional: Show validation message */}
-      {!isFormValid && submitStatus === "idle" && (
-        <h3 className="text-center font-normal">
-          Bitte füllen Sie alle Felder aus und wählen Sie einen Empfänger
-        </h3>
       )}
     </form>
   );

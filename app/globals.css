@@ -162,20 +162,40 @@
   .background-blue {
     @apply bg-[#5a7cbe] text-gray-100;
   }
-
-  a {
-    @apply px-4 py-2;
+  .background-yellow {
+    @apply bg-[#f7f1a9];
   }
 
   .backgroundcolor {
     @apply bg-gray-300;
   }
 
-  input {
-    @apply bg-gray-300 px-4 py-2 rounded-md shadow-lg;
-  }
+  input,
   textarea {
-    @apply bg-gray-300 px-4 py-2 rounded-md shadow-lg;
+    @apply bg-gray-300 text-gray-700 p-4 rounded-sm shadow-md border border-gray-700;
+    @apply focus:outline-none focus:bg-gray-200 focus:border-gray-700;
+    @apply transition-colors duration-200;
+  }
+
+  /* Override autofill styling */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #d1d5db inset !important;
+    -webkit-text-fill-color: #374151 !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-gray-400;
+  }
+
+  select {
+    @apply bg-gray-300 p-4 rounded-sm shadow-md border text-gray-500 border-gray-700 appearance-none w-full;
+    @apply focus:outline-none focus:bg-gray-200 focus:border-gray-700;
+    @apply transition-colors duration-200;
   }
 }
 
@@ -248,9 +268,14 @@
 }
 
 .portable-text a {
-  @apply text-[#5a7cbe] font-bold transition-colors duration-200 p-0;
+  @apply text-[#5a7cbe] font-bold transition-colors duration-200 p-0 underline underline-offset-2;
 }
 
 .portable-text a:hover {
   @apply text-gray-700;
+}
+
+/* Custom link styles for specific pages */
+.portable-text-blue-background-links a {
+  @apply text-[#f7f1a9] underline underline-offset-2;
 }

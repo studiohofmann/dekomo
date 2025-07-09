@@ -44,6 +44,12 @@ export const ZUGANGSWEGE_QUERY = defineQuery(`*[_type == "zugangswege"][0]{
     alt
   }
 }`);
+
+export const NEWS_QUERY = defineQuery(`*[_type == "news"][0]{
+  ueberschrift,
+  text
+}`);
+
 export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
   ueberschrift,
   text,
@@ -62,6 +68,24 @@ export const NETZWERK_QUERY = defineQuery(`*[_type == "netzwerk"][0]{
     titel,
     latitude,
     longitude
+  }
+}`);
+export const DOWNLOADS_SEITE_QUERY =
+  defineQuery(`*[_type == "downloadsSeite"][0]{
+  seitentitelMenue,
+  slug,
+  text,
+  dateien[]{
+    titel,
+    datei{
+      asset->{
+        _id,
+        url,
+        originalFilename,
+        size,
+        extension
+      }
+    }
   }
 }`);
 
@@ -89,36 +113,9 @@ export const IMPRESSUM_SEITE_QUERY =
  seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText 
 }`);
 
-export const DATENSCHUTZ_SEITE_QUERY =
-  defineQuery(`*[_type == "datenschutzSeite"][0]{
- seitentitelMenue, text,
-}`);
-
-export const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
-  projektfoerderung,
-  text,
-  partner,
-  netzwerk,
-  projektfoerderungLogo{
-    image{
-      asset->{_id, url},
-      alt
-    },
-    name,
-    url
-  },
-  partnerLogos[]{
-    asset->{_id, url},
-    alt,
-    name,
-    url
-  },
-  netzwerkLogos[]{
-    asset->{_id, url},
-    alt,
-    name,
-    url
-  }
+export const DATENSCHUTZ_QUERY = defineQuery(`*[_type == "datenschutz"][0]{
+  ueberschrift,
+  text
 }`);
 
 export const PROJEKTFOERDERUNG_QUERY =

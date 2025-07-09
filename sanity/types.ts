@@ -13,80 +13,6 @@
  */
 
 // Source: schema.json
-export type Footer = {
-  _id: string;
-  _type: "footer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  projektfoerderung?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  projektfoerderungLogo?: {
-    image?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    };
-    url?: string;
-    name?: string;
-  };
-  partner?: string;
-  partnerLogos?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "logo";
-    _key: string;
-  }>;
-  netzwerk?: string;
-  netzwerkLogos?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "logo";
-    _key: string;
-  }>;
-};
-
 export type ErweitertesNetzwerk = {
   _id: string;
   _type: "erweitertesNetzwerk";
@@ -173,15 +99,13 @@ export type Projektfoerderung = {
   };
 };
 
-export type DatenschutzSeite = {
+export type Datenschutz = {
   _id: string;
-  _type: "datenschutzSeite";
+  _type: "datenschutz";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  seitentitelMenue?: string;
-  menuReihenfolge?: number;
-  slug?: Slug;
+  ueberschrift?: string;
   text?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -359,6 +283,89 @@ export type KontaktSeite = {
   }>;
 };
 
+export type DownloadsSeite = {
+  _id: string;
+  _type: "downloadsSeite";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seitentitelMenue?: string;
+  slug?: Slug;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  dateien?: Array<{
+    titel?: string;
+    datei?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    };
+    _type: "downloadItem";
+    _key: string;
+  }>;
+};
+
+export type Vision = {
+  _id: string;
+  _type: "vision";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  grafik?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
 export type Netzwerk = {
   _id: string;
   _type: "netzwerk";
@@ -431,6 +438,33 @@ export type Auswirkungen = {
     alt?: string;
     _type: "image";
   };
+};
+
+export type News = {
+  _id: string;
+  _type: "news";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
 };
 
 export type Zugangswege = {
@@ -542,55 +576,6 @@ export type Projektbeschreibung = {
     alt?: string;
     _type: "image";
   };
-};
-
-export type Vision = {
-  _id: string;
-  _type: "vision";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  grafik?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-};
-
-export type Einleitung = {
-  _id: string;
-  _type: "einleitung";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
 };
 
 export type HomeSeite = {
@@ -722,7 +707,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Footer | ErweitertesNetzwerk | Projektpartner | Projektfoerderung | DatenschutzSeite | ImpressumSeite | Ansprechpersonen | KontaktSeite | Netzwerk | Auswirkungen | Zugangswege | Teilprojekte | Projektbeschreibung | Vision | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Auswirkungen | News | Zugangswege | Teilprojekte | Projektbeschreibung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
@@ -737,11 +722,6 @@ export type NAVIGATION_QUERYResult = Array<{
 export type HOME_QUERYResult = {
   seitentitelMenue: string | null;
   slug: Slug | null;
-} | null;
-// Variable: EINLEITUNG_QUERY
-// Query: *[_type == "einleitung"][0]{  ueberschrift}
-export type EINLEITUNG_QUERYResult = {
-  ueberschrift: string | null;
 } | null;
 // Variable: VISION_QUERY
 // Query: *[_type == "vision"][0]{  ueberschrift, text, grafik{    asset->{_id, url},    alt  },}
@@ -859,6 +839,29 @@ export type ZUGANGSWEGE_QUERYResult = {
     alt: string | null;
   } | null;
 } | null;
+// Variable: NEWS_QUERY
+// Query: *[_type == "news"][0]{  ueberschrift,  text}
+export type NEWS_QUERYResult = {
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 // Variable: AUSWIRKUNGEN_QUERY
 // Query: *[_type == "auswirkungen"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
 export type AUSWIRKUNGEN_QUERYResult = {
@@ -915,6 +918,42 @@ export type NETZWERK_QUERYResult = {
     titel: string | null;
     latitude: number | null;
     longitude: number | null;
+  }> | null;
+} | null;
+// Variable: DOWNLOADS_SEITE_QUERY
+// Query: *[_type == "downloadsSeite"][0]{  seitentitelMenue,  slug,  text,  dateien[]{    titel,    datei{      asset->{        _id,        url,        originalFilename,        size,        extension      }    }  }}
+export type DOWNLOADS_SEITE_QUERYResult = {
+  seitentitelMenue: string | null;
+  slug: Slug | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  dateien: Array<{
+    titel: string | null;
+    datei: {
+      asset: {
+        _id: string;
+        url: string | null;
+        originalFilename: string | null;
+        size: number | null;
+        extension: string | null;
+      } | null;
+    } | null;
   }> | null;
 } | null;
 // Variable: KONTAKT_SEITE_QUERY
@@ -1051,10 +1090,10 @@ export type IMPRESSUM_SEITE_QUERYResult = {
     _key: string;
   }> | null;
 } | null;
-// Variable: DATENSCHUTZ_SEITE_QUERY
-// Query: *[_type == "datenschutzSeite"][0]{ seitentitelMenue, text,}
-export type DATENSCHUTZ_SEITE_QUERYResult = {
-  seitentitelMenue: string | null;
+// Variable: DATENSCHUTZ_QUERY
+// Query: *[_type == "datenschutz"][0]{  ueberschrift,  text}
+export type DATENSCHUTZ_QUERYResult = {
+  ueberschrift: string | null;
   text: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1072,60 +1111,6 @@ export type DATENSCHUTZ_SEITE_QUERYResult = {
     level?: number;
     _type: "block";
     _key: string;
-  }> | null;
-} | null;
-// Variable: FOOTER_QUERY
-// Query: *[_type == "footer"][0]{  projektfoerderung,  text,  partner,  netzwerk,  projektfoerderungLogo{    image{      asset->{_id, url},      alt    },    name,    url  },  partnerLogos[]{    asset->{_id, url},    alt,    name,    url  },  netzwerkLogos[]{    asset->{_id, url},    alt,    name,    url  }}
-export type FOOTER_QUERYResult = {
-  projektfoerderung: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  partner: string | null;
-  netzwerk: string | null;
-  projektfoerderungLogo: {
-    image: {
-      asset: {
-        _id: string;
-        url: string | null;
-      } | null;
-      alt: string | null;
-    } | null;
-    name: string | null;
-    url: string | null;
-  } | null;
-  partnerLogos: Array<{
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-    name: null;
-    url: null;
-  }> | null;
-  netzwerkLogos: Array<{
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-    name: null;
-    url: null;
   }> | null;
 } | null;
 // Variable: PROJEKTFOERDERUNG_QUERY
@@ -1189,18 +1174,18 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type in [\"homeSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
     "*[_type == \"homeSeite\"][0]{\n  seitentitelMenue, slug\n}": HOME_QUERYResult;
-    "*[_type == \"einleitung\"][0]{\n  ueberschrift\n}": EINLEITUNG_QUERYResult;
     "*[_type == \"vision\"][0]{\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
+    "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
+    "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  }\n}": DOWNLOADS_SEITE_QUERYResult;
     "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
     "*[_type == \"impressumSeite\"][0]{\n seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText \n}": IMPRESSUM_SEITE_QUERYResult;
-    "*[_type == \"datenschutzSeite\"][0]{\n seitentitelMenue, text,\n}": DATENSCHUTZ_SEITE_QUERYResult;
-    "*[_type == \"footer\"][0]{\n  projektfoerderung,\n  text,\n  partner,\n  netzwerk,\n  projektfoerderungLogo{\n    image{\n      asset->{_id, url},\n      alt\n    },\n    name,\n    url\n  },\n  partnerLogos[]{\n    asset->{_id, url},\n    alt,\n    name,\n    url\n  },\n  netzwerkLogos[]{\n    asset->{_id, url},\n    alt,\n    name,\n    url\n  }\n}": FOOTER_QUERYResult;
+    "*[_type == \"datenschutz\"][0]{\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;
     "*[_type == \"projektfoerderung\"][0]{\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
     "*[_type == \"projektpartner\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
     "*[_type == \"erweitertesNetzwerk\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": ERWEITERTES_NETZWERK_QUERYResult;

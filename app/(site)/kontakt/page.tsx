@@ -17,19 +17,17 @@ export default async function Kontakt() {
 
   return (
     <div className="page-section">
-      <section className="background-blue">
-        <h1>{kontaktSeite.seitentitelMenue}</h1>
-      </section>
-      <section>
+      <section className="background-blue gap-8">
+        <h2>{kontaktSeite.seitentitelMenue}</h2>
         <div className="portable-text">
           <PortableText value={kontaktSeite.text ?? []} />
         </div>
       </section>
-      <div className="md:grid md:grid-cols-2">
-        <section className="bg-[#f7f1a9]">
+      <div className="lg:grid lg:grid-cols-2">
+        <section className="background-yellow lg:pr-8">
           <Ansprechpersonen />
         </section>
-        <section className="!pl-8">
+        <section className="lg:pl-8">
           <ContactForm />
         </section>
       </div>
