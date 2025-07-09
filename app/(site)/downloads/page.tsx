@@ -43,7 +43,7 @@ export default async function DownloadsPage() {
         {/* Downloads section */}
         {downloadsSeite.dateien && downloadsSeite.dateien.length > 0 ? (
           <div className="grid gap-4">
-            {downloadsSeite.dateien.map((item: any, index: number) => (
+            {downloadsSeite.dateien.map((item, index) => (
               <div key={index}>
                 <div className="flex items-center justify-between bg-gray-100 text-gray-700 p-4 rounded-sm shadow-md border border-gray-700">
                   <div className="flex flex-col gap-2">
