@@ -7,6 +7,18 @@ const kontaktSeite = {
   type: "document",
   icon: EnvelopeIcon,
 
+  groups: [
+    {
+      name: "content",
+      title: "Inhalt",
+      default: true,
+    },
+    {
+      name: "seo",
+      title: "SEO",
+    },
+  ],
+
   fields: [
     defineField({
       name: "seitentitelMenue",
@@ -29,22 +41,63 @@ const kontaktSeite = {
       options: { source: "seitentitelMenue" },
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: "text",
       title: "Text",
       type: "array",
       of: [{ type: "block" }],
+      group: "content",
     }),
+
+    // Individual SEO fields (not nested in an object)
     defineField({
-      name: "ueberschriftAnsprechpersonen",
-      title: "Überschrift Ansprechpersonen",
+      name: "seoTitle",
+      title: "SEO Titel",
       type: "string",
+      description: "Titel für Suchmaschinen (50-60 Zeichen empfohlen)",
+      validation: (rule) =>
+        rule.max(60).warning("Sollte unter 60 Zeichen sein"),
+      group: "seo",
     }),
     defineField({
-      name: "textAnsprechpersonen",
-      title: "Text Ansprechpersonen",
+      name: "metaDescription",
+      title: "Meta Description",
+      type: "text",
+      description: "Beschreibung für Suchmaschinen (150-160 Zeichen empfohlen)",
+      validation: (rule) =>
+        rule.max(160).warning("Sollte unter 160 Zeichen sein"),
+      group: "seo",
+    }),
+    defineField({
+      name: "keywords",
+      title: "Keywords",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ type: "string" }],
+      description: "Relevante Suchbegriffe für diese Seite",
+      options: {
+        layout: "tags",
+      },
+      group: "seo",
+    }),
+    defineField({
+      name: "openGraphImage",
+      title: "Open Graph Bild",
+      type: "image",
+      description: "Bild für Social Media Shares (1200x630px empfohlen)",
+      options: {
+        hotspot: true,
+      },
+      group: "seo",
+    }),
+    defineField({
+      name: "noIndex",
+      title: "Von Suchmaschinen ausschließen",
+      type: "boolean",
+      description:
+        "Verhindert, dass diese Seite in Suchmaschinen indexiert wird",
+      initialValue: false,
+      group: "seo",
     }),
   ],
 };

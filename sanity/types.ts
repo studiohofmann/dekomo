@@ -171,25 +171,22 @@ export type ImpressumSeite = {
     _type: "block";
     _key: string;
   }>;
-  datenschutzUeberschrift?: string;
-  datenschutzText?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: Array<string>;
+  openGraphImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 };
 
 export type Ansprechpersonen = {
@@ -262,25 +259,22 @@ export type KontaktSeite = {
     _type: "block";
     _key: string;
   }>;
-  ueberschriftAnsprechpersonen?: string;
-  textAnsprechpersonen?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: Array<string>;
+  openGraphImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 };
 
 export type DownloadsSeite = {
@@ -324,6 +318,22 @@ export type DownloadsSeite = {
     _type: "downloadItem";
     _key: string;
   }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: Array<string>;
+  openGraphImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 };
 
 export type Vision = {
@@ -587,6 +597,22 @@ export type HomeSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: Array<string>;
+  openGraphImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -957,29 +983,10 @@ export type DOWNLOADS_SEITE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: KONTAKT_SEITE_QUERY
-// Query: *[_type == "kontaktSeite"][0]{ seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen}
+// Query: *[_type == "kontaktSeite"][0]{ seitentitelMenue, text}
 export type KONTAKT_SEITE_QUERYResult = {
   seitentitelMenue: string | null;
   text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  ueberschriftAnsprechpersonen: string | null;
-  textAnsprechpersonen: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -1070,25 +1077,8 @@ export type IMPRESSUM_SEITE_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
-  datenschutzUeberschrift: string | null;
-  datenschutzText: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  datenschutzUeberschrift: null;
+  datenschutzText: null;
 } | null;
 // Variable: DATENSCHUTZ_QUERY
 // Query: *[_type == "datenschutz"][0]{  ueberschrift,  text}
@@ -1182,7 +1172,7 @@ declare module "@sanity/client" {
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
     "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  }\n}": DOWNLOADS_SEITE_QUERYResult;
-    "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen\n}": KONTAKT_SEITE_QUERYResult;
+    "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
     "*[_type == \"impressumSeite\"][0]{\n seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText \n}": IMPRESSUM_SEITE_QUERYResult;
     "*[_type == \"datenschutz\"][0]{\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;

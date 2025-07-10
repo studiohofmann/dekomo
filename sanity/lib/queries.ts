@@ -6,7 +6,23 @@ export const NAVIGATION_QUERY = defineQuery(`
 `);
 
 export const HOME_QUERY = defineQuery(`*[_type == "homeSeite"][0]{
-  seitentitelMenue, slug
+  seoTitle,
+  metaDescription,
+  keywords,
+  openGraphImage{
+    asset->{
+      _id,
+      url,
+      metadata{
+        dimensions{
+          width,
+          height
+        }
+      }
+    },
+    alt
+  },
+  noIndex
 }`);
 
 export const VISION_QUERY = defineQuery(`*[_type == "vision"][0]{
@@ -86,11 +102,46 @@ export const DOWNLOADS_SEITE_QUERY =
         extension
       }
     }
-  }
+  },
+  seoTitle,
+  metaDescription,
+  keywords,
+  openGraphImage{
+    asset->{
+      _id,
+      url,
+      metadata{
+        dimensions{
+          width,
+          height
+        }
+      }
+    },
+    alt
+  },
+  noIndex
 }`);
 
 export const KONTAKT_SEITE_QUERY = defineQuery(`*[_type == "kontaktSeite"][0]{
- seitentitelMenue, text, ueberschriftAnsprechpersonen, textAnsprechpersonen
+  seitentitelMenue,
+  text,
+  seoTitle,
+  metaDescription,
+  keywords,
+  openGraphImage{
+    asset->{
+      _id,
+      url,
+      metadata{
+        dimensions{
+          width,
+          height
+        }
+      }
+    },
+    alt
+  },
+  noIndex
 }`);
 
 export const ANSPRECHPERSONEN_QUERY =
@@ -110,7 +161,26 @@ export const ANSPRECHPERSONEN_QUERY =
 
 export const IMPRESSUM_SEITE_QUERY =
   defineQuery(`*[_type == "impressumSeite"][0]{
- seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText 
+  seitentitelMenue,
+  angabenText,
+  impressumText,
+  seoTitle,
+  metaDescription,
+  keywords,
+  openGraphImage{
+    asset->{
+      _id,
+      url,
+      metadata{
+        dimensions{
+          width,
+          height
+        }
+      }
+    },
+    alt
+  },
+  noIndex
 }`);
 
 export const DATENSCHUTZ_QUERY = defineQuery(`*[_type == "datenschutz"][0]{
