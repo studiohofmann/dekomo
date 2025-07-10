@@ -4,6 +4,25 @@ import type { DOWNLOADS_SEITE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "next-sanity";
 import { Button } from "@/components/ui/button";
 import { DownloadOutlined, FileOutlined } from "@ant-design/icons";
+import type { Metadata } from "next";
+import { generateSEOMetadata } from "@/lib/seo";
+
+// Generate metadata for the downloads page
+export async function generateMetadata(): Promise<Metadata> {
+  const downloadsSeite: DOWNLOADS_SEITE_QUERYResult = await sanityFetch({
+    query: DOWNLOADS_SEITE_QUERY,
+    revalidate: 60,
+  });
+
+  return generateSEOMetadata({
+    data: downloadsSeite,
+    title: !downloadsSeite ? "Downloads" : undefined, // Fallback title if no data
+    description: !downloadsSeite
+      ? "Downloads und Dokumente zum DeKoMo Projekt"
+      : undefined,
+    url: "/downloads",
+  });
+}
 
 export default async function DownloadsPage() {
   const downloadsSeite: DOWNLOADS_SEITE_QUERYResult = await sanityFetch({

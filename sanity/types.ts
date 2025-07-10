@@ -744,10 +744,25 @@ export type NAVIGATION_QUERYResult = Array<{
   menuReihenfolge: number | null;
 }>;
 // Variable: HOME_QUERY
-// Query: *[_type == "homeSeite"][0]{  seitentitelMenue, slug}
+// Query: *[_type == "homeSeite"][0]{  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type HOME_QUERYResult = {
-  seitentitelMenue: string | null;
-  slug: Slug | null;
+  seoTitle: string | null;
+  metaDescription: string | null;
+  keywords: Array<string> | null;
+  openGraphImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  noIndex: boolean | null;
 } | null;
 // Variable: VISION_QUERY
 // Query: *[_type == "vision"][0]{  ueberschrift, text, grafik{    asset->{_id, url},    alt  },}
@@ -947,7 +962,7 @@ export type NETZWERK_QUERYResult = {
   }> | null;
 } | null;
 // Variable: DOWNLOADS_SEITE_QUERY
-// Query: *[_type == "downloadsSeite"][0]{  seitentitelMenue,  slug,  text,  dateien[]{    titel,    datei{      asset->{        _id,        url,        originalFilename,        size,        extension      }    }  }}
+// Query: *[_type == "downloadsSeite"][0]{  seitentitelMenue,  slug,  text,  dateien[]{    titel,    datei{      asset->{        _id,        url,        originalFilename,        size,        extension      }    }  },  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type DOWNLOADS_SEITE_QUERYResult = {
   seitentitelMenue: string | null;
   slug: Slug | null;
@@ -981,9 +996,26 @@ export type DOWNLOADS_SEITE_QUERYResult = {
       } | null;
     } | null;
   }> | null;
+  seoTitle: string | null;
+  metaDescription: string | null;
+  keywords: Array<string> | null;
+  openGraphImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  noIndex: boolean | null;
 } | null;
 // Variable: KONTAKT_SEITE_QUERY
-// Query: *[_type == "kontaktSeite"][0]{ seitentitelMenue, text}
+// Query: *[_type == "kontaktSeite"][0]{  seitentitelMenue,  text,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type KONTAKT_SEITE_QUERYResult = {
   seitentitelMenue: string | null;
   text: Array<{
@@ -1004,6 +1036,23 @@ export type KONTAKT_SEITE_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
+  seoTitle: string | null;
+  metaDescription: string | null;
+  keywords: Array<string> | null;
+  openGraphImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  noIndex: boolean | null;
 } | null;
 // Variable: ANSPRECHPERSONEN_QUERY
 // Query: *[_type == "ansprechpersonen"][0]{  ueberschrift,  ansprechperson[]{    text,    profilbild{      asset->{        _id,        url      },      alt    }  }}
@@ -1038,7 +1087,7 @@ export type ANSPRECHPERSONEN_QUERYResult = {
   }> | null;
 } | null;
 // Variable: IMPRESSUM_SEITE_QUERY
-// Query: *[_type == "impressumSeite"][0]{ seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText }
+// Query: *[_type == "impressumSeite"][0]{  seitentitelMenue,  angabenText,  impressumText,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type IMPRESSUM_SEITE_QUERYResult = {
   seitentitelMenue: string | null;
   angabenText: Array<{
@@ -1077,8 +1126,23 @@ export type IMPRESSUM_SEITE_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
-  datenschutzUeberschrift: null;
-  datenschutzText: null;
+  seoTitle: string | null;
+  metaDescription: string | null;
+  keywords: Array<string> | null;
+  openGraphImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  noIndex: boolean | null;
 } | null;
 // Variable: DATENSCHUTZ_QUERY
 // Query: *[_type == "datenschutz"][0]{  ueberschrift,  text}
@@ -1163,7 +1227,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type in [\"homeSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
-    "*[_type == \"homeSeite\"][0]{\n  seitentitelMenue, slug\n}": HOME_QUERYResult;
+    "*[_type == \"homeSeite\"][0]{\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
     "*[_type == \"vision\"][0]{\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
@@ -1171,10 +1235,10 @@ declare module "@sanity/client" {
     "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
-    "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  }\n}": DOWNLOADS_SEITE_QUERYResult;
-    "*[_type == \"kontaktSeite\"][0]{\n seitentitelMenue, text\n}": KONTAKT_SEITE_QUERYResult;
+    "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  },\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": DOWNLOADS_SEITE_QUERYResult;
+    "*[_type == \"kontaktSeite\"][0]{\n  seitentitelMenue,\n  text,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
-    "*[_type == \"impressumSeite\"][0]{\n seitentitelMenue, angabenText, impressumText, datenschutzUeberschrift, datenschutzText \n}": IMPRESSUM_SEITE_QUERYResult;
+    "*[_type == \"impressumSeite\"][0]{\n  seitentitelMenue,\n  angabenText,\n  impressumText,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": IMPRESSUM_SEITE_QUERYResult;
     "*[_type == \"datenschutz\"][0]{\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;
     "*[_type == \"projektfoerderung\"][0]{\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
     "*[_type == \"projektpartner\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
