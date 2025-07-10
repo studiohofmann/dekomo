@@ -49,6 +49,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Umami Analytics */}
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+        ></script>
+      </head>
       <body className="antialiased">
         <header>
           <Header menuItems={menuItems} />
