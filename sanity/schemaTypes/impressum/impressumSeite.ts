@@ -42,19 +42,26 @@ const impressumSeite = {
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "angabenText",
-      title: "Angaben Text",
-      type: "array",
-      of: [{ type: "block" }],
-      group: "content",
-    }),
-    defineField({
       name: "impressumText",
       title: "Impressum Text",
       type: "array",
       of: [{ type: "block" }],
       group: "content",
     }),
+    defineField({
+      name: "angabenUeberschrift",
+      title: "Angaben Überschrift",
+      type: "string",
+      group: "content",
+    }),
+    defineField({
+      name: "angabenText",
+      title: "Angaben Text",
+      type: "array",
+      of: [{ type: "block" }],
+      group: "content",
+    }),
+
     defineField({
       name: "seoTitle",
       title: "SEO Titel",

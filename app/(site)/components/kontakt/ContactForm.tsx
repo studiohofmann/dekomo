@@ -88,7 +88,7 @@ export default function ContactForm() {
     formData.message.trim();
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit} className="card">
       <h2>Kontaktformular</h2>
       <div className="flex flex-col gap-4">
         {/* 📧 Recipient Cards */}
@@ -136,7 +136,7 @@ export default function ContactForm() {
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className={`${formData.gender ? "text-gray-700" : "text-gray-400"}`}
+              className={`${formData.gender ? "text-gray-700" : "text-gray-500"}`}
               required
             >
               <option value="" disabled>
@@ -155,7 +155,7 @@ export default function ContactForm() {
                 <CloseOutlined />
               </button>
             ) : (
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                 <DownOutlined />
               </span>
             )}

@@ -28,7 +28,7 @@ export default async function Projektfoerderung() {
           </div>
         )}
         {projektfoerderung.text && (
-          <div className="portable-text text-sm col-span-2">
+          <div className="portable-text text-sm col-span-2 portable-text-footer-link">
             <PortableText value={projektfoerderung.text} />
           </div>
         )}

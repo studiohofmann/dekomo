@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  HomeFilled,
-  MailFilled,
-  InfoCircleFilled,
-  DatabaseFilled,
-} from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button"; // <-- import your Button
 
 // Use the stricter type for filtered items
 type MenuItem = {
@@ -30,9 +25,9 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        entries.forEach((entry: IntersectionObserverEntry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            setActiveSection((entry.target as HTMLElement).id);
           }
         });
       },
@@ -54,25 +49,8 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
     };
   }, [pathname]);
 
-  // Function to get the correct icon based on slug
-  const getIcon = (slug: string) => {
-    switch (slug) {
-      case "":
-      case "/":
-        return <HomeFilled />;
-      case "kontakt":
-        return <MailFilled />;
-      case "impressum":
-        return <InfoCircleFilled />;
-      case "datenschutz":
-        return <DatabaseFilled />;
-      default:
-        return null; // No icon for other pages
-    }
-  };
-
   return (
-    <ul className="grid grid-cols-4 md:flex md:gap-4 lg:gap-8 w-full">
+    <ul className="grid grid-cols-4 gap-4 w-full">
       {menuItems.map((item) => {
         let href =
           item.slug.current === "" || item.slug.current === "/"
@@ -100,20 +78,15 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
 
         return (
           <li key={item.slug.current}>
-            <Link
-              className={`transition-colors
-                         ${
-                           isActive
-                             ? "text-gray-700 "
-                             : "text-[#5a7cbe] hover:text-gray-700"
-                         }`}
-              href={href}
+            <Button
+              asChild
+              variant={isActive ? "selected" : "custom"}
+              size="custom"
             >
-              <div className="flex flex-col items-center justify-center gap-1 md:gap-2 md:flex-row md:items-center">
-                {getIcon(item.slug.current)}
-                <h3 className="md:mt-1">{item.seitentitelMenue}</h3>
-              </div>
-            </Link>
+              <Link href={href}>
+                <h3>{item.seitentitelMenue}</h3>
+              </Link>
+            </Button>
           </li>
         );
       })}

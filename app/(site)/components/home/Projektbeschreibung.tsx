@@ -3,6 +3,7 @@ import { PROJEKTBESCHREIBUNG_QUERY } from "@/sanity/lib/queries";
 import type { PROJEKTBESCHREIBUNG_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import SanityImage from "../SanityImage";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function Projektbeschreibung() {
   const projektbeschreibung: PROJEKTBESCHREIBUNG_QUERYResult =
@@ -16,26 +17,20 @@ export default async function Projektbeschreibung() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <ExpandableSquareCard>
       <h2>{projektbeschreibung.ueberschrift}</h2>
-      <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
-        {projektbeschreibung.text && (
-          <div className="portable-text lg:w-1/2">
-            <PortableText value={projektbeschreibung.text || []} />
-          </div>
-        )}
-        {projektbeschreibung.grafik && (
-          <div className="lg:w-1/2">
-            <SanityImage
-              image={projektbeschreibung.grafik}
-              altFallback={projektbeschreibung.grafik.alt || "Grafik"}
-              width={600}
-              height={400}
-              className="w-full h-auto rounded-md shadow-md"
-            />
-          </div>
-        )}
+      {projektbeschreibung.grafik && (
+        <SanityImage
+          image={projektbeschreibung.grafik}
+          altFallback={projektbeschreibung.grafik.alt || "Grafik"}
+          width={600}
+          height={400}
+          className="w-full object-cover"
+        />
+      )}
+      <div className="portable-text">
+        <PortableText value={projektbeschreibung.text || []} />
       </div>
-    </div>
+    </ExpandableSquareCard>
   );
 }

@@ -3,6 +3,7 @@ import { TEILPROJEKTE_QUERY } from "@/sanity/lib/queries";
 import type { TEILPROJEKTE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function Teilprojekte() {
   const data: TEILPROJEKTE_QUERYResult = await sanityFetch({
@@ -15,7 +16,7 @@ export default async function Teilprojekte() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <ExpandableSquareCard className="border-1 border-gray-700 p-8">
       {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
       <Tabs defaultValue={data.teilprojekt[0].ueberschrift || "tab-0"}>
         <TabsList>
@@ -33,7 +34,6 @@ export default async function Teilprojekte() {
           <TabsContent
             key={idx}
             value={teilprojekt.ueberschrift || `tab-${idx}`}
-            className="p-4"
           >
             {teilprojekt.text && (
               <div className="portable-text">
@@ -43,6 +43,6 @@ export default async function Teilprojekte() {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </ExpandableSquareCard>
   );
 }

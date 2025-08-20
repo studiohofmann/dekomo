@@ -24,7 +24,7 @@ function TabsList({
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
-      className={cn("flex flex-col gap-4 md:flex-row", className)}
+      className={cn("flex flex-col gap-4", className)}
       {...props}
     />
   );
@@ -39,7 +39,7 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       className={cn(
         // Replace the long className with your custom styles
-        "w-full items-center justify-center rounded-sm shadow-md text-sm text-gray-700 font-bold bg-[#94b0dd] border border-gray-700 hover:bg-[#5a7cbe] hover:text-gray-100  data-[state=active]:bg-[#5a7cbe] data-[state=active]:text-gray-100 p-4 transition-colors",
+        "bg-[#94b0dd] text-gray-700 !text-sm font-bold rounded-md shadow-md w-full items-center justify-center  text-md   border border-gray-700 hover:bg-[#5a7cbe]  hover:text-gray-100  data-[state=active]:bg-[#5a7cbe] data-[state=active]:text-gray-100 p-4 transition-colors",
         className
       )}
       {...props}
@@ -54,10 +54,7 @@ function TabsContent({
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn(
-        "bg-[#5a7cbe] text-gray-100 rounded-sm shadow-md border border-gray-700",
-        className
-      )}
+      className={cn("", className)}
       {...props}
     />
   );

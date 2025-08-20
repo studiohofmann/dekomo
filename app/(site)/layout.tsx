@@ -5,6 +5,7 @@ import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
 import type { NAVIGATION_QUERYResult } from "@/sanity/types";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import SearchHighlighter from "./components/header/search-bar/SearchHighlighter";
 
 export const metadata: Metadata = {
   title: "DeKoMo",
@@ -62,7 +63,10 @@ export default async function RootLayout({
           <Header menuItems={menuItems} />
         </header>
 
-        <main>{children}</main>
+        <main>
+          <SearchHighlighter />
+          {children}
+        </main>
         <footer>
           <Footer />
         </footer>

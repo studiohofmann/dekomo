@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { ZUGANGSWEGE_QUERY } from "@/sanity/lib/queries";
 import type { ZUGANGSWEGE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function Zugangswege() {
   const zugangswege: ZUGANGSWEGE_QUERYResult = await sanityFetch({
@@ -14,9 +15,8 @@ export default async function Zugangswege() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <ExpandableSquareCard>
       <h2>{zugangswege.ueberschrift}</h2>
-
       {zugangswege.text && (
         <div className="portable-text">
           <PortableText value={zugangswege.text || []} />
@@ -34,6 +34,6 @@ export default async function Zugangswege() {
             />
           </div>
         )}*/}
-    </div>
+    </ExpandableSquareCard>
   );
 }
