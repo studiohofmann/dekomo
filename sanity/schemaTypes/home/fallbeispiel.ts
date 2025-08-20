@@ -1,9 +1,9 @@
 import { defineField } from "sanity";
 import { HomeIcon } from "@sanity/icons";
 
-const einleitung = {
-  name: "einleitung",
-  title: "Einleitung",
+const fallbeispiel = {
+  name: "fallbeispiel",
+  title: "Fallbeispiel",
   type: "document",
   icon: HomeIcon,
 
@@ -38,4 +38,4 @@ const einleitung = {
   ],
 };
 
-export default einleitung;
+export default fallbeispiel;

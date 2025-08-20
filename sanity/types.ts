@@ -135,7 +135,7 @@ export type ImpressumSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
-  angabenText?: Array<{
+  impressumText?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -153,7 +153,8 @@ export type ImpressumSeite = {
     _type: "block";
     _key: string;
   }>;
-  impressumText?: Array<{
+  angabenUeberschrift?: string;
+  angabenText?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -410,6 +411,46 @@ export type Netzwerk = {
   }>;
 };
 
+export type Fallbeispiel = {
+  _id: string;
+  _type: "fallbeispiel";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  bild?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
 export type Auswirkungen = {
   _id: string;
   _type: "auswirkungen";
@@ -588,6 +629,46 @@ export type Projektbeschreibung = {
   };
 };
 
+export type Einleitung = {
+  _id: string;
+  _type: "einleitung";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  bild?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
 export type HomeSeite = {
   _id: string;
   _type: "homeSeite";
@@ -733,7 +814,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Auswirkungen | News | Zugangswege | Teilprojekte | Projektbeschreibung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Fallbeispiel | Auswirkungen | News | Zugangswege | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
@@ -763,6 +844,36 @@ export type HOME_QUERYResult = {
     alt: null;
   } | null;
   noIndex: boolean | null;
+} | null;
+// Variable: EINLEITUNG_QUERY
+// Query: *[_type == "einleitung"][0]{  ueberschrift,  text,  bild{    asset->{_id, url},    alt  },}
+export type EINLEITUNG_QUERYResult = {
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  bild: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+  } | null;
 } | null;
 // Variable: VISION_QUERY
 // Query: *[_type == "vision"][0]{  ueberschrift, text, grafik{    asset->{_id, url},    alt  },}
@@ -933,6 +1044,36 @@ export type AUSWIRKUNGEN_QUERYResult = {
     alt: string | null;
   } | null;
 } | null;
+// Variable: FALLBEISPIEL_QUERY
+// Query: *[_type == "fallbeispiel"][0]{  ueberschrift,  text,  bild{    asset->{_id, url},    alt  },}
+export type FALLBEISPIEL_QUERYResult = {
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  bild: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+  } | null;
+} | null;
 // Variable: NETZWERK_QUERY
 // Query: *[_type == "netzwerk"][0]{  ueberschrift,  text,  standorte[]{    titel,    latitude,    longitude  }}
 export type NETZWERK_QUERYResult = {
@@ -1087,9 +1228,10 @@ export type ANSPRECHPERSONEN_QUERYResult = {
   }> | null;
 } | null;
 // Variable: IMPRESSUM_SEITE_QUERY
-// Query: *[_type == "impressumSeite"][0]{  seitentitelMenue,  angabenText,  impressumText,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
+// Query: *[_type == "impressumSeite"][0]{  seitentitelMenue,  angabenUeberschrift,  angabenText,  impressumText,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type IMPRESSUM_SEITE_QUERYResult = {
   seitentitelMenue: string | null;
+  angabenUeberschrift: string | null;
   angabenText: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1228,17 +1370,19 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type in [\"homeSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
     "*[_type == \"homeSeite\"][0]{\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
+    "*[_type == \"einleitung\"][0]{\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": EINLEITUNG_QUERYResult;
     "*[_type == \"vision\"][0]{\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
+    "*[_type == \"fallbeispiel\"][0]{\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": FALLBEISPIEL_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
     "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  },\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": DOWNLOADS_SEITE_QUERYResult;
     "*[_type == \"kontaktSeite\"][0]{\n  seitentitelMenue,\n  text,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": KONTAKT_SEITE_QUERYResult;
     "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
-    "*[_type == \"impressumSeite\"][0]{\n  seitentitelMenue,\n  angabenText,\n  impressumText,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": IMPRESSUM_SEITE_QUERYResult;
+    "*[_type == \"impressumSeite\"][0]{\n  seitentitelMenue,\n  angabenUeberschrift,\n  angabenText,\n  impressumText,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": IMPRESSUM_SEITE_QUERYResult;
     "*[_type == \"datenschutz\"][0]{\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;
     "*[_type == \"projektfoerderung\"][0]{\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
     "*[_type == \"projektpartner\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;

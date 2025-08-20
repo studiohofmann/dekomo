@@ -14,9 +14,8 @@ export default async function Datenschutz() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <h2>{datenschutz.ueberschrift}</h2>
-
       {datenschutz.text && (
         <div className="portable-text">
           <PortableText value={datenschutz.text || []} />

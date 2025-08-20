@@ -19,16 +19,17 @@ const buttonVariants = cva("items-center justify-center transition-all", {
         "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
       link: "text-primary underline-offset-4 hover:underline",
       custom:
-        "bg-[#94b0dd] text-gray-700 text-sm font-bold rounded-sm shadow-md hover:bg-[#5a7cbe] hover:text-gray-100 border border-gray-700",
+        "bg-[#94b0dd] flex items-center justify-center text-gray-700 text-sm font-bold rounded-md shadow-md hover:bg-[#5a7cbe] hover:text-gray-100 border border-gray-700",
       // In your button.tsx, add this variant:
-      selected: "bg-gray-700 text-gray-100 font-bold rounded-full shadow-md",
+      selected:
+        "bg-[#5a7cbe] flex items-center justify-center text-gray-100 font-bold rounded-md shadow-md border border-gray-700",
     },
     size: {
       default: "h-9 px-4 py-2 has-[>svg]:px-3",
       sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
       lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
       icon: "size-9",
-      custom: "p-4",
+      custom: "px-4 py-2",
     },
   },
   defaultVariants: {

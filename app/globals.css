@@ -134,31 +134,53 @@
   body {
     font-family: "Eau Sans", sans-serif;
     @apply bg-gray-100 text-gray-700;
-    @apply font-normal;
+    @apply font-medium;
   }
 
   h1 {
-    @apply text-gray-100 text-5xl font-black text-center;
+    @apply text-5xl font-black text-center;
   }
 
   h2 {
-    @apply text-2xl font-black;
+    @apply w-full;
+    @apply px-4 py-4;
+    @apply bg-gray-100;
+    @apply text-xl  font-black text-center;
+    @apply border-1 border-gray-700 rounded-t-md;
   }
 
   h3 {
     @apply text-sm font-bold;
   }
 
-  .page-section {
-    @apply pt-32;
-    @apply flex flex-col;
+  .page-introduction {
+    @apply mt-32 pt-16 px-4;
+    @apply flex flex-col gap-4;
+    @apply bg-gradient-to-b from-gray-300 to-gray-100;
+    @apply md:px-8;
+    @apply xl:px-16;
+    @apply 2xl:px-32;
+  }
+  .page-content {
+    @apply px-4 py-16;
+    @apply grid grid-cols-1 gap-8;
+    @apply md:px-8;
+    @apply lg:grid-cols-2;
+    @apply xl:px-16;
+    @apply 2xl:px-32;
   }
 
   section {
-    @apply px-4 md:px-8 lg:px-12 xl:px-32 py-16;
+    @apply m-4 p-4;
     @apply flex flex-col;
   }
 
+  .card {
+    @apply p-8;
+    @apply flex flex-col gap-4;
+    @apply bg-gray-300;
+    @apply border border-gray-700 rounded-md shadow-md;
+  }
   .background-blue {
     @apply bg-[#5a7cbe] text-gray-100;
   }
@@ -172,8 +194,8 @@
 
   input,
   textarea {
-    @apply bg-gray-300 text-gray-700 p-4 rounded-sm shadow-md border border-gray-700;
-    @apply focus:outline-none focus:bg-gray-200 focus:border-gray-700;
+    @apply bg-gray-200 text-gray-700 p-4  border border-gray-700;
+    @apply focus:outline-none focus:bg-gray-100 focus:border-gray-700;
     @apply transition-colors duration-200;
   }
 
@@ -189,30 +211,38 @@
 
   input::placeholder,
   textarea::placeholder {
-    @apply text-gray-400;
+    @apply text-gray-500;
   }
 
   select {
-    @apply bg-gray-300 p-4 rounded-sm shadow-md border text-gray-500 border-gray-700 appearance-none w-full;
+    @apply bg-gray-200 p-4 rounded-sm shadow-md border text-gray-500 border-gray-700 appearance-none w-full;
     @apply focus:outline-none focus:bg-gray-200 focus:border-gray-700;
     @apply transition-colors duration-200;
   }
 }
 
+/* FOOTER */
 .footer {
-  @apply px-4 md:px-8 lg:px-12 xl:px-32 py-16 pt-16 pb-22 lg:pb-4;
+  @apply px-4 py-16;
   @apply flex flex-col gap-8;
-  @apply bg-gray-300;
+  @apply bg-[#94b0dd];
+  @apply md:px-8;
+  @apply lg:px-12;
+  @apply xl:px-32;
 }
-
 .footer-grid {
-  @apply grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4;
+  @apply grid grid-cols-3 gap-4;
+  @apply md:grid-cols-4;
+  @apply lg:grid-cols-5 lg:gap-8;
 }
-
 .footer-logo-container {
-  @apply bg-gray-200 py-2 px-4 rounded-md shadow-md;
+  @apply p-4;
+  @apply bg-gray-300;
+  @apply border border-gray-700;
+  @apply rounded-md shadow-md;
 }
 
+/* PORTABLE TEXT */
 .portable-text h1,
 .portable-text h2,
 .portable-text h3 {
@@ -268,14 +298,14 @@
 }
 
 .portable-text a {
-  @apply text-[#5a7cbe] font-bold transition-colors duration-200 p-0 underline underline-offset-2;
+  @apply text-[#94b0dd]  font-bold;
+  @apply underline underline-offset-2;
+  @apply transition-colors duration-200;
+  @apply hover:text-[#5a7cbe];
 }
-
-.portable-text a:hover {
-  @apply text-gray-700;
-}
-
-/* Custom link styles for specific pages */
-.portable-text-blue-background-links a {
-  @apply text-[#f7f1a9] underline underline-offset-2;
+.portable-text-footer-link a {
+  @apply text-gray-100 font-bold;
+  @apply underline underline-offset-2;
+  @apply transition-colors duration-200;
+  @apply hover:text-gray-300;
 }

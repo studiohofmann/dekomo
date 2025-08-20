@@ -25,6 +25,15 @@ export const HOME_QUERY = defineQuery(`*[_type == "homeSeite"][0]{
   noIndex
 }`);
 
+export const EINLEITUNG_QUERY = defineQuery(`*[_type == "einleitung"][0]{
+  ueberschrift,
+  text,
+  bild{
+    asset->{_id, url},
+    alt
+  },
+}`);
+
 export const VISION_QUERY = defineQuery(`*[_type == "vision"][0]{
   ueberschrift, text, grafik{
     asset->{_id, url},
@@ -77,6 +86,16 @@ export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
     alt
   }
 }`);
+
+export const FALLBEISPIEL_QUERY = defineQuery(`*[_type == "fallbeispiel"][0]{
+  ueberschrift,
+  text,
+  bild{
+    asset->{_id, url},
+    alt
+  },
+}`);
+
 export const NETZWERK_QUERY = defineQuery(`*[_type == "netzwerk"][0]{
   ueberschrift,
   text,
@@ -162,6 +181,7 @@ export const ANSPRECHPERSONEN_QUERY =
 export const IMPRESSUM_SEITE_QUERY =
   defineQuery(`*[_type == "impressumSeite"][0]{
   seitentitelMenue,
+  angabenUeberschrift,
   angabenText,
   impressumText,
   seoTitle,

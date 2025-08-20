@@ -3,6 +3,7 @@ import { NETZWERK_QUERY } from "@/sanity/lib/queries";
 import type { NETZWERK_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
 import MapWrapper from "./MapWrapper";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function Netzwerk() {
   const netzwerk: NETZWERK_QUERYResult = await sanityFetch({
@@ -15,15 +16,15 @@ export default async function Netzwerk() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <ExpandableSquareCard>
       <h2>{netzwerk.ueberschrift}</h2>
-      <div className="flex flex-col gap-4 lg:gap-8 lg:grid lg:grid-cols-2">
-        {netzwerk.text && (
-          <div className="portable-text">
-            <PortableText value={netzwerk.text} />
-          </div>
-        )}
-        {/* Use the client wrapper component */}
+
+      {netzwerk.text && (
+        <div className="portable-text">
+          <PortableText value={netzwerk.text} />
+        </div>
+      )}
+      <div className="w-full aspect-[4/3] mt-4">
         <MapWrapper
           standorte={(netzwerk.standorte || []).map((s) => ({
             titel: s.titel ?? "",
@@ -32,6 +33,6 @@ export default async function Netzwerk() {
           }))}
         />
       </div>
-    </div>
+    </ExpandableSquareCard>
   );
 }

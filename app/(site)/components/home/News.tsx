@@ -7,6 +7,7 @@ import type {
   DOWNLOADS_SEITE_QUERYResult,
 } from "@/sanity/types";
 import { PortableText } from "next-sanity";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function News() {
   const news: NEWS_QUERYResult = await sanityFetch({
@@ -20,27 +21,31 @@ export default async function News() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2>{news?.ueberschrift || "Aktuelles & Downloads"}</h2>
-      <div className="flex flex-col gap-8 lg:flex-row">
-        {news?.text && (
-          <div className="portable-text lg:flex-1">
-            <PortableText value={news.text} />
-          </div>
-        )}
-        <Link
-          href={
-            downloadsSeite?.slug?.current
-              ? `/${downloadsSeite.slug.current}`
-              : "/downloads"
-          }
-          className="self-center sm:self-center md:self-center lg:flex-1 lg:self-end"
-        >
-          <Button variant="custom" size="custom">
-            Zu den Downloads
-          </Button>
-        </Link>
+    <ExpandableSquareCard className="!bg-[#f7f1a9]">
+      <div className="flex flex-col h-full w-full">
+        <div className="flex-1 flex flex-col gap-4">
+          <h2>{news?.ueberschrift || "Aktuelles & Downloads"}</h2>
+          {news?.text && (
+            <div className="portable-text">
+              <PortableText value={news.text} />
+            </div>
+          )}
+        </div>
+        <div className="mt-4 flex justify-center">
+          <Link
+            href={
+              downloadsSeite?.slug?.current
+                ? `/${downloadsSeite.slug.current}`
+                : "/downloads"
+            }
+            className="self-center"
+          >
+            <Button variant="custom" size="custom">
+              Zu den Downloads
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </ExpandableSquareCard>
   );
 }

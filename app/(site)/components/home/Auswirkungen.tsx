@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { AUSWIRKUNGEN_QUERY } from "@/sanity/lib/queries";
 import type { AUSWIRKUNGEN_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
+import ExpandableSquareCard from "../ExpandableSquareCard";
 
 export default async function Auswirkungen() {
   const auswirkungen: AUSWIRKUNGEN_QUERYResult = await sanityFetch({
@@ -14,9 +15,8 @@ export default async function Auswirkungen() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <ExpandableSquareCard>
       <h2>{auswirkungen.ueberschrift}</h2>
-
       {auswirkungen.text && (
         <div className="portable-text">
           <PortableText value={auswirkungen.text || []} />
@@ -34,7 +34,7 @@ export default async function Auswirkungen() {
             />
           </div>
         )}
-          */}
-    </div>
+      */}
+    </ExpandableSquareCard>
   );
 }

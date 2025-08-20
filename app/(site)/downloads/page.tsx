@@ -49,69 +49,67 @@ export default async function DownloadsPage() {
   };
 
   return (
-    <div className="page-section">
-      <section className="background-blue gap-8">
-        <h2>{downloadsSeite.seitentitelMenue || "Downloads"}</h2>
-
+    <div id="downloads">
+      <div className="page-introduction">
+        <h1>{downloadsSeite.seitentitelMenue || "Downloads"}</h1>
         {downloadsSeite.text && (
           <div className="portable-text">
             <PortableText value={downloadsSeite.text} />
           </div>
         )}
-
-        {/* Downloads section */}
-        {downloadsSeite.dateien && downloadsSeite.dateien.length > 0 ? (
-          <div className="grid gap-4">
-            {downloadsSeite.dateien.map((item, index) => (
-              <div key={index}>
-                <div className="flex items-center justify-between bg-gray-100 text-gray-700 p-4 rounded-sm shadow-md border border-gray-700">
-                  <div className="flex flex-col gap-2">
-                    <div className="font-bold">{item.titel}</div>
-                    {item.datei?.asset && (
-                      <div className="flex text-sm gap-4 items-center justify-center">
-                        <div className="flex items-center gap-2">
-                          <FileOutlined className="text-lg pb-0.5" />
-                          {item.datei.asset.originalFilename}
-                        </div>
-
-                        {item.datei.asset.size && (
-                          <span>{formatFileSize(item.datei.asset.size)}</span>
-                        )}
+      </div>
+      {/* Downloads section */}
+      {downloadsSeite.dateien && downloadsSeite.dateien.length > 0 ? (
+        <div className="page-content">
+          {downloadsSeite.dateien.map((item, index) => (
+            <div key={index}>
+              <div className="card flex-row items-center justify-between">
+                <div className="flex flex-col gap-4">
+                  <div className="font-bold">{item.titel}</div>
+                  {item.datei?.asset && (
+                    <div className="flex text-sm gap-4 items-center justify-center">
+                      <div className="flex items-center gap-2">
+                        <FileOutlined className="text-lg pb-0.5" />
+                        {item.datei.asset.originalFilename}
                       </div>
-                    )}
-                  </div>
 
-                  {item.datei?.asset?.url && (
-                    <div>
-                      <a
-                        href={item.datei.asset.url}
-                        download={item.datei.asset.originalFilename}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="custom" size="custom">
-                          <div className="flex gap-2 items-center justify-center">
-                            <div>Download</div>
-
-                            <DownloadOutlined className="text-lg pb-0.5" />
-                          </div>
-                        </Button>
-                      </a>
+                      {item.datei.asset.size && (
+                        <span>{formatFileSize(item.datei.asset.size)}</span>
+                      )}
                     </div>
                   )}
                 </div>
+
+                {item.datei?.asset?.url && (
+                  <div>
+                    <a
+                      href={item.datei.asset.url}
+                      download={item.datei.asset.originalFilename}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="custom" size="custom">
+                        <div className="flex gap-2 items-center justify-center">
+                          <div>Download</div>
+
+                          <DownloadOutlined className="text-lg pb-0.5" />
+                        </div>
+                      </Button>
+                    </a>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Verfügbare Downloads</h2>
-            <p className="text-gray-600">
-              Derzeit sind keine Downloads verfügbar.
-            </p>
-          </div>
-        )}
-      </section>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-gray-50 p-6 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">Verfügbare Downloads</h2>
+          <p className="text-gray-600">
+            Derzeit sind keine Downloads verfügbar.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

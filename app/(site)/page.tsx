@@ -1,12 +1,14 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { HOME_QUERY } from "@/sanity/lib/queries";
 import type { HOME_QUERYResult } from "@/sanity/types";
+import Einleitung from "./components/home/Einleitung";
 import Vision from "./components/home/Vision";
 import Projektbeschreibung from "./components/home/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
 import News from "./components/home/News";
 import Auswirkungen from "./components/home/Auswirkungen";
+import Fallbeispiel from "./components/home/Fallbeispiel";
 import Netzwerk from "./components/home/Netzwerk";
 import type { Metadata } from "next";
 import { generateSEOMetadata } from "@/lib/seo";
@@ -27,30 +29,36 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Home() {
   return (
-    <div className="page-section">
-      <section className="bg-[#5a7cbe] text-gray-100">
-        <Projektbeschreibung />
-      </section>
-      <section>
-        <Teilprojekte />
-      </section>
-      <div className="lg:flex">
-        <section className="bg-[#f7f1a9] lg:flex-1 lg:pr-16">
+    <div>
+      <Einleitung />
+      <div className="page-content lg:grid-cols-3 xl:gap-16">
+        <div id="projektbeschreibung">
+          <Projektbeschreibung />
+        </div>
+        <div id="teilprojekte">
+          <Teilprojekte />
+        </div>
+
+        <div id="zugangswege">
           <Zugangswege />
-        </section>
-        <section className="bg-[#5a7cbe] text-gray-100 lg:flex-1 lg:pl-16">
+        </div>
+        <div id="auswirkungen">
           <Auswirkungen />
-        </section>
+        </div>
+
+        <div id="fallbeispiel">
+          <Fallbeispiel />
+        </div>
+        <div id="news">
+          <News />
+        </div>
+        <div id="netzwerk">
+          <Netzwerk />
+        </div>
+        <div id="vision">
+          <Vision />
+        </div>
       </div>
-      <section>
-        <News />
-      </section>
-      <section className="bg-[#5a7cbe] text-gray-100">
-        <Netzwerk />
-      </section>
-      <section className="bg-[#f7f1a9]">
-        <Vision />
-      </section>
     </div>
   );
 }
