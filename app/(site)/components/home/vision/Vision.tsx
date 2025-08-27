@@ -2,7 +2,6 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { VISION_QUERY } from "@/sanity/lib/queries";
 import type { VISION_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
-import SanityImage from "../../SanityImage";
 import ExpandableSquareCard from "../../ExpandableSquareCard";
 import GrafikVision from "./GrafikVision";
 
