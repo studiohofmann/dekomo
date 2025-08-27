@@ -19,6 +19,18 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("");
 
+  // keep normal ordering for everything else, then append Impressum then Datenschutz
+  const others = [...menuItems]
+    .filter((it) => it.slug.current !== "impressum" && it.slug.current !== "datenschutz")
+    .sort((a, b) => (a.menuReihenfolge ?? 0) - (b.menuReihenfolge ?? 0));
+
+  const impressumItem = menuItems.find((it) => it.slug.current === "impressum");
+  const datenschutzItem = menuItems.find((it) => it.slug.current === "datenschutz");
+
+  const orderedMenuItems = [...others];
+  if (impressumItem) orderedMenuItems.push(impressumItem);
+  if (datenschutzItem) orderedMenuItems.push(datenschutzItem);
+
   useEffect(() => {
     if (pathname !== "/impressum") return;
 
@@ -86,7 +98,7 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
 
   return (
     <ul className="grid grid-cols-4 gap-4 w-full">
-      {menuItems.map((item) => {
+      {orderedMenuItems.map((item) => {
         let href =
           item.slug.current === "" || item.slug.current === "/"
             ? "/"
