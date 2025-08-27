@@ -2,7 +2,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { HOME_QUERY } from "@/sanity/lib/queries";
 import type { HOME_QUERYResult } from "@/sanity/types";
 import Einleitung from "./components/home/Einleitung";
-import Vision from "./components/home/Vision";
+import Vision from "./components/home/vision/Vision";
 import Projektbeschreibung from "./components/home/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
