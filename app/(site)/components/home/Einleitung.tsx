@@ -15,7 +15,7 @@ export default async function Einleitung() {
   }
 
   return (
-    <div className="relative flex justify-center items-center w-full h-[60vh]">
+    <div className="relative flex justify-center items-center w-full h-[75vh]">
       {einleitung.bild && (
         <SanityImage
           image={einleitung.bild}
@@ -30,7 +30,7 @@ export default async function Einleitung() {
       <div className="page-introduction bg-none absolute inset-0 items-center justify-center z-20">
         <h1 className="text-gray-100">{einleitung.ueberschrift}</h1>
         {einleitung.text && (
-          <div className="portable-text text-gray-100 font-bold text-sm 2xl:px-16">
+          <div className="portable-text text-gray-100 text-center text-sm 2xl:px-16">
             <PortableText value={einleitung.text || []} />
           </div>
         )}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { sanityFetch } from "@/sanity/lib/client";
 import { NEWS_QUERY, DOWNLOADS_SEITE_QUERY } from "@/sanity/lib/queries";
 import type {
@@ -40,9 +39,7 @@ export default async function News() {
             }
             className="self-center"
           >
-            <Button variant="custom" size="custom">
-              Zu den Downloads
-            </Button>
+            Zu den Downloads
           </Link>
         </div>
       </div>

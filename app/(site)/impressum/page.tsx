@@ -50,13 +50,15 @@ export default async function Impressum() {
       <div className="page-content">
         <div className="card">
           <h2>{impressumSeite.angabenUeberschrift}</h2>
-          <div className="portable-text">
+          <div className="portable-text portable-text-impressum-links">
             <PortableText value={impressumSeite.angabenText ?? []} />
           </div>
         </div>
-        <ExpandableSquareCard className="scroll-mt-12 !bg-[#f7f1a9]">
-          <Datenschutz />
-        </ExpandableSquareCard>
+        <div id="datenschutz" className="scroll-mt-24">
+          <ExpandableSquareCard className="!bg-[#f7f1a9]">
+            <Datenschutz />
+          </ExpandableSquareCard>
+        </div>
       </div>
     </div>
   );

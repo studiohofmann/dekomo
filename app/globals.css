@@ -138,7 +138,7 @@
   }
 
   h1 {
-    @apply text-5xl font-black text-center;
+    @apply text-2xl font-black text-center;
   }
 
   h2 {
@@ -153,8 +153,83 @@
     @apply text-sm font-bold;
   }
 
+  /* LINKS */
+  a:not(.logo-link) {
+    @apply px-4 py-2;
+    @apply w-full;
+    @apply flex items-center justify-center;
+    @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+    @apply text-xs font-bold text-gray-700 hover:text-gray-100;
+    @apply border border-gray-700;
+    @apply rounded-md;
+    @apply shadow-md;
+  }
+  a.active-link:not(.logo-link) {
+    @apply bg-[#5a7cbe];
+    @apply text-gray-100;
+  }
+  .portable-text a {
+    @apply text-[#94b0dd]  font-bold;
+    @apply underline underline-offset-2;
+    @apply transition-colors duration-200;
+    @apply hover:text-[#5a7cbe];
+  }
+  .portable-text-footer-link a:not(.logo-link) {
+    @apply text-gray-100 font-bold hover:text-gray-300;
+    @apply underline underline-offset-2;
+    @apply transition-colors duration-200;
+    @apply px-0 py-0;
+    @apply w-auto;
+    @apply flex-none items-start justify-start;
+    @apply bg-transparent border-none shadow-none rounded-none;
+    display: inline;
+    align-items: normal;
+    justify-content: normal;
+    flex: none;
+  }
+  .portable-text-impressum-links a:not(.logo-link) {
+    @apply text-base font-bold text-[#94b0dd] hover:text-[#5a7cbe];
+    @apply underline underline-offset-2;
+    @apply transition-colors duration-200;
+    @apply px-0 py-0;
+    @apply w-auto;
+    @apply flex-none items-start justify-start;
+    @apply bg-transparent border-none shadow-none rounded-none;
+    display: inline;
+    align-items: normal;
+    justify-content: normal;
+    flex: none;
+  }
+
+  /* BUTTON */
+  button {
+    @apply px-4 py-2;
+    @apply w-full;
+    @apply flex items-center justify-center gap-2;
+    @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+    @apply text-gray-700 hover:text-gray-100 text-xs font-bold;
+    @apply border border-gray-700;
+    @apply rounded-md;
+    @apply shadow-md;
+  }
+
+  /* TABS */
+  .tab-trigger-btn {
+    @apply px-4 py-2 w-full flex items-center justify-center gap-2;
+    @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+    @apply text-gray-700 hover:text-gray-100 text-xs font-bold;
+    @apply border border-gray-700;
+    @apply rounded-md;
+    @apply shadow-md;
+    @apply transition-colors;
+  }
+  .tab-trigger-btn[data-state="active"] {
+    @apply bg-[#5a7cbe] text-gray-100;
+  }
+
+  /* LAYOUT */
   .page-introduction {
-    @apply mt-32 pt-16 px-4;
+    @apply mt-32 px-4 pt-16;
     @apply flex flex-col gap-4;
     @apply bg-gradient-to-b from-gray-300 to-gray-100;
     @apply md:px-8;
@@ -176,11 +251,23 @@
   }
 
   .card {
-    @apply p-8;
+    @apply p-4;
     @apply flex flex-col gap-4;
     @apply bg-gray-300;
     @apply border border-gray-700 rounded-md shadow-md;
   }
+  .expandable-card {
+    @apply relative;
+    @apply w-full;
+    @apply p-4;
+    @apply flex flex-col gap-4 items-center justify-start;
+    @apply bg-gray-300;
+    @apply border-1 border-gray-700;
+    @apply rounded-lg;
+    @apply shadow-lg;
+    @apply transition-all duration-300;
+  }
+
   .background-blue {
     @apply bg-[#5a7cbe] text-gray-100;
   }
@@ -221,13 +308,43 @@
   }
 }
 
+/* HEADER */
+.header {
+  @apply fixed;
+  @apply top-0  left-0;
+  @apply px-4;
+  @apply w-full;
+  @apply z-[9999];
+  @apply flex gap-4 items-center justify-center;
+  @apply bg-gray-300;
+  @apply border-b border-gray-700;
+  @apply shadow-md;
+  @apply transition-all duration-300;
+  @apply md:justify-between;
+  @apply md:px-8;
+  @apply xl:px-16;
+  @apply 2xl:px-32;
+}
+.mobile-navigation {
+  @apply fixed;
+  @apply w-full h-18;
+  @apply z-[9999];
+  @apply px-4;
+  @apply left-0 bottom-0;
+  @apply flex items-center justify-center;
+  @apply bg-gray-300;
+  @apply border-t border-gray-700;
+  @apply shadow-md;
+  @apply md:hidden;
+}
+
 /* FOOTER */
 .footer {
-  @apply px-4 py-16;
+  @apply px-4 pt-16 pb-18;
   @apply flex flex-col gap-8;
   @apply bg-[#94b0dd];
   @apply md:px-8;
-  @apply lg:px-12;
+  @apply lg:px-12 lg:pb-0;
   @apply xl:px-32;
 }
 .footer-grid {
@@ -295,17 +412,4 @@
 
 .portable-text em {
   font-style: italic;
-}
-
-.portable-text a {
-  @apply text-[#94b0dd]  font-bold;
-  @apply underline underline-offset-2;
-  @apply transition-colors duration-200;
-  @apply hover:text-[#5a7cbe];
-}
-.portable-text-footer-link a {
-  @apply text-gray-100 font-bold;
-  @apply underline underline-offset-2;
-  @apply transition-colors duration-200;
-  @apply hover:text-gray-300;
 }

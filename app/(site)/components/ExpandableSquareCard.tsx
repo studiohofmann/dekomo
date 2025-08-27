@@ -62,7 +62,7 @@ export default function ExpandableSquareCard({
     <div ref={wrapperRef} className="w-full flex flex-col items-center">
       <div
         ref={contentRef}
-        className={`relative bg-gray-300 border-1 border-gray-700 p-8 flex flex-col gap-4 items-center justify-start w-full rounded-lg shadow-lg transition-all duration-300 ${className} ${
+        className={`expandable-card ${className} ${
           expanded ? "" : "overflow-hidden"
         }`}
         style={
@@ -81,16 +81,10 @@ export default function ExpandableSquareCard({
       </div>
       {(isOverflowing || expanded) && <div style={{ height: gapPx }} />}
       {isOverflowing || expanded ? (
-        <Button
-          variant="custom"
-          size="custom"
-          className="flex items-center justify-center gap-2 w-full"
-          style={{ height: buttonHeightPx, minHeight: buttonHeightPx }}
-          onClick={() => setExpanded((prev) => !prev)}
-        >
+        <button onClick={() => setExpanded((prev) => !prev)}>
           {expanded ? buttonLabelCollapse : buttonLabelExpand}
           {expanded ? <CloseOutlined /> : <RightOutlined />}
-        </Button>
+        </button>
       ) : null}
     </div>
   );

@@ -5,11 +5,9 @@ type LogoDeKoMoProps = {
   className?: string;
 };
 
-export default function LogoDeKoMo({
-  className = "h-full w-auto",
-}: LogoDeKoMoProps) {
+export default function LogoDeKoMo({ className = "" }: LogoDeKoMoProps) {
   return (
-    <Link href="/" className="px-0 py-0 flex items-center justify-center">
+    <Link href="/" className={`logo-link`}>
       <LogoDeKoMoSvg className={className} />
     </Link>
   );

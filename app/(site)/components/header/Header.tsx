@@ -28,11 +28,7 @@ export default function Header({ menuItems }: HeaderProps) {
 
   return (
     <>
-      <div
-        className={`fixed top-0 left-0 w-full z-[9999] bg-gray-300 shadow-md transition-all duration-300 flex gap-4 items-center justify-center md:justify-between px-4 md:px-8 xl:px-16 2xl:px-32 ${
-          isShrunk ? "h-20" : "h-32"
-        }`}
-      >
+      <div className={`header ${isShrunk ? "h-20" : "h-32"}`}>
         <LogoDeKoMo
           className={`transition-all duration-300 ${isShrunk ? "h-12" : "h-24"}`}
         />
@@ -45,7 +41,7 @@ export default function Header({ menuItems }: HeaderProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="fixed px-4 left-0 bottom-0 w-full z-[9999] md:hidden bg-gray-300 h-18 flex items-center justify-center">
+      <div className="mobile-navigation">
         <NavigationLinks menuItems={menuItems} />
       </div>
     </>

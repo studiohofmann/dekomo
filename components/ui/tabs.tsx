@@ -37,11 +37,7 @@ function TabsTrigger({
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
-      className={cn(
-        // Replace the long className with your custom styles
-        "bg-[#94b0dd] text-gray-700 !text-sm font-bold rounded-md shadow-md w-full items-center justify-center  text-md   border border-gray-700 hover:bg-[#5a7cbe]  hover:text-gray-100  data-[state=active]:bg-[#5a7cbe] data-[state=active]:text-gray-100 p-4 transition-colors",
-        className
-      )}
+      className={cn("tab-trigger-btn", className)}
       {...props}
     />
   );

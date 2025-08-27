@@ -16,7 +16,7 @@ export default async function Teilprojekte() {
   }
 
   return (
-    <ExpandableSquareCard className="border-1 border-gray-700 p-8">
+    <ExpandableSquareCard>
       {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
       <Tabs defaultValue={data.teilprojekt[0].ueberschrift || "tab-0"}>
         <TabsList>

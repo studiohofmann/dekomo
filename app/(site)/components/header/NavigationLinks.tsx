@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button"; // <-- import your Button
 
 // Use the stricter type for filtered items
 type MenuItem = {
@@ -18,10 +17,20 @@ interface NavigationLinksProps {
 
 export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const hash = typeof window !== "undefined" ? window.location.hash : "";
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     if (pathname !== "/impressum") return;
+
+    // If there is a hash, set the active section accordingly
+    if (hash === "#datenschutz") {
+      setActiveSection("datenschutz");
+      return;
+    } else if (hash === "" || hash === "#impressum") {
+      setActiveSection("impressum");
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,6 +56,15 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
       if (impressumElement) observer.unobserve(impressumElement);
       if (datenschutzElement) observer.unobserve(datenschutzElement);
     };
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    if (
+      pathname === "/impressum" &&
+      (!window.location.hash || window.location.hash === "#impressum")
+    ) {
+      setActiveSection("impressum");
+    }
   }, [pathname]);
 
   return (
@@ -78,15 +96,9 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
 
         return (
           <li key={item.slug.current}>
-            <Button
-              asChild
-              variant={isActive ? "selected" : "custom"}
-              size="custom"
-            >
-              <Link href={href}>
-                <h3>{item.seitentitelMenue}</h3>
-              </Link>
-            </Button>
+            <Link href={href} className={isActive ? "active-link" : ""}>
+              {item.seitentitelMenue}
+            </Link>
           </li>
         );
       })}
