@@ -1,7 +1,6 @@
 "use client";
 import { useState, useRef, useLayoutEffect } from "react";
 import { RightOutlined, CloseOutlined } from "@ant-design/icons";
-import { Button } from "@/components/ui/button";
 
 export default function ExpandableSquareCard({
   children,

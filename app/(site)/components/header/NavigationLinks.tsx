@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 // Use the stricter type for filtered items
@@ -17,32 +17,58 @@ interface NavigationLinksProps {
 
 export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const hash = typeof window !== "undefined" ? window.location.hash : "";
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     if (pathname !== "/impressum") return;
 
-    // If there is a hash, set the active section accordingly
-    if (hash === "#datenschutz") {
+    // Handle hash on load
+    if (window.location.hash === "#datenschutz") {
       setActiveSection("datenschutz");
-      return;
-    } else if (hash === "" || hash === "#impressum") {
-      setActiveSection("impressum");
+    } else {
+      setActiveSection("impressum"); // Default to impressum
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
+        let hasIntersecting = false;
         entries.forEach((entry: IntersectionObserverEntry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            // Require 50% visibility
             setActiveSection((entry.target as HTMLElement).id);
+            hasIntersecting = true;
           }
         });
+
+        // If neither meets the threshold, decide by scroll position / bottom-of-page
+        if (!hasIntersecting) {
+          const datenschutzElement = document.getElementById("datenschutz");
+          const headerOffset = 64; // same as rootMargin used above
+          const buffer = 50; // tolerate small overlap
+
+          if (datenschutzElement) {
+            const scrollY = window.scrollY;
+            const datenschutzTop =
+              datenschutzElement.getBoundingClientRect().top +
+              scrollY -
+              headerOffset;
+            const atBottom =
+              window.innerHeight + window.scrollY >=
+              document.body.scrollHeight - 10;
+
+            if (scrollY >= datenschutzTop - buffer || atBottom) {
+              setActiveSection("datenschutz");
+            } else {
+              setActiveSection("impressum");
+            }
+          } else {
+            setActiveSection("impressum");
+          }
+        }
       },
       {
-        threshold: 0.5,
-        rootMargin: "-128px 0px 0px 0px", // Offset for fixed header (8rem = 128px)
+        threshold: [0.1, 0.5, 1],
+        rootMargin: "-64px 0px 0px 0px",
       }
     );
 
@@ -56,15 +82,6 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
       if (impressumElement) observer.unobserve(impressumElement);
       if (datenschutzElement) observer.unobserve(datenschutzElement);
     };
-  }, [pathname, hash]);
-
-  useEffect(() => {
-    if (
-      pathname === "/impressum" &&
-      (!window.location.hash || window.location.hash === "#impressum")
-    ) {
-      setActiveSection("impressum");
-    }
   }, [pathname]);
 
   return (
