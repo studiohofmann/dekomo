@@ -20,6 +20,9 @@ export default function ExpandableSquareCard({
   const [expanded, setExpanded] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [measuredButtonHeight, setMeasuredButtonHeight] =
+    useState<number>(buttonHeightPx);
   const [squareSize, setSquareSize] = useState<number | null>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
@@ -28,9 +31,10 @@ export default function ExpandableSquareCard({
     function updateSize() {
       if (wrapperRef.current) {
         const width = wrapperRef.current.offsetWidth;
-        // Only subtract button+gap if button is needed
+        // use measuredButtonHeight so button styling stays untouched
+        const bh = measuredButtonHeight ?? buttonHeightPx;
         if (isOverflowing || expanded) {
-          setSquareSize(width - buttonHeightPx - gapPx);
+          setSquareSize(width - bh - gapPx);
         } else {
           setSquareSize(width);
         }
@@ -39,7 +43,23 @@ export default function ExpandableSquareCard({
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
-  }, [buttonHeightPx, gapPx, expanded, isOverflowing]);
+  }, [buttonHeightPx, gapPx, expanded, isOverflowing, measuredButtonHeight]);
+
+  // measure real button height after render (captures font-size/padding changes)
+  useLayoutEffect(() => {
+    function measure() {
+      const h = buttonRef.current?.offsetHeight;
+      if (h && h !== measuredButtonHeight) setMeasuredButtonHeight(h);
+    }
+    // measure on mount and next frame
+    measure();
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", measure);
+    };
+  }, [measuredButtonHeight]);
 
   // Check for overflow
   useLayoutEffect(() => {
@@ -80,7 +100,7 @@ export default function ExpandableSquareCard({
       </div>
       {(isOverflowing || expanded) && <div style={{ height: gapPx }} />}
       {isOverflowing || expanded ? (
-        <button onClick={() => setExpanded((prev) => !prev)}>
+        <button ref={buttonRef} onClick={() => setExpanded((prev) => !prev)}>
           {expanded ? buttonLabelCollapse : buttonLabelExpand}
           {expanded ? <CloseOutlined /> : <RightOutlined />}
         </button>

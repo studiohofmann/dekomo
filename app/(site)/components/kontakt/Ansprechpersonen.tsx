@@ -21,7 +21,7 @@ export default async function Ansprechpersonen() {
         {(ansprechpersonen.ansprechperson ?? []).map((person, index) => (
           <div
             key={index}
-            className="flex flex-col w-full gap-8 p-8 items-center bg-gray-100  border border-gray-700"
+            className="flex flex-col w-full gap-4 p-4 items-center bg-gray-100  border border-gray-700"
           >
             {person.profilbild && person.profilbild.asset && (
               <SanityImage

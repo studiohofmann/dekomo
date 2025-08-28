@@ -2,7 +2,6 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { DOWNLOADS_SEITE_QUERY } from "@/sanity/lib/queries";
 import type { DOWNLOADS_SEITE_QUERYResult } from "@/sanity/types";
 import { PortableText } from "next-sanity";
-import { Button } from "@/components/ui/button";
 import { DownloadOutlined, FileOutlined } from "@ant-design/icons";
 import type { Metadata } from "next";
 import { generateSEOMetadata } from "@/lib/seo";
@@ -88,13 +87,11 @@ export default async function DownloadsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button variant="custom" size="custom">
-                        <div className="flex gap-2 items-center justify-center">
-                          <div>Download</div>
+                      <div className="flex gap-2 items-center justify-center">
+                        <div>Download</div>
 
-                          <DownloadOutlined className="text-lg pb-0.5" />
-                        </div>
-                      </Button>
+                        <DownloadOutlined className="text-lg pb-0.5" />
+                      </div>
                     </a>
                   </div>
                 )}

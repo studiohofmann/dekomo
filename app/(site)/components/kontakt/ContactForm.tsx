@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { DownOutlined, CloseOutlined } from "@ant-design/icons";
 
 export default function ContactForm() {
@@ -103,10 +102,8 @@ export default function ContactForm() {
               email: "giuliana.crippa@unibe.ch",
             },
           ].map((person) => (
-            <Button
+            <button
               key={person.email}
-              variant="custom"
-              size="custom"
               onClick={() => handleRecipientClick(person.email)}
               className={`text-center ${
                 recipientEmail === person.email
@@ -125,32 +122,32 @@ export default function ContactForm() {
                 className="sr-only"
               />
               {person.label}
-            </Button>
+            </button>
           ))}
         </div>
 
         {/* ✍️ Contact Info */}
         <div className="flex flex-col gap-4">
-          <div className="relative">
+          <div className="relative cursor-pointer">
             <select
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className={`${formData.gender ? "text-gray-700" : "text-gray-500"}`}
+              className={`cursor-pointer ${formData.gender ? "text-gray-700" : "text-gray-500"}`} // This only styles the select box itself
               required
             >
               <option value="" disabled>
                 Anrede *
               </option>
-              <option value="Herr">Herr</option>
               <option value="Frau">Frau</option>
+              <option value="Herr">Herr</option>
               <option value="Neutral">Neutral</option>
             </select>
             {formData.gender ? (
               <button
                 type="button"
                 onClick={() => setFormData((prev) => ({ ...prev, gender: "" }))}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
+                className="clean-button absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
               >
                 <CloseOutlined />
               </button>
@@ -195,15 +192,13 @@ export default function ContactForm() {
         </div>
 
         {/* ✅ Submit Button */}
-        <Button
-          variant="custom"
-          size="custom"
+        <button
           disabled={!isFormValid || isSubmitting}
           type="submit"
           className="disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Wird gesendet..." : "Senden"}
-        </Button>
+        </button>
       </div>
       {/* Optional: Show validation message */}
       {!isFormValid && submitStatus === "idle" && (
