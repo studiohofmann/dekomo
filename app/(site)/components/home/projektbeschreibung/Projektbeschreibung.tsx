@@ -2,8 +2,8 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { PROJEKTBESCHREIBUNG_QUERY } from "@/sanity/lib/queries";
 import type { PROJEKTBESCHREIBUNG_QUERYResult } from "@/sanity/types";
 import { PortableText } from "@portabletext/react";
-import SanityImage from "../SanityImage";
-import ExpandableSquareCard from "../ExpandableSquareCard";
+import GrafikProjektbeschreibung from "./GrafikProjektbeschreibung";
+import ExpandableSquareCard from "../../ExpandableSquareCard";
 
 export default async function Projektbeschreibung() {
   const projektbeschreibung: PROJEKTBESCHREIBUNG_QUERYResult =
@@ -19,15 +19,9 @@ export default async function Projektbeschreibung() {
   return (
     <ExpandableSquareCard>
       <h2>{projektbeschreibung.ueberschrift}</h2>
-      {projektbeschreibung.grafik && (
-        <SanityImage
-          image={projektbeschreibung.grafik}
-          altFallback={projektbeschreibung.grafik.alt || "Grafik"}
-          width={600}
-          height={400}
-          className="w-full object-cover"
-        />
-      )}
+      <div className="w-full">
+        <GrafikProjektbeschreibung />
+      </div>
       <div className="portable-text">
         <PortableText value={projektbeschreibung.text || []} />
       </div>
