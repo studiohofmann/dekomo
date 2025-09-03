@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
+import ReactDOM from "react-dom";
 import Link from "next/link";
 
 // add global declaration so we can use window.removeAllHighlights without `any`
@@ -70,8 +71,12 @@ function getPreview(item: SearchResult, query: string): string {
             ) {
               const idx = childText.toLowerCase().indexOf(query.toLowerCase());
               if (idx !== -1) {
-                const start = Math.max(0, idx - 30);
-                const end = Math.min(childText.length, idx + query.length + 70);
+                // increase context: show more chars before/after match
+                const start = Math.max(0, idx - 100); // was 30
+                const end = Math.min(
+                  childText.length,
+                  idx + query.length + 200
+                ); // was +70
                 let snippet = childText.slice(start, end);
                 if (start > 0) snippet = "…" + snippet;
                 if (end < childText.length) snippet = snippet + "…";
@@ -87,8 +92,8 @@ function getPreview(item: SearchResult, query: string): string {
     ) {
       const idx = field.toLowerCase().indexOf(query.toLowerCase());
       if (idx !== -1) {
-        const start = Math.max(0, idx - 30);
-        const end = Math.min(field.length, idx + query.length + 70);
+        const start = Math.max(0, idx - 100); // was 30
+        const end = Math.min(field.length, idx + query.length + 200); // was +70
         let snippet = field.slice(start, end);
         if (start > 0) snippet = "…" + snippet;
         if (end < field.length) snippet = snippet + "…";
@@ -103,6 +108,40 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // measurement for portal dropdown
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [rect, setRect] = useState({ left: 0, top: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    function updateRect() {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+      const w = wrapper.getBoundingClientRect();
+      // target width: 50% of viewport
+      const vw = Math.max(0, window.innerWidth || 0);
+      const targetWidth = Math.round(vw * 0.5);
+      // keep a small page padding so box doesn't touch edges
+      const pagePadding = 16;
+      const width = Math.min(targetWidth, Math.max(200, vw - pagePadding * 2));
+      const centerX = w.left + w.width / 2;
+      let left = Math.round(centerX - width / 2);
+      // clamp so it stays within viewport + padding
+      left = Math.max(
+        pagePadding,
+        Math.min(left, Math.round(vw - pagePadding - width))
+      );
+      const top = Math.round(w.bottom + 16); // gap-4 == 16px below input
+      setRect({ left, top, width });
+    }
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    window.addEventListener("scroll", updateRect, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateRect);
+      window.removeEventListener("scroll", updateRect);
+    };
+  }, [query, results.length]);
 
   // Handle search input and fetch results
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,67 +165,74 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="relative">
+    // this wrapper must be relative and full-width of the header area
+    <div ref={wrapperRef} className="relative w-full min-w-0">
       <input
         type="search"
         value={query}
         onChange={handleSearch}
         placeholder="Suche..."
-        className="
-          bg-gray-200 border px-4 py-2 h-10 rounded-md text-gray-700
-          focus:outline-none
-          placeholder-gray-500 placeholder:italic placeholder:text-sm w-[123.7px]
-        "
+        className="text-xs placeholder:italic placeholder:text-xs w-full"
       />
-      {query.length > 1 && (
-        <div className="absolute p-8 bg-gray-100 left-0 top-full border border-gray-700 rounded-md shadow mt-2 z-10 w-64">
-          {loading && <div className="p-2">Lädt...</div>}
-          {!loading && results.length === 0 && (
-            <div className="p-2">Keine Treffer</div>
-          )}
-          {!loading &&
-            results.map((item) => {
-              const sectionId =
-                item.sectionId || (item as Partial<SearchResult>)._id;
-              const targetUrl = `/${item.slug?.current || ""}#${sectionId}-search-${encodeURIComponent(query)}`;
-              return (
-                <Link
-                  key={item._id}
-                  href={targetUrl}
-                  className="bg-gray-100 px-4 py-2 hover:bg-gray-100"
-                  // type the event and use the declared window property
-                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    if (typeof window !== "undefined") {
-                      window.removeAllHighlights?.();
-                    }
-                    const isSamePage =
-                      window.location.pathname ===
-                      `/${item.slug?.current || ""}`;
-                    if (isSamePage) {
-                      e.preventDefault();
-                      window.location.hash = `${sectionId}-search-${encodeURIComponent(query)}`;
-                      window.dispatchEvent(new Event("hashchange"));
-                    }
-                    setQuery("");
-                    setResults([]);
-                    // For cross-page navigation, do NOT prevent default!
-                  }}
-                  scroll={false}
-                >
-                  <div className="font-bold">
-                    {item.seitentitelMenue ||
-                      item.seoTitle ||
-                      item.ueberschrift ||
-                      item.metaDescription}
-                  </div>
-                  <div className="text-sm text-gray-600 line-clamp-2">
-                    {highlight(getPreview(item, query), query)}
-                  </div>
-                </Link>
-              );
-            })}
-        </div>
-      )}
+      {query.length > 1 &&
+        rect.width > 0 &&
+        ReactDOM.createPortal(
+          <div
+            className="p-4 bg-gray-200 border border-gray-700 rounded-md shadow flex flex-col gap-4 max-h-[60vh] overflow-y-auto"
+            style={{
+              position: "fixed",
+              left: rect.left,
+              top: rect.top,
+              width: rect.width,
+              maxWidth: "100%",
+              zIndex: 99999, // ensure it's on top
+            }}
+          >
+            {loading && <div className="p-2">Lädt...</div>}
+            {!loading && results.length === 0 && (
+              <div className="p-2">Keine Treffer</div>
+            )}
+            {!loading &&
+              results.map((item) => {
+                const sectionId =
+                  item.sectionId || (item as Partial<SearchResult>)._id;
+                const targetUrl = `/${item.slug?.current || ""}#${sectionId}-search-${encodeURIComponent(query)}`;
+                return (
+                  <Link
+                    key={item._id}
+                    href={targetUrl}
+                    className="flex flex-col gap-2 font-normal"
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                      if (typeof window !== "undefined")
+                        window.removeAllHighlights?.();
+                      const isSamePage =
+                        window.location.pathname ===
+                        `/${item.slug?.current || ""}`;
+                      if (isSamePage) {
+                        e.preventDefault();
+                        window.location.hash = `${sectionId}-search-${encodeURIComponent(query)}`;
+                        window.dispatchEvent(new Event("hashchange"));
+                      }
+                      setQuery("");
+                      setResults([]);
+                    }}
+                    scroll={false}
+                  >
+                    <div className="font-bold">
+                      {item.seitentitelMenue ||
+                        item.seoTitle ||
+                        item.ueberschrift ||
+                        item.metaDescription}
+                    </div>
+                    <div className="font-normal line-clamp-3">
+                      {highlight(getPreview(item, query), query)}
+                    </div>
+                  </Link>
+                );
+              })}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

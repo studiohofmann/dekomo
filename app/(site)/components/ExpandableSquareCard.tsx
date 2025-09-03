@@ -81,9 +81,8 @@ export default function ExpandableSquareCard({
     <div ref={wrapperRef} className="w-full flex flex-col items-center">
       <div
         ref={contentRef}
-        className={`expandable-card ${className} ${
-          expanded ? "" : "overflow-hidden"
-        }`}
+        // make this a positioned container so the absolute overlay is contained
+        className={`expandable-card ${className} ${expanded ? "" : "overflow-hidden"} relative z-0`}
         style={
           !expanded
             ? squareSize
@@ -95,12 +94,18 @@ export default function ExpandableSquareCard({
         {children}
         {/* fading overlay — LAST child inside this relative container */}
         {!expanded && isOverflowing && (
-          <div className="pointer-events-none absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-gray-300 to-transparent z-[9998]" />
+          // contained overlay + lower z so it doesn't cover outside elements
+          <div className="pointer-events-none absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-gray-300 to-transparent z-10" />
         )}
       </div>
       {(isOverflowing || expanded) && <div style={{ height: gapPx }} />}
       {isOverflowing || expanded ? (
-        <button ref={buttonRef} onClick={() => setExpanded((prev) => !prev)}>
+        <button
+          ref={buttonRef}
+          onClick={() => setExpanded((prev) => !prev)}
+          // ensure button sits above the overlay
+          className="relative z-20"
+        >
           {expanded ? buttonLabelCollapse : buttonLabelExpand}
           {expanded ? <CloseOutlined /> : <RightOutlined />}
         </button>

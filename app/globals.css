@@ -310,11 +310,12 @@
     @apply md:hidden;
   }
 
-  /* OCONTACT FORM */
+  /* CONTACT FORM */
   input,
   textarea {
     @apply px-4 py-2;
     @apply bg-gray-200 text-gray-700  border border-gray-700;
+    @apply rounded-md;
     @apply focus:outline-none focus:bg-gray-100 focus:border-gray-700;
     @apply transition-colors duration-200;
   }
@@ -347,7 +348,7 @@
 
   /* FOOTER */
   .footer {
-    @apply px-4 pt-16 pb-18;
+    @apply px-4 pt-16 pb-16;
     @apply flex flex-col gap-8;
     @apply bg-[#94b0dd];
     @apply md:px-8;

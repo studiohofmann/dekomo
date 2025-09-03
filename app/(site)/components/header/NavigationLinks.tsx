@@ -13,19 +13,28 @@ type MenuItem = {
 
 interface NavigationLinksProps {
   menuItems: MenuItem[];
+  onLinkClick?: () => void;
 }
 
-export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
+export default function NavigationLinks({
+  menuItems,
+  onLinkClick,
+}: NavigationLinksProps) {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("");
 
   // keep normal ordering for everything else, then append Impressum then Datenschutz
   const others = [...menuItems]
-    .filter((it) => it.slug.current !== "impressum" && it.slug.current !== "datenschutz")
+    .filter(
+      (it) =>
+        it.slug.current !== "impressum" && it.slug.current !== "datenschutz"
+    )
     .sort((a, b) => (a.menuReihenfolge ?? 0) - (b.menuReihenfolge ?? 0));
 
   const impressumItem = menuItems.find((it) => it.slug.current === "impressum");
-  const datenschutzItem = menuItems.find((it) => it.slug.current === "datenschutz");
+  const datenschutzItem = menuItems.find(
+    (it) => it.slug.current === "datenschutz"
+  );
 
   const orderedMenuItems = [...others];
   if (impressumItem) orderedMenuItems.push(impressumItem);
@@ -97,7 +106,7 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
   }, [pathname]);
 
   return (
-    <ul className="grid grid-cols-4 gap-4 w-full">
+    <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
       {orderedMenuItems.map((item) => {
         let href =
           item.slug.current === "" || item.slug.current === "/"
@@ -125,7 +134,13 @@ export default function NavigationLinks({ menuItems }: NavigationLinksProps) {
 
         return (
           <li key={item.slug.current}>
-            <Link href={href} className={isActive ? "active-link" : ""}>
+            <Link
+              href={href}
+              className={isActive ? "active-link" : ""}
+              onClick={() => {
+                if (onLinkClick) onLinkClick();
+              }}
+            >
               {item.seitentitelMenue}
             </Link>
           </li>
