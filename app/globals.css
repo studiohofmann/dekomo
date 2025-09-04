@@ -138,6 +138,7 @@
 
   h1 {
     @apply text-2xl font-black text-center;
+    @apply md:text-4xl;
   }
 
   h2 {
@@ -162,6 +163,7 @@
     @apply border border-gray-700;
     @apply rounded-md;
     @apply shadow-md;
+    @apply transition-colors duration-300 ease-in-out;
   }
   a.active-link:not(.logo-link) {
     @apply bg-[#5a7cbe];
@@ -211,6 +213,7 @@
     @apply rounded-md;
     @apply shadow-md;
     @apply cursor-pointer;
+    @apply transition-colors duration-300 ease-in-out;
   }
 
   /* TABS */
@@ -266,7 +269,6 @@
     @apply border-1 border-gray-700;
     @apply rounded-lg;
     @apply shadow-lg;
-    @apply transition-all duration-300;
   }
 
   .background-blue {

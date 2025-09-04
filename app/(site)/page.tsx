@@ -8,7 +8,7 @@ import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
 import News from "./components/home/News";
 import Auswirkungen from "./components/home/Auswirkungen";
-import Fallbeispiel from "./components/home/Fallbeispiel";
+import Fallbeispiele from "./components/home/Fallbeispiele";
 import Netzwerk from "./components/home/Netzwerk";
 import type { Metadata } from "next";
 import { generateSEOMetadata } from "@/lib/seo";
@@ -46,8 +46,8 @@ export default function Home() {
           <Auswirkungen />
         </div>
 
-        <div id="fallbeispiel">
-          <Fallbeispiel />
+        <div id="fallbeispiele">
+          <Fallbeispiele />
         </div>
         <div id="news">
           <News />

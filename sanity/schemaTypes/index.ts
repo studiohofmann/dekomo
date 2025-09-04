@@ -7,7 +7,7 @@ import teilprojekte from "./home/teilprojekte";
 import zugangswege from "./home/zugangswege";
 import news from "./home/news";
 import auswirkungen from "./home/auswirkungen";
-import fallbeispiel from "./home/fallbeispiel";
+import fallbeispiele from "./home/fallbeispiele";
 import netzwerk from "./home/netzwerk";
 import downloadsSeite from "./downloadsSeite";
 import kontaktSeite from "./kontakt/kontaktSeite";
@@ -27,7 +27,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     zugangswege,
     news,
     auswirkungen,
-    fallbeispiel,
+    fallbeispiele,
     netzwerk,
     vision,
     downloadsSeite,

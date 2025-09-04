@@ -30,7 +30,7 @@ export default async function Einleitung() {
       <div className="page-introduction bg-none absolute inset-0 items-center justify-center z-20">
         <h1 className="text-gray-100">{einleitung.ueberschrift}</h1>
         {einleitung.text && (
-          <div className="portable-text text-gray-100 text-center text-sm 2xl:px-16">
+          <div className="portable-text text-gray-100 text-center text-sm md:text-base 2xl:px-16">
             <PortableText value={einleitung.text || []} />
           </div>
         )}

@@ -87,13 +87,16 @@ export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
   }
 }`);
 
-export const FALLBEISPIEL_QUERY = defineQuery(`*[_type == "fallbeispiel"][0]{
+export const FALLBEISPIELE_QUERY = defineQuery(`*[_type == "fallbeispiele"][0]{
   ueberschrift,
-  text,
-  bild{
-    asset->{_id, url},
-    alt
-  },
+  fallbeispiel[]{
+    ueberschrift,
+    bild{
+      asset->{_id, url},
+      alt
+    },
+    text
+  }
 }`);
 
 export const NETZWERK_QUERY = defineQuery(`*[_type == "netzwerk"][0]{
