@@ -1,5 +1,11 @@
 "use client";
-import { useState, useRef, useLayoutEffect, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+  useEffect,
+} from "react";
 import { RightOutlined, CloseOutlined } from "@ant-design/icons";
 
 export default function ExpandableSquareCard({
@@ -40,57 +46,60 @@ export default function ExpandableSquareCard({
   }, [squareSize]);
 
   // animate height between current and target px
-  const animateHeight = (targetPx: number, onDone?: () => void) => {
-    const el = contentRef.current;
-    if (!el) {
-      onDone?.();
-      return;
-    }
-    if (transitioningRef.current) {
-      el.style.transition = "";
-    }
-
-    // hide overflow immediately so inner content doesn't leak during the shrink/expand
-    el.style.overflow = "hidden";
-    // hint the browser to optimize
-    el.style.willChange = "height";
-
-    const currentPx = el.getBoundingClientRect().height;
-    // set current explicit height to start the animation (if it's 'auto')
-    el.style.height = `${currentPx}px`;
-    // force reflow
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    el.offsetHeight;
-
-    // use configurable duration (default 300ms -> Tailwind duration-300)
-    el.style.transition = `height ${transitionDurationMs}ms cubic-bezier(.2,.8,.2,1)`;
-    transitioningRef.current = true;
-
-    const handle = () => {
-      el.style.transition = "";
-      transitioningRef.current = false;
-      // if we expanded, set height to auto for responsiveness and restore overflow
-      if (targetPx > currentPx) {
-        el.style.height = "auto";
-        // allow content to be visible after expansion
-        el.style.overflow = "visible";
-      } else {
-        // collapsed: keep explicit height and keep overflow hidden
-        el.style.height = `${targetPx}px`;
-        el.style.overflow = "hidden";
+  const animateHeight = useCallback(
+    (targetPx: number, onDone?: () => void) => {
+      const el = contentRef.current;
+      if (!el) {
+        onDone?.();
+        return;
       }
-      // cleanup will-change hint
-      el.style.willChange = "";
-      el.removeEventListener("transitionend", handle);
-      onDone?.();
-    };
+      if (transitioningRef.current) {
+        el.style.transition = "";
+      }
 
-    el.addEventListener("transitionend", handle);
-    // start animation next frame
-    requestAnimationFrame(() => {
-      el.style.height = `${targetPx}px`;
-    });
-  };
+      // hide overflow immediately so inner content doesn't leak during the shrink/expand
+      el.style.overflow = "hidden";
+      // hint the browser to optimize
+      el.style.willChange = "height";
+
+      const currentPx = el.getBoundingClientRect().height;
+      // set current explicit height to start the animation (if it's 'auto')
+      el.style.height = `${currentPx}px`;
+      // force reflow
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      el.offsetHeight;
+
+      // use configurable duration (default 300ms -> Tailwind duration-300)
+      el.style.transition = `height ${transitionDurationMs}ms cubic-bezier(.2,.8,.2,1)`;
+      transitioningRef.current = true;
+
+      const handle = () => {
+        el.style.transition = "";
+        transitioningRef.current = false;
+        // if we expanded, set height to auto for responsiveness and restore overflow
+        if (targetPx > currentPx) {
+          el.style.height = "auto";
+          // allow content to be visible after expansion
+          el.style.overflow = "visible";
+        } else {
+          // collapsed: keep explicit height and keep overflow hidden
+          el.style.height = `${targetPx}px`;
+          el.style.overflow = "hidden";
+        }
+        // cleanup will-change hint
+        el.style.willChange = "";
+        el.removeEventListener("transitionend", handle);
+        onDone?.();
+      };
+
+      el.addEventListener("transitionend", handle);
+      // start animation next frame
+      requestAnimationFrame(() => {
+        el.style.height = `${targetPx}px`;
+      });
+    },
+    [transitionDurationMs]
+  );
 
   // Calculate square size
   useLayoutEffect(() => {
@@ -169,7 +178,7 @@ export default function ExpandableSquareCard({
   }, [squareSize, expanded, children, overlayMounted, transitionDurationMs]);
 
   // smooth toggle handler
-  const toggle = () => {
+  const toggle = useCallback(() => {
     const el = contentRef.current;
     if (!el) {
       setExpanded((s) => !s);
@@ -209,7 +218,56 @@ export default function ExpandableSquareCard({
         }
       });
     }
-  };
+  }, [
+    getCollapsedHeight,
+    expanded,
+    animateHeight,
+    transitionDurationMs,
+    overlayMounted,
+  ]);
+
+  // add this effect somewhere inside the component body (after toggle / refs are defined)
+  useEffect(() => {
+    function onSearchOpen(e: Event) {
+      const detail = (e as CustomEvent)?.detail;
+      const sectionId: string | undefined = detail?.sectionId;
+      if (!sectionId || !contentRef.current) return;
+
+      // try to find the target inside this card
+      const target =
+        contentRef.current.querySelector(`#${CSS.escape(sectionId)}`) ||
+        contentRef.current.querySelector(`[data-section-id="${sectionId}"]`);
+
+      if (!target) return;
+
+      // if collapsed, toggle open first
+      if (!expanded) {
+        // call your existing toggle function
+        try {
+          toggle();
+        } catch {
+          setExpanded(true);
+        }
+        // scroll after the expand animation completes
+        setTimeout(() => {
+          (target as HTMLElement).scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, transitionDurationMs + 50);
+      } else {
+        // already open -> just scroll
+        (target as HTMLElement).scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+
+    window.addEventListener("search:open", onSearchOpen as EventListener);
+    return () =>
+      window.removeEventListener("search:open", onSearchOpen as EventListener);
+  }, [expanded, transitionDurationMs, toggle, contentRef]);
 
   return (
     <div ref={wrapperRef} className="w-full flex flex-col items-center">

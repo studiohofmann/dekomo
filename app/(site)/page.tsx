@@ -38,10 +38,6 @@ export default function Home() {
         <div id="teilprojekte">
           <Teilprojekte />
         </div>
-
-        <div id="zugangswege">
-          <Zugangswege />
-        </div>
         <div id="auswirkungen">
           <Auswirkungen />
         </div>
@@ -54,6 +50,9 @@ export default function Home() {
         </div>
         <div id="netzwerk">
           <Netzwerk />
+        </div>
+        <div id="zugangswege">
+          <Zugangswege />
         </div>
         <div id="vision">
           <Vision />
