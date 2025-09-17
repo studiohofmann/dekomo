@@ -16,6 +16,9 @@ export default function ContactForm() {
     message: "",
     gender: "",
   });
+  const [submitErrorDetail, setSubmitErrorDetail] = useState<string | null>(
+    null
+  );
 
   const handleRecipientClick = (email: string) => {
     // If the clicked email is already selected, deselect it
@@ -67,10 +70,17 @@ export default function ContactForm() {
         });
         setRecipientEmail("");
       } else {
+        // Extract error details from response
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Server error:", errorData);
+        setSubmitErrorDetail(
+          errorData?.detail || errorData?.message || "Unbekannter Fehler"
+        );
         setSubmitStatus("error");
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      setSubmitErrorDetail(String(error));
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -133,7 +143,9 @@ export default function ContactForm() {
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className={`cursor-pointer ${formData.gender ? "text-gray-700" : "text-gray-500"}`} // This only styles the select box itself
+              className={`cursor-pointer ${
+                formData.gender ? "text-gray-700" : "text-gray-500"
+              }`} // This only styles the select box itself
               required
             >
               <option value="" disabled>
@@ -223,6 +235,11 @@ export default function ContactForm() {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
           <h3 className="font-bold">Fehler beim Senden</h3>
           <p>Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.</p>
+          {submitErrorDetail && (
+            <div className="mt-2 text-xs border-t border-red-300 pt-2">
+              <p className="font-mono">Fehlerdetails: {submitErrorDetail}</p>
+            </div>
+          )}
         </div>
       )}
     </form>

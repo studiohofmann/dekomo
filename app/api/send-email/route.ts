@@ -1,6 +1,15 @@
 import nodemailer from "nodemailer";
 import { NextRequest, NextResponse } from "next/server";
 
+interface NodemailerError extends Error {
+  code?: string;
+  response?: {
+    body?: unknown;
+  };
+  responseCode?: number;
+  command?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -38,20 +47,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create SendGrid transporter
+    // Create Plesk mail server transporter
     const transporter = nodemailer.createTransport({
-      host: "smtp.sendgrid.net",
+      host: "mail.dekomo.ch",
       port: 587,
-      secure: false,
+      secure: false, // Use TLS
       auth: {
-        user: "apikey", // This is always "apikey" for SendGrid
-        pass: process.env.SENDGRID_API_KEY,
+        user: "info@dekomo.ch", // Your Plesk mailbox
+        pass: process.env.MAIL_PASSWORD, // Will add to env vars
       },
     });
 
     // Send email
     const info = await transporter.sendMail({
-      from: `"DeKoMo Kontakt" <noreply@dekomo.ch>`, // Clean name, noreply address
+      from: '"DeKoMo Kontakt" <info@dekomo.ch>', // Must match the auth user above
       to: recipientEmail,
       replyTo: email, // User can reply directly to the person who sent the form
       subject: `Kontaktanfrage DeKoMo: ${name} ${vorname}`,
@@ -99,10 +108,23 @@ Antworten Sie direkt auf diese E-Mail, um mit ${name} ${vorname} in Kontakt zu t
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Email sending error:", error);
+  } catch (error: unknown) {
+    const err = error as NodemailerError;
+    console.error("Email sending error:", err);
+    // Extract useful details from error
+    const errorMessage = err?.message || String(err);
+    const responseBody = err?.response?.body;
+    console.error("Error details:", {
+      message: errorMessage,
+      body: responseBody,
+    });
+
     return NextResponse.json(
-      { error: "Fehler beim Senden der E-Mail" },
+      {
+        error: "Fehler beim Senden der E-Mail",
+        detail: errorMessage,
+        responseBody: responseBody,
+      },
       { status: 500 }
     );
   }
