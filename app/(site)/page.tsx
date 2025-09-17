@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <div>
       <Einleitung />
-      <div className="page-content lg:grid-cols-3 xl:gap-16">
+      <div className="page-content md:grid-cols-2 2xl:grid-cols-3 xl:gap-16">
         <div id="projektbeschreibung">
           <Projektbeschreibung />
         </div>

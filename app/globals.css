@@ -414,3 +414,176 @@
     font-style: italic;
   }
 }
+
+.leaflet-map .leaflet-control-zoom {
+  @apply flex flex-col gap-2;
+  @apply absolute left-1 top-1 z-10;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Buttons: remove their own border so only the container shows an outline */
+.leaflet-map .leaflet-control-zoom a,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-out {
+  @apply px-2 py-2;
+  @apply w-full;
+  @apply flex items-center justify-center;
+  @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+  @apply text-xs font-bold text-gray-700 hover:text-gray-100;
+  @apply border border-gray-700;
+  @apply rounded-md;
+  @apply shadow-md;
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* ensure any SVG inside scales up */
+.leaflet-map .leaflet-control-zoom a svg {
+  @apply w-6 h-6; /* 24px */
+  fill: currentColor;
+}
+
+/* adjust stacked layout spacing if needed */
+.leaflet-map .leaflet-control-zoom {
+  @apply flex flex-col gap-2;
+}
+
+/* Toned-down link styles inside maps to avoid inheriting .portable-text link rules */
+.leaflet-map a {
+  @apply text-[#94b0dd] font-medium no-underline;
+  @apply transition-colors duration-200;
+}
+.leaflet-map a:hover {
+  @apply text-[#5a7cbe];
+}
+
+/* Attribution / OSM link: smaller and less bold than portable-text links */
+.leaflet-map .leaflet-control-attribution a,
+.leaflet-map .leaflet-custom-attribution .leaflet-osm a {
+  @apply text-xs font-normal underline underline-offset-2 text-gray-700;
+  @apply transition-colors duration-200;
+}
+.leaflet-map .leaflet-control-attribution a:hover,
+.leaflet-map .leaflet-custom-attribution .leaflet-osm a:hover {
+  @apply text-[#5a7cbe];
+}
+
+/* Reset boxed link styles INSIDE the Leaflet map (attribution, popups, custom control) */
+.leaflet-map
+  :is(
+    .leaflet-control-attribution a,
+    .leaflet-custom-attribution a,
+    .leaflet-popup-content a
+  ) {
+  @apply inline-block; /* not full-width / not flex */
+  @apply px-0 py-0; /* remove site button padding */
+  @apply w-auto; /* allow intrinsic width */
+  @apply bg-transparent; /* remove background */
+  @apply border-0; /* remove border */
+  @apply rounded-none; /* remove radius */
+  @apply shadow-none; /* remove shadow */
+  @apply text-[#94b0dd] font-medium; /* keep gentle color & weight */
+  @apply underline underline-offset-2;
+  @apply transition-colors duration-200;
+}
+/* hover color */
+.leaflet-map
+  :is(
+    .leaflet-control-attribution a,
+    .leaflet-custom-attribution a,
+    .leaflet-popup-content a
+  ):hover {
+  @apply text-[#5a7cbe];
+}
+
+/* If the global rule still wins because of specificity, force with !important fallbacks */
+.leaflet-map .leaflet-control-attribution a,
+.leaflet-map .leaflet-custom-attribution a,
+.leaflet-map .leaflet-popup-content a {
+  background: transparent !important;
+  padding: 0 !important;
+  width: auto !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: inline-block !important;
+}
+
+/* remove all borders / outlines for Leaflet zoom control */
+.leaflet-map .leaflet-control-zoom,
+.leaflet-map .leaflet-control-zoom a,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-out {
+  @apply border-0 bg-transparent shadow-none;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  outline: 0 !important;
+}
+
+/* remove any separator lines between stacked buttons */
+.leaflet-map .leaflet-control-zoom a:not(:first-child) {
+  border-top: 0 !important;
+}
+
+/* ensure buttons keep their size and layout but no border */
+.leaflet-map .leaflet-control-zoom a {
+  @apply inline-flex items-center justify-center w-9 h-9 p-0 m-0;
+  border-radius: 0;
+}
+.leaflet-map .leaflet-bottom.leaflet-right {
+  /* offset from the viewport edges — adjust values to taste */
+  right: 0.5rem; /* distance from right edge */
+  bottom: 0.5rem; /* distance from bottom edge */
+  pointer-events: none; /* container only; controls keep pointer events */
+}
+
+/* ensure the actual control element still accepts pointer events */
+.leaflet-map .leaflet-bottom.leaflet-right > * {
+  pointer-events: auto;
+}
+
+/* Leaflet tooltip styling used by .custom-tooltip (keeps text clean + styled) */
+.leaflet-map .leaflet-tooltip.custom-tooltip {
+  @apply bg-[#f7f1a9] text-gray-700 rounded-md px-4 py-2 shadow-md border border-gray-700;
+  @apply text-xs; /* change here: text-xs | text-sm | text-base | text-lg */
+  white-space: nowrap;
+  font-weight: 600; /* fallback if no Tailwind on inner span */
+}
+
+/* tooltip arrow color */
+.leaflet-map .leaflet-tooltip.custom-tooltip:before {
+  @apply border-t-gray-700;
+}
+
+/* Override all previous zoom control styles with exact link styling */
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-out {
+  /* Exact link styling without anything extra */
+  @apply px-3 py-2;
+  @apply w-full;
+  @apply flex items-center justify-center;
+  @apply !bg-[#94b0dd] hover:!bg-[#5a7cbe];
+  @apply text-xs font-bold text-gray-700 hover:text-gray-100;
+  @apply !border !border-gray-700;
+  @apply rounded-md;
+  @apply !shadow-md;
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* Fix parent container to not interfere */
+.leaflet-map .leaflet-control-zoom {
+  @apply bg-transparent border-0 shadow-none;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  @apply flex flex-col gap-2;
+}
+
+/* Fix zoom button corners and ensure rounded edges on both buttons */
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-out {
+  /* Force rounded corners with important flag */
+  border-radius: 0.375rem !important; /* rounded-md = 0.375rem */
+  overflow: hidden !important;
+}

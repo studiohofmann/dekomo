@@ -1,8 +1,9 @@
 "use client";
-
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
+import { renderToStaticMarkup } from "react-dom/server";
+import { EnvironmentFilled } from "@ant-design/icons";
 
 // Define the type for locations from Sanity
 type StandortType = {
@@ -16,15 +17,35 @@ type MapProps = {
 };
 
 const Map = ({ standorte }: MapProps) => {
-  const markerIcon = new L.Icon({
-    iconUrl: "/marker-icon.png",
-    shadowUrl: "/marker-shadow.png",
-    iconSize: [22, 32],
-    shadowSize: [41, 41],
-    iconAnchor: [11, 32], // Fixed anchor point
-    shadowAnchor: [12, 41],
-    popupAnchor: [0, -32], // Fixed popup position
-  });
+  // Create a DivIcon from a React element (Ant icon)
+  const createIconFromReact = (
+    node: React.ReactNode,
+    size = 36,
+    wrapperClass = "w-9 h-9 flex items-center justify-center"
+  ) => {
+    const html = renderToStaticMarkup(
+      <div
+        className={`map-marker-react ${wrapperClass}`}
+        style={{ width: size, height: size }}
+      >
+        {node}
+      </div>
+    );
+    return L.divIcon({
+      className: "map-marker",
+      html,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size],
+      popupAnchor: [0, -size / 2],
+    });
+  };
+
+  // use Tailwind classes for color & sizing (w-9 h-9 = 36px)
+  const antIcon = createIconFromReact(
+    <EnvironmentFilled />,
+    36,
+    "text-gray-700 text-3xl"
+  );
 
   // Set center to Switzerland if you have locations, otherwise default
   const mapCenter: [number, number] =
@@ -38,6 +59,7 @@ const Map = ({ standorte }: MapProps) => {
         center={mapCenter}
         zoom={7} // Adjusted for Switzerland
         style={{ height: "100%", width: "100%" }}
+        className="leaflet-map"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -49,7 +71,7 @@ const Map = ({ standorte }: MapProps) => {
           <Marker
             key={index}
             position={[standort.latitude, standort.longitude]}
-            icon={markerIcon}
+            icon={antIcon}
           >
             {/* Tooltip shows title above marker (always visible) */}
             <Tooltip
@@ -62,7 +84,7 @@ const Map = ({ standorte }: MapProps) => {
             </Tooltip>
 
             {/* Popup shows on click */}
-            <Popup>
+            {/* <Popup>
               <div>
                 <div>{standort.titel}</div>
                 <p>
@@ -70,7 +92,7 @@ const Map = ({ standorte }: MapProps) => {
                   {standort.longitude.toFixed(4)}
                 </p>
               </div>
-            </Popup>
+            </Popup> */}
           </Marker>
         ))}
       </MapContainer>

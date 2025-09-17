@@ -24,7 +24,7 @@ export default async function Netzwerk() {
           <PortableText value={netzwerk.text} />
         </div>
       )}
-      <div className="w-full aspect-[4/3] mt-4">
+      <div className="w-full aspect-[4/3]">
         <MapWrapper
           standorte={(netzwerk.standorte || []).map((s) => ({
             titel: s.titel ?? "",
