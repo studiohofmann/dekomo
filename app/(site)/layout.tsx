@@ -6,6 +6,7 @@ import type { NAVIGATION_QUERYResult } from "@/sanity/types";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import SearchHighlighter from "./components/header/search-bar/SearchHighlighter";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "DeKoMo",
@@ -66,6 +67,7 @@ export default async function RootLayout({
         <main>
           <SearchHighlighter />
           {children}
+          <SpeedInsights />
         </main>
         <footer>
           <Footer />
