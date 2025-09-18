@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useLayoutEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import Link from "next/link";
+import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 
 // add global declaration so we can use window.removeAllHighlights without `any`
 declare global {
@@ -105,47 +105,13 @@ function getPreview(item: SearchResult, query: string): string {
 }
 
 export default function SearchBar() {
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // measurement for portal dropdown
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [rect, setRect] = useState({ left: 0, top: 0, width: 0 });
-
-  useLayoutEffect(() => {
-    function updateRect() {
-      const wrapper = wrapperRef.current;
-      if (!wrapper) return;
-      const w = wrapper.getBoundingClientRect();
-      // target width: 50% of viewport
-      const vw = Math.max(0, window.innerWidth || 0);
-      const targetWidth = Math.round(vw * 0.5);
-      // keep a small page padding so box doesn't touch edges
-      const pagePadding = 16;
-      const width = Math.min(targetWidth, Math.max(200, vw - pagePadding * 2));
-      const centerX = w.left + w.width / 2;
-      let left = Math.round(centerX - width / 2);
-      // clamp so it stays within viewport + padding
-      left = Math.max(
-        pagePadding,
-        Math.min(left, Math.round(vw - pagePadding - width))
-      );
-      const top = Math.round(w.bottom + 16); // gap-4 == 16px below input
-      setRect({ left, top, width });
-    }
-    updateRect();
-    window.addEventListener("resize", updateRect);
-    window.addEventListener("scroll", updateRect, { passive: true });
-    return () => {
-      window.removeEventListener("resize", updateRect);
-      window.removeEventListener("scroll", updateRect);
-    };
-  }, [query, results.length]);
-
   // Handle search input and fetch results
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // use the declared window property instead of casting to any
     if (typeof window !== "undefined") {
       window.removeAllHighlights?.();
     }
@@ -158,81 +124,121 @@ export default function SearchBar() {
     }
 
     setLoading(true);
-    const res = await fetch(`/api/search?q=${encodeURIComponent(value)}`);
-    const data = (await res.json()) as SearchResult[];
-    setResults(data);
-    setLoading(false);
+    try {
+      console.log("Searching for:", value);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(value)}`);
+      console.log("API response status:", res.status);
+      let data = await res.json();
+      console.log("Raw search results:", data);
+
+      // Filter results to only include those with actual preview content
+      data = data.filter((item: SearchResult) => {
+        const preview = getPreview(item, value);
+        return preview.trim().length > 0;
+      });
+
+      console.log("Filtered search results:", data);
+      setResults(data);
+    } catch (error) {
+      console.error("Search error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setQuery("");
+    setResults([]);
   };
 
   return (
-    // this wrapper must be relative and full-width of the header area
-    <div ref={wrapperRef} className="relative w-full min-w-0">
-      <input
-        type="search"
-        value={query}
-        onChange={handleSearch}
-        placeholder="Suche..."
-        className="text-xs placeholder:italic placeholder:text-xs w-full"
-      />
-      {query.length > 1 &&
-        rect.width > 0 &&
-        ReactDOM.createPortal(
+    <>
+      {/* Search Icon */}
+      <button
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            window.removeAllHighlights?.();
+          }
+          setIsOpen(true);
+        }}
+        className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+        aria-label="Search"
+      >
+        <SearchOutlined className="text-gray-700" />
+      </button>
+
+      {/* Modal Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-white bg-opacity-50 z-50 flex items-center justify-center"
+          onClick={closeModal}
+        >
           <div
-            className="p-4 bg-gray-200 border border-gray-700 rounded-md shadow flex flex-col gap-4 max-h-[60vh] overflow-y-auto"
-            style={{
-              position: "fixed",
-              left: rect.left,
-              top: rect.top,
-              width: rect.width,
-              maxWidth: "100%",
-              zIndex: 99999, // ensure it's on top
-            }}
+            className="rounded-lg shadow-xl w-full h-full m-4 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
-            {loading && <div className="p-2">Lädt...</div>}
-            {!loading && results.length === 0 && (
-              <div className="p-2">Keine Treffer</div>
-            )}
-            {!loading &&
-              results.map((item) => {
-                const sectionId =
-                  item.sectionId || (item as Partial<SearchResult>)._id;
-                const targetUrl = `/${item.slug?.current || ""}#${sectionId}-search-${encodeURIComponent(query)}`;
-                return (
-                  <Link
-                    key={item._id}
-                    href={targetUrl}
-                    className="flex flex-col gap-2 font-normal"
-                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                      if (typeof window !== "undefined")
-                        window.removeAllHighlights?.();
-                      const isSamePage =
-                        window.location.pathname ===
-                        `/${item.slug?.current || ""}`;
-                      if (isSamePage) {
-                        e.preventDefault();
-                        window.location.hash = `${sectionId}-search-${encodeURIComponent(query)}`;
-                        window.dispatchEvent(new Event("hashchange"));
-                      }
-                      setQuery("");
-                      setResults([]);
-                    }}
-                    scroll={false}
-                  >
-                    <div className="font-bold">
-                      {item.seitentitelMenue ||
-                        item.seoTitle ||
-                        item.ueberschrift ||
-                        item.metaDescription}
-                    </div>
-                    <div className="font-normal line-clamp-3">
-                      {highlight(getPreview(item, query), query)}
-                    </div>
-                  </Link>
-                );
-              })}
-          </div>,
-          document.body
-        )}
-    </div>
+            {/* Header with close button */}
+            <div className="bg-white flex items-center justify-between p-4 border-b">
+              <h2 className="text-lg font-semibold">Suche</h2>
+              <button
+                onClick={closeModal}
+                className="p-1 hover:bg-gray-100 rounded-md transition-colors"
+                aria-label="Close search"
+              >
+                <CloseOutlined />
+              </button>
+            </div>
+
+            {/* Search Input */}
+            <div className="bg-white p-4 border-b">
+              <input
+                type="search"
+                value={query}
+                onChange={handleSearch}
+                placeholder="Suche..."
+                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                autoFocus
+              />
+            </div>
+
+            {/* Results */}
+            <div className="p-4 flex-1 overflow-y-auto">
+              {loading && <div className="p-4 text-center">Lädt...</div>}
+              {!loading && results.length === 0 && query.length > 1 && (
+                <div className="p-4 text-center text-gray-500">
+                  Keine Treffer
+                </div>
+              )}
+              {!loading &&
+                results.map((item) => {
+                  return (
+                    <Link
+                      key={item._id}
+                      href={`${item.slug?.current || ""}?search=${encodeURIComponent(query)}`}
+                      className="block p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                      onClick={() => {
+                        if (typeof window !== "undefined")
+                          window.removeAllHighlights?.();
+                        closeModal();
+                      }}
+                    >
+                      <div className="font-semibold text-gray-900 mb-2">
+                        {item.seitentitelMenue ||
+                          item.seoTitle ||
+                          item.ueberschrift ||
+                          item.metaDescription}
+                      </div>
+                      <div className="text-gray-700 line-clamp-3">
+                        {highlight(getPreview(item, query), query)}
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

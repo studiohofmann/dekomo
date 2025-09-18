@@ -1,38 +1,53 @@
-import { sanityFetch } from "@/sanity/lib/client";
+import { NextRequest, NextResponse } from "next/server";
+import { client } from "@/sanity/lib/client";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const q = searchParams.get("q") || "";
+  const searchQuery = searchParams.get("q");
 
-  const results = await sanityFetch({
-    query: `*[
-      (
-        defined(seitentitelMenue) && seitentitelMenue match $q + "*" ||
-        defined(seoTitle) && seoTitle match $q + "*" ||
-        defined(metaDescription) && metaDescription match $q + "*" ||
-        defined(ueberschrift) && ueberschrift match $q + "*" ||
-        $q in keywords ||
-        defined(text) && text[].children[].text match $q + "*" ||
-        defined(angabenText) && angabenText[].children[].text match $q + "*" ||
-        defined(impressumText) && impressumText[].children[].text match $q + "*" ||
-        defined(ansprechperson) && ansprechperson[].text[].children[].text match $q + "*"
-      )
-    ][0...10]{
-      _id,
-      _type,
-      seitentitelMenue,
-      seoTitle,
-      metaDescription,
-      ueberschrift,
-      keywords,
-      slug,
-      text,
-      angabenText,
-      impressumText,
-      ansprechperson
-    }`,
-    params: { q },
-  });
+  if (!searchQuery || searchQuery.length < 2) {
+    return NextResponse.json([]);
+  }
 
-  return Response.json(results);
+  try {
+    const results = await client.fetch(
+      `*[_type in [
+        "homeSeite", "einleitung", "vision", "projektbeschreibung", 
+        "teilprojekte", "zugangswege", "news", "auswirkungen", 
+        "fallbeispiele", "netzwerk", "downloadsSeite", "kontaktSeite", 
+        "ansprechpersonen", "impressumSeite", "datenschutz", 
+        "projektfoerderung", "projektpartner", "erweitertesNetzwerk"
+      ]] | score(
+        boost(ueberschrift match $searchQuery + "*", 3),
+        boost(text match $searchQuery + "*", 2),
+        boost(teilprojekt[].ueberschrift match $searchQuery + "*", 2),
+        boost(teilprojekt[].text match $searchQuery + "*", 1),
+        boost(fallbeispiel[].ueberschrift match $searchQuery + "*", 2),
+        boost(fallbeispiel[].text match $searchQuery + "*", 1),
+        boost(ansprechperson[].text match $searchQuery + "*", 1),
+        boost(angabenUeberschrift match $searchQuery + "*", 2),
+        boost(angabenText match $searchQuery + "*", 1),
+        boost(impressumText match $searchQuery + "*", 1),
+        boost(seitentitelMenue match $searchQuery + "*", 2),
+        boost(seoTitle match $searchQuery + "*", 1),
+        boost(metaDescription match $searchQuery + "*", 1)
+      ) | order(_score desc)[0...20] {
+        _id,
+        _type,
+        slug,
+        ueberschrift,
+        text,
+        seitentitelMenue,
+        seoTitle,
+        metaDescription,
+        "sectionId": _type  // Use _type as sectionId
+      }`,
+      { searchQuery: searchQuery }
+    );
+
+    return NextResponse.json(results);
+  } catch (error) {
+    console.error("Search API error:", error);
+    return NextResponse.json({ error: "Search failed" }, { status: 500 });
+  }
 }

@@ -11,106 +11,102 @@ function removeAllHighlights() {
   });
 }
 
-function removeHashFromUrl() {
-  if (window.location.hash) {
-    history.replaceState(
-      null,
-      "",
-      window.location.pathname + window.location.search
-    );
-  }
-}
-
-function highlightInSection(
-  section: HTMLElement,
-  searchTerm: string,
-  shouldScroll = true
-) {
-  console.log(
-    `[Highlight] Highlighting "${searchTerm}" in section #${section.id}`
-  );
-  section.querySelectorAll("mark[data-search-highlight]").forEach((el) => {
-    const parent = el.parentNode;
-    if (parent) {
-      parent.replaceChild(document.createTextNode(el.textContent || ""), el);
-    }
-  });
-
-  let firstMatch: HTMLElement | null = null;
-  // Collect all matching text nodes first
-  const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT, {
-    acceptNode: (node) =>
-      node.nodeValue &&
-      node.nodeValue.toLowerCase().includes(searchTerm.toLowerCase())
-        ? NodeFilter.FILTER_ACCEPT
-        : NodeFilter.FILTER_SKIP,
-  });
-  const nodesToHighlight: Text[] = [];
-  let node = walker.nextNode();
-  while (node) {
-    nodesToHighlight.push(node as Text);
-    node = walker.nextNode();
-  }
-  nodesToHighlight.forEach((textNode) => {
-    const html = textNode.nodeValue!.replace(
-      new RegExp(`(${searchTerm})`, "gi"),
-      '<mark data-search-highlight style="background: #fde68a;">$1</mark>'
-    );
-    const span = document.createElement("span");
-    span.innerHTML = html;
-    textNode.parentElement?.replaceChild(span, textNode);
-    if (!firstMatch) {
-      firstMatch = span.querySelector("mark[data-search-highlight]");
-    }
-  });
-
-  if (firstMatch && shouldScroll) {
-    console.log("[Highlight] Scrolling to first match");
-    (firstMatch as HTMLElement).scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  } else if (!firstMatch) {
-    console.log("[Highlight] No matches found");
-  }
-}
-
-function attemptHighlight(retries = 0) {
+function attemptHighlight() {
   const main = document.querySelector("main");
-  const hash = window.location.hash;
-  // Prevent infinite loop: only highlight if hash changed
-  if (main && main.getAttribute("data-highlighted-hash") === hash) {
-    // Already highlighted for this hash, skip
-    return;
-  }
-  if (main) main.setAttribute("data-highlighted-hash", hash);
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchTerm = urlParams.get("search");
 
-  console.log(`[Highlight] attemptHighlight called (retry ${retries})`);
-  removeAllHighlights();
-  const match = hash.match(/^#([^#]+)-search-(.+)$/);
-  removeAllHighlights();
-
-  if (!match) {
-    console.log("[Highlight] No matching hash found:", hash);
+  if (!searchTerm) {
+    console.log("[Highlight] No search term in URL");
     return;
   }
 
-  const sectionId = match[1];
-  const searchTerm = decodeURIComponent(match[2]);
-  const section = document.getElementById(sectionId);
+  // Prevent infinite loop
+  if (main && main.getAttribute("data-highlighted-search") === searchTerm) {
+    return;
+  }
+  if (main) main.setAttribute("data-highlighted-search", searchTerm);
 
-  if (section) {
-    console.log(`[Highlight] Section "${sectionId}" found, highlighting now.`);
-    // Only scroll if this is the first highlight for this hash
-    const shouldScroll = true;
-    highlightInSection(section, searchTerm, shouldScroll);
-  } else if (retries < 20) {
-    setTimeout(() => attemptHighlight(retries + 1), 150);
-  } else {
-    console.warn(
-      `[Highlight] Section "${sectionId}" not found after 20 attempts.`
+  console.log(`[Highlight] Highlighting search term: "${searchTerm}"`);
+  removeAllHighlights();
+
+  // Expand ALL expandable cards to reveal content
+  const allExpandableCards = document.querySelectorAll(".expandable-card");
+  const expansionPromises: Promise<void>[] = [];
+
+  allExpandableCards.forEach((card) => {
+    const isExpanded =
+      card.classList.contains("expanded") ||
+      card.querySelector('[aria-expanded="true"]');
+    if (!isExpanded) {
+      const expandButton = card.querySelector(
+        'button[aria-expanded="false"], button:not([aria-expanded])'
+      );
+      if (expandButton) {
+        console.log("[Highlight] Expanding card:", card);
+        (expandButton as HTMLButtonElement).click();
+        expansionPromises.push(
+          new Promise((resolve) => setTimeout(resolve, 800))
+        ); // Increased delay for animation
+      }
+    }
+  });
+
+  // After expansions complete, highlight
+  Promise.all(expansionPromises).then(() => {
+    console.log("[Highlight] All cards expanded, now highlighting");
+
+    let firstMatch: HTMLElement | null = null;
+
+    // Scan for matches in the now-expanded content
+    const highlightWalker = document.createTreeWalker(
+      main || document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node) =>
+          node.nodeValue &&
+          node.nodeValue.toLowerCase().includes(searchTerm.toLowerCase())
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_SKIP,
+      }
     );
-  }
+
+    const nodesToHighlight: Text[] = [];
+    let highlightNode = highlightWalker.nextNode();
+    while (highlightNode) {
+      nodesToHighlight.push(highlightNode as Text);
+      highlightNode = highlightWalker.nextNode();
+    }
+
+    nodesToHighlight.forEach((textNode) => {
+      const html = textNode.nodeValue!.replace(
+        new RegExp(`(${searchTerm})`, "gi"),
+        '<mark data-search-highlight style="background: #fde68a;">$1</mark>'
+      );
+      const span = document.createElement("span");
+      span.innerHTML = html;
+      textNode.parentElement?.replaceChild(span, textNode);
+      if (!firstMatch) {
+        firstMatch = span.querySelector("mark[data-search-highlight]");
+      }
+    });
+
+    // Scroll to first match
+    if (firstMatch) {
+      console.log("[Highlight] Scrolling to first match");
+      (firstMatch as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    } else {
+      console.log("[Highlight] No matches found");
+    }
+
+    // Remove search param from URL to prevent persistence
+    const url = new URL(window.location.href);
+    url.searchParams.delete("search");
+    window.history.replaceState({}, "", url.toString());
+  });
 }
 
 // Replace any/NodeJS.Timeout usage with safer types
@@ -131,7 +127,11 @@ function attachObserver(): {
     if (mutationTimeout) clearTimeout(mutationTimeout);
     mutationTimeout = setTimeout(() => {
       console.log("[Highlight] MutationObserver triggered");
-      attemptHighlight();
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchTerm = urlParams.get("search");
+      if (searchTerm) {
+        attemptHighlight();
+      }
     }, 100);
   });
   observer.observe(main, { childList: true, subtree: true });
@@ -153,33 +153,26 @@ export default function SearchHighlighter() {
   }
 
   useEffect(() => {
-    removeAllHighlights(); // <-- Always clear highlights on mount
+    removeAllHighlights();
 
-    let didInitialRender = false;
-    let observerData: ObserverData = null;
+    let observerData: ObserverData = null; // Remove didInitialRender
     let pollTimeout: Timeout | null = null;
 
-    // Wait for <main> to exist before attaching observer
     function waitForMainAndAttach() {
       const main = document.querySelector("main");
       if (main) {
         observerData = attachObserver();
-        // Only set didInitialRender after <main> is present
-        didInitialRender = true;
+        // Remove didInitialRender = true;
+        // Check for search term on initial load
+        attemptHighlight();
       } else {
         pollTimeout = setTimeout(waitForMainAndAttach, 50);
       }
     }
     waitForMainAndAttach();
 
-    // Only highlight on navigation/hashchange, not on initial mount
-    const safeAttemptHighlight = () => {
-      if (!didInitialRender) return;
-      attemptHighlight();
-    };
-
     const onHashChange = () => {
-      console.log("[Highlight] Hash changed:", window.location.hash);
+      console.log("[Highlight] Hash changed");
       attemptHighlight();
       if (observerData && observerData.observer)
         observerData.observer.disconnect();
@@ -187,26 +180,19 @@ export default function SearchHighlighter() {
     };
 
     const onPopState = () => {
-      console.log("[Highlight] popstate/navigation event");
+      console.log("[Highlight] Navigation event");
       removeAllHighlights();
+      attemptHighlight();
       if (observerData && observerData.observer)
         observerData.observer.disconnect();
       observerData = attachObserver();
     };
 
-    const onPageHide = () => {
-      removeAllHighlights();
-    };
-
-    window.addEventListener("hashchange", safeAttemptHighlight);
-    window.addEventListener("beforeunload", onPageHide);
-    window.addEventListener("pagehide", onPageHide);
+    window.addEventListener("hashchange", onHashChange);
     window.addEventListener("popstate", onPopState);
 
     return () => {
       window.removeEventListener("hashchange", onHashChange);
-      window.removeEventListener("beforeunload", onPageHide);
-      window.removeEventListener("pagehide", onPageHide);
       window.removeEventListener("popstate", onPopState);
       if (observerData && observerData.observer)
         observerData.observer.disconnect();
@@ -214,7 +200,6 @@ export default function SearchHighlighter() {
         clearTimeout(observerData.mutationTimeout);
       if (pollTimeout) clearTimeout(pollTimeout);
       removeAllHighlights();
-      removeHashFromUrl();
     };
   }, []);
 
