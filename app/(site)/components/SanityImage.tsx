@@ -23,7 +23,7 @@ interface SanityImageProps {
 export default function SanityImage({
   image,
   altFallback = "Image",
-  aspectRatio = "aspect-4/3",
+  aspectRatio = "aspect-[4/3]",
   priority = false,
   className = "object-cover",
   width,

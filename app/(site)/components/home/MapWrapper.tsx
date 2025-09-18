@@ -18,9 +18,5 @@ type MapWrapperProps = {
 };
 
 export default function MapWrapper({ standorte }: MapWrapperProps) {
-  return (
-    <div className="w-full h-full" id="map">
-      <DynamicMap standorte={standorte} />
-    </div>
-  );
+  return <DynamicMap standorte={standorte} />;
 }

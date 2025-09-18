@@ -587,3 +587,13 @@
   border-radius: 0.375rem !important; /* rounded-md = 0.375rem */
   overflow: hidden !important;
 }
+
+/* Prevent Leaflet from expanding its parent */
+.leaflet-map,
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0 !important;
+  overflow: hidden !important;
+}

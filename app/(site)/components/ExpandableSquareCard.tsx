@@ -57,36 +57,28 @@ export default function ExpandableSquareCard({
         el.style.transition = "";
       }
 
-      // hide overflow immediately so inner content doesn't leak during the shrink/expand
       el.style.overflow = "hidden";
-      // hint the browser to optimize
       el.style.willChange = "height";
 
       const currentPx = el.getBoundingClientRect().height;
-      // set current explicit height to start the animation (if it's 'auto')
       el.style.height = `${currentPx}px`;
       // force reflow
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       el.offsetHeight;
 
-      // use configurable duration (default 300ms -> Tailwind duration-300)
       el.style.transition = `height ${transitionDurationMs}ms cubic-bezier(.2,.8,.2,1)`;
       transitioningRef.current = true;
 
       const handle = () => {
         el.style.transition = "";
         transitioningRef.current = false;
-        // if we expanded, set height to auto for responsiveness and restore overflow
         if (targetPx > currentPx) {
           el.style.height = "auto";
-          // allow content to be visible after expansion
           el.style.overflow = "visible";
         } else {
-          // collapsed: keep explicit height and keep overflow hidden
           el.style.height = `${targetPx}px`;
           el.style.overflow = "hidden";
         }
-        // cleanup will-change hint
         el.style.willChange = "";
         el.removeEventListener("transitionend", handle);
         onDone?.();
@@ -98,7 +90,7 @@ export default function ExpandableSquareCard({
         el.style.height = `${targetPx}px`;
       });
     },
-    [transitionDurationMs]
+    [contentRef, transitionDurationMs]
   );
 
   // Calculate square size
@@ -186,24 +178,17 @@ export default function ExpandableSquareCard({
     }
     const collapsed = getCollapsedHeight();
     if (!expanded) {
-      // start fading overlay out immediately
       setOverlayVisible(false);
       setTimeout(() => setOverlayMounted(false), transitionDurationMs);
-      // expand: measure full height and animate to it, then set expanded
       const full = el.scrollHeight;
-      // ensure current explicit height is set then animate; animateHeight will manage overflow
       animateHeight(full, () => {
         setExpanded(true);
       });
     } else {
-      // collapse: ensure current is measured then animate to collapsed
-      // set height to current scrollHeight if it's 'auto'
       const current = el.getBoundingClientRect().height;
       el.style.height = `${current}px`;
-      // start collapse animation
       animateHeight(collapsed, () => {
         setExpanded(false);
-        // after collapse, recompute overflow and show overlay if needed
         const el2 = contentRef.current;
         if (el2) {
           const overflowing = el2.scrollHeight > el2.clientHeight + 1;
@@ -219,8 +204,9 @@ export default function ExpandableSquareCard({
       });
     }
   }, [
-    getCollapsedHeight,
+    contentRef,
     expanded,
+    getCollapsedHeight,
     animateHeight,
     transitionDurationMs,
     overlayMounted,

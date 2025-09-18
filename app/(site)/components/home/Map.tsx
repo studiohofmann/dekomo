@@ -54,49 +54,35 @@ const Map = ({ standorte }: MapProps) => {
       : [46.8182, 8.2275]; // Center of Switzerland
 
   return (
-    <div className="w-full h-full">
-      <MapContainer
-        center={mapCenter}
-        zoom={7} // Adjusted for Switzerland
-        style={{ height: "100%", width: "100%" }}
-        className="leaflet-map"
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+    <MapContainer
+      center={mapCenter}
+      zoom={7} // Adjusted for Switzerland
+      className="leaflet-map w-full h-full"
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-        {/* Map over the Sanity locations */}
-        {standorte.map((standort, index) => (
-          <Marker
-            key={index}
-            position={[standort.latitude, standort.longitude]}
-            icon={antIcon}
+      {/* Map over the Sanity locations */}
+      {standorte.map((standort, index) => (
+        <Marker
+          key={index}
+          position={[standort.latitude, standort.longitude]}
+          icon={antIcon}
+        >
+          {/* Tooltip shows title above marker (always visible) */}
+          <Tooltip
+            permanent
+            direction="top"
+            offset={[0, -40]}
+            className="custom-tooltip"
           >
-            {/* Tooltip shows title above marker (always visible) */}
-            <Tooltip
-              permanent
-              direction="top"
-              offset={[0, -40]}
-              className="custom-tooltip"
-            >
-              <span>{standort.titel}</span>
-            </Tooltip>
-
-            {/* Popup shows on click */}
-            {/* <Popup>
-              <div>
-                <div>{standort.titel}</div>
-                <p>
-                  {standort.latitude.toFixed(4)},{" "}
-                  {standort.longitude.toFixed(4)}
-                </p>
-              </div>
-            </Popup> */}
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
+            <span>{standort.titel}</span>
+          </Tooltip>
+        </Marker>
+      ))}
+    </MapContainer>
   );
 };
 

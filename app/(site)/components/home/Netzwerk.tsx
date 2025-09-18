@@ -24,14 +24,16 @@ export default async function Netzwerk() {
           <PortableText value={netzwerk.text} />
         </div>
       )}
-      <div className="w-full aspect-[4/3]">
-        <MapWrapper
-          standorte={(netzwerk.standorte || []).map((s) => ({
-            titel: s.titel ?? "",
-            latitude: s.latitude ?? 0,
-            longitude: s.longitude ?? 0,
-          }))}
-        />
+      <div className="w-full aspect-[4/3] z-10 overflow-hidden relative">
+        <div className="absolute inset-0 w-full h-full">
+          <MapWrapper
+            standorte={(netzwerk.standorte || []).map((s) => ({
+              titel: s.titel ?? "",
+              latitude: s.latitude ?? 0,
+              longitude: s.longitude ?? 0,
+            }))}
+          />
+        </div>
       </div>
     </ExpandableSquareCard>
   );
