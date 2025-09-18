@@ -597,3 +597,56 @@
   inset: 0 !important;
   overflow: hidden !important;
 }
+
+/* Block any focus styles that might cause expansion */
+.leaflet-container:focus,
+.leaflet-container:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Nuclear containment for Leaflet map */
+.map-containment-wrapper {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  contain: strict !important;
+  pointer-events: auto !important;
+}
+
+/* Force Leaflet to stay within bounds */
+.map-containment-wrapper .leaflet-map,
+.map-containment-wrapper .leaflet-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Prevent any focus or active states from affecting layout */
+.map-containment-wrapper .leaflet-container:focus,
+.map-containment-wrapper .leaflet-container:active,
+.map-containment-wrapper .leaflet-container:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Kill all transitions that might cause layout shifts */
+.map-containment-wrapper .leaflet-fade-anim .leaflet-tile,
+.map-containment-wrapper .leaflet-zoom-anim .leaflet-zoom-animated {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Ensure controls don't break containment */
+.map-containment-wrapper .leaflet-control-container {
+  position: absolute !important;
+  z-index: 1000 !important;
+}

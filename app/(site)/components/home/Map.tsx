@@ -54,35 +54,41 @@ const Map = ({ standorte }: MapProps) => {
       : [46.8182, 8.2275]; // Center of Switzerland
 
   return (
-    <MapContainer
-      center={mapCenter}
-      zoom={7} // Adjusted for Switzerland
-      className="leaflet-map w-full h-full"
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+    <div className="map-containment-wrapper">
+      <MapContainer
+        center={mapCenter}
+        zoom={7}
+        className="leaflet-map w-full h-full"
+        scrollWheelZoom={true}
+        dragging={true}
+        zoomControl={true}
+        keyboard={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      {/* Map over the Sanity locations */}
-      {standorte.map((standort, index) => (
-        <Marker
-          key={index}
-          position={[standort.latitude, standort.longitude]}
-          icon={antIcon}
-        >
-          {/* Tooltip shows title above marker (always visible) */}
-          <Tooltip
-            permanent
-            direction="top"
-            offset={[0, -40]}
-            className="custom-tooltip"
+        {/* Map over the Sanity locations */}
+        {standorte.map((standort, index) => (
+          <Marker
+            key={index}
+            position={[standort.latitude, standort.longitude]}
+            icon={antIcon}
           >
-            <span>{standort.titel}</span>
-          </Tooltip>
-        </Marker>
-      ))}
-    </MapContainer>
+            {/* Tooltip shows title above marker (always visible) */}
+            <Tooltip
+              permanent
+              direction="top"
+              offset={[0, -40]}
+              className="custom-tooltip"
+            >
+              <span>{standort.titel}</span>
+            </Tooltip>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 };
 

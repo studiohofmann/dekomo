@@ -24,7 +24,7 @@ export default async function Netzwerk() {
           <PortableText value={netzwerk.text} />
         </div>
       )}
-      <div className="w-full aspect-[4/3] z-10 overflow-hidden relative">
+      <div className="w-full aspect-[4/3] min-h-[250px] md:min-h-[300px] lg:min-h-[400px] z-10 overflow-hidden relative">
         <div className="absolute inset-0 w-full h-full">
           <MapWrapper
             standorte={(netzwerk.standorte || []).map((s) => ({
