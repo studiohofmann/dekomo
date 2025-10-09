@@ -253,6 +253,24 @@
     @apply flex flex-col;
   }
 
+  .not-found-page {
+    @apply h-screen; /* Full height of the viewport */
+    @apply px-4;
+    @apply flex items-center justify-center;
+    @apply bg-red-300;
+    @apply bg-gradient-to-b from-gray-300 to-gray-100;
+    @apply md:px-8;
+    @apply xl:px-16;
+    @apply 2xl:px-32;
+  }
+  .search-bar {
+    @apply w-full;
+    @apply p-4;
+    @apply flex flex-col gap-4;
+    @apply bg-gray-300;
+    @apply border border-gray-700 rounded-md shadow-md;
+  }
+
   /* CARDS */
   .card {
     @apply p-4;
@@ -431,7 +449,7 @@
   @apply w-full;
   @apply flex items-center justify-center;
   @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
-  @apply text-xs font-bold text-gray-700 hover:text-gray-100;
+  @applyxs text- font-bold text-gray-700 hover:text-gray-100;
   @apply border border-gray-700;
   @apply rounded-md;
   @apply shadow-md;

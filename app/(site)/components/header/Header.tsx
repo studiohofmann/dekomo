@@ -49,14 +49,11 @@ export default function Header({ menuItems }: HeaderProps) {
         />
         {/* position this row so absolute dropdowns inside can use right:0 */}
         <div className="hidden md:flex items-center gap-4 relative">
-          {/* let the search take remaining space so the dropdown can stretch to the row end */}
-          {/* min-w-0 is important so the flex child can shrink correctly */}
-          <div className="hidden lg:block flex-1 min-w-0 relative">
-            <SearchBar />
-          </div>
-          {/* navigation should not force the search wrapper wider */}
           <div className="flex-none">
             <NavigationLinks menuItems={menuItems} />
+          </div>
+          <div className="hidden lg:block flex-1 min-w-0 relative">
+            <SearchBar />
           </div>
         </div>
       </div>

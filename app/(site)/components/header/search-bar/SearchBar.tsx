@@ -155,55 +155,47 @@ export default function SearchBar() {
   return (
     <>
       {/* Search Icon */}
-      <button
+      <div
         onClick={() => {
           if (typeof window !== "undefined") {
             window.removeAllHighlights?.();
           }
           setIsOpen(true);
         }}
-        className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+        className="text-2xl cursor-pointer hover:text-[#5a7cbe] transition-colors duration-300 ease-in-out"
         aria-label="Search"
       >
-        <SearchOutlined className="text-gray-700" />
-      </button>
+        <SearchOutlined className="" />
+      </div>
 
       {/* Modal Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-white bg-opacity-50 z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-gray-100 z-50 flex justify-center p-4 md:px-8 xl:px-16 2xl:px-32"
           onClick={closeModal}
         >
           <div
-            className="rounded-lg shadow-xl w-full h-full m-4 overflow-hidden"
+            className="search-bar"
+            style={{
+              height: results.length > 0 ? "auto" : "8rem", // Dynamic height
+              maxHeight: "100vh", // Limit max height
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header with close button */}
-            <div className="bg-white flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-semibold">Suche</h2>
-              <button
-                onClick={closeModal}
-                className="p-1 hover:bg-gray-100 rounded-md transition-colors"
-                aria-label="Close search"
-              >
-                <CloseOutlined />
-              </button>
-            </div>
-
-            {/* Search Input */}
-            <div className="bg-white p-4 border-b">
-              <input
-                type="search"
-                value={query}
-                onChange={handleSearch}
-                placeholder="Suche..."
-                className="w-full px-4 py-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                autoFocus
-              />
-            </div>
+            <input
+              type="search"
+              value={query}
+              onChange={handleSearch}
+              placeholder="Suche..."
+              autoFocus
+            />
 
             {/* Results */}
-            <div className="p-4 flex-1 overflow-y-auto">
+            <div
+              className={`flex flex-col flex-1 overflow-y-auto gap-4 ${
+                results.length > 0 ? "block" : "hidden"
+              }`}
+            >
               {loading && <div className="p-4 text-center">Lädt...</div>}
               {!loading && results.length === 0 && query.length > 1 && (
                 <div className="p-4 text-center text-gray-500">
@@ -216,26 +208,31 @@ export default function SearchBar() {
                     <Link
                       key={item._id}
                       href={`${item.slug?.current || ""}?search=${encodeURIComponent(query)}`}
-                      className="block p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                      className="block"
                       onClick={() => {
                         if (typeof window !== "undefined")
                           window.removeAllHighlights?.();
                         closeModal();
                       }}
                     >
-                      <div className="font-semibold text-gray-900 mb-2">
-                        {item.seitentitelMenue ||
-                          item.seoTitle ||
-                          item.ueberschrift ||
-                          item.metaDescription}
-                      </div>
-                      <div className="text-gray-700 line-clamp-3">
-                        {highlight(getPreview(item, query), query)}
+                      <div className="flex flex-col gap-2">
+                        <div className="font-semibold">
+                          {item.seitentitelMenue ||
+                            item.seoTitle ||
+                            item.ueberschrift ||
+                            item.metaDescription}
+                        </div>
+                        <div className="font-normal">
+                          {highlight(getPreview(item, query), query)}
+                        </div>
                       </div>
                     </Link>
                   );
                 })}
             </div>
+            <button onClick={closeModal} aria-label="Close search">
+              <CloseOutlined />
+            </button>
           </div>
         </div>
       )}
