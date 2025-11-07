@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const NAVIGATION_QUERY = defineQuery(`
-  *[_type in ["homeSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge
+  *[_type in ["homeSeite", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge
   }
 `);
 
@@ -75,6 +75,11 @@ export const NEWS_QUERY = defineQuery(`*[_type == "news"][0]{
   text
 }`);
 
+export const MEDIEN_QUERY = defineQuery(`*[_type == "medien"][0]{
+  ueberschrift,
+  text
+}`);
+
 export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
   ueberschrift,
   text,
@@ -85,6 +90,13 @@ export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{
     },
     alt
   }
+}`);
+
+export const KOMPETENZERWEITERUNG_QUERY =
+  defineQuery(`*[_type == "kompetenzerweiterung"][0]{
+  ueberschrift,
+  text,
+  
 }`);
 
 export const FALLBEISPIELE_QUERY = defineQuery(`*[_type == "fallbeispiele"][0]{

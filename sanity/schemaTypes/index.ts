@@ -5,6 +5,7 @@ import vision from "./home/vision";
 import projektbeschreibung from "./home/projektbeschreibung";
 import teilprojekte from "./home/teilprojekte";
 import zugangswege from "./home/zugangswege";
+import kompetenzerweiterung from "./home/kompetenzerweiterung";
 import news from "./home/news";
 import auswirkungen from "./home/auswirkungen";
 import fallbeispiele from "./home/fallbeispiele";
@@ -17,6 +18,7 @@ import datenschutz from "./impressum/datenschutz";
 import projektfoerderung from "./footer/projektfoerderung";
 import projektpartner from "./footer/projektpartner";
 import erweitertesNetzwerk from "./footer/erweitertesNetzwerk";
+import medien from "./home/medien";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -25,7 +27,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     projektbeschreibung,
     teilprojekte,
     zugangswege,
+    kompetenzerweiterung,
     news,
+    medien,
     auswirkungen,
     fallbeispiele,
     netzwerk,

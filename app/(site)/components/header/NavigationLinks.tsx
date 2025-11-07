@@ -106,7 +106,7 @@ export default function NavigationLinks({
   }, [pathname]);
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
+    <ul className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
       {orderedMenuItems.map((item) => {
         let href =
           item.slug.current === "" || item.slug.current === "/"
@@ -133,7 +133,7 @@ export default function NavigationLinks({
         }
 
         return (
-          <li key={item.slug.current}>
+          <div key={item.slug.current}>
             <Link
               href={href}
               className={isActive ? "active-link" : ""}
@@ -143,7 +143,7 @@ export default function NavigationLinks({
             >
               {item.seitentitelMenue}
             </Link>
-          </li>
+          </div>
         );
       })}
     </ul>

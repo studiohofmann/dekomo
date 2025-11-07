@@ -6,10 +6,11 @@ import Vision from "./components/home/vision/Vision";
 import Projektbeschreibung from "./components/home/projektbeschreibung/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
 import Zugangswege from "./components/home/Zugangswege";
-import News from "./components/home/News";
+import Medien from "./components/home/Medien";
 import Auswirkungen from "./components/home/Auswirkungen";
 import Fallbeispiele from "./components/home/Fallbeispiele";
 import Netzwerk from "./components/home/Netzwerk";
+import Kompetenzerweiterung from "./components/home/Kompetenzerweiterung";
 import type { Metadata } from "next";
 import { generateSEOMetadata } from "@/lib/seo";
 
@@ -45,14 +46,18 @@ export default function Home() {
         <div id="fallbeispiele">
           <Fallbeispiele />
         </div>
-        <div id="news">
-          <News />
+        <div id="medien">
+          <Medien />
         </div>
+
         <div id="netzwerk">
           <Netzwerk />
         </div>
         <div id="zugangswege">
           <Zugangswege />
+        </div>
+        <div id="kompetenzerweiterung">
+          <Kompetenzerweiterung />
         </div>
         <div id="vision">
           <Vision />

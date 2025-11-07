@@ -285,6 +285,7 @@ export type DownloadsSeite = {
   _updatedAt: string;
   _rev: string;
   seitentitelMenue?: string;
+  menuReihenfolge?: number;
   slug?: Slug;
   text?: Array<{
     children?: Array<{
@@ -495,9 +496,63 @@ export type Auswirkungen = {
   };
 };
 
+export type Medien = {
+  _id: string;
+  _type: "medien";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type News = {
   _id: string;
   _type: "news";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type Kompetenzerweiterung = {
+  _id: string;
+  _type: "kompetenzerweiterung";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -818,11 +873,11 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Fallbeispiele | Auswirkungen | News | Zugangswege | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Fallbeispiele | Auswirkungen | Medien | News | Kompetenzerweiterung | Zugangswege | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
-// Query: *[_type in ["homeSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge  }
+// Query: *[_type in ["homeSeite", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge  }
 export type NAVIGATION_QUERYResult = Array<{
   seitentitelMenue: string | null;
   slug: Slug | null;
@@ -1018,6 +1073,29 @@ export type NEWS_QUERYResult = {
     _key: string;
   }> | null;
 } | null;
+// Variable: MEDIEN_QUERY
+// Query: *[_type == "medien"][0]{  ueberschrift,  text}
+export type MEDIEN_QUERYResult = {
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 // Variable: AUSWIRKUNGEN_QUERY
 // Query: *[_type == "auswirkungen"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
 export type AUSWIRKUNGEN_QUERYResult = {
@@ -1047,6 +1125,29 @@ export type AUSWIRKUNGEN_QUERYResult = {
     } | null;
     alt: string | null;
   } | null;
+} | null;
+// Variable: KOMPETENZERWEITERUNG_QUERY
+// Query: *[_type == "kompetenzerweiterung"][0]{  ueberschrift,  text,  }
+export type KOMPETENZERWEITERUNG_QUERYResult = {
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
 } | null;
 // Variable: FALLBEISPIELE_QUERY
 // Query: *[_type == "fallbeispiele"][0]{  ueberschrift,  fallbeispiel[]{    ueberschrift,    bild{      asset->{_id, url},      alt    },    text  }}
@@ -1375,7 +1476,7 @@ export type ERWEITERTES_NETZWERK_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type in [\"homeSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
+    "\n  *[_type in [\"homeSeite\", \"downloadsSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
     "*[_type == \"homeSeite\"][0]{\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
     "*[_type == \"einleitung\"][0]{\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": EINLEITUNG_QUERYResult;
     "*[_type == \"vision\"][0]{\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
@@ -1383,7 +1484,9 @@ declare module "@sanity/client" {
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
+    "*[_type == \"medien\"][0]{\n  ueberschrift,\n  text\n}": MEDIEN_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
+    "*[_type == \"kompetenzerweiterung\"][0]{\n  ueberschrift,\n  text,\n  \n}": KOMPETENZERWEITERUNG_QUERYResult;
     "*[_type == \"fallbeispiele\"][0]{\n  ueberschrift,\n  fallbeispiel[]{\n    ueberschrift,\n    bild{\n      asset->{_id, url},\n      alt\n    },\n    text\n  }\n}": FALLBEISPIELE_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
     "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  },\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": DOWNLOADS_SEITE_QUERYResult;

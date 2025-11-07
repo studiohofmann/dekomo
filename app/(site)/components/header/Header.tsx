@@ -52,7 +52,7 @@ export default function Header({ menuItems }: HeaderProps) {
           <div className="flex-none">
             <NavigationLinks menuItems={menuItems} />
           </div>
-          <div className="hidden lg:block flex-1 min-w-0 relative">
+          <div className="hidden md:block relative">
             <SearchBar />
           </div>
         </div>
