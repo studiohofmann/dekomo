@@ -60,7 +60,7 @@ export default function Header({ menuItems }: HeaderProps) {
 
       {/* Mobile Menu bar at the bottom */}
       <div className="md:hidden">
-        <div className="fixed p-4 inset-x-0 bottom-0 z-[9999] bg-gray-300 border-t border-gray-700 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.06)]">
+        <div className="fixed p-4 inset-x-0 bottom-0 z-[9999] bg-gray-300  shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.06)]">
           <div>
             <button
               type="button"
@@ -91,12 +91,13 @@ export default function Header({ menuItems }: HeaderProps) {
           aria-modal="true"
           className="fixed inset-0 z-50 bg-gray-300 flex items-end pb-21"
         >
-          <nav className="w-full px-4">
+          <div className="flex flex-col gap-4 p-4 w-full">
             <NavigationLinks
               menuItems={menuItems}
-              onLinkClick={() => setMobileOpen(false)} // close menu when any link is clicked
+              onLinkClick={() => setMobileOpen(false)}
+              isMobile={true} // Add this for mobile styling
             />
-          </nav>
+          </div>
         </div>
       )}
     </>

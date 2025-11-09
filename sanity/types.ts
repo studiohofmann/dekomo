@@ -378,6 +378,73 @@ export type Vision = {
   };
 };
 
+export type Kompetenzerweiterung = {
+  _id: string;
+  _type: "kompetenzerweiterung";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type Zugangswege = {
+  _id: string;
+  _type: "zugangswege";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  grafik?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
 export type Netzwerk = {
   _id: string;
   _type: "netzwerk";
@@ -408,6 +475,32 @@ export type Netzwerk = {
     latitude?: number;
     longitude?: number;
     _type: "standort";
+    _key: string;
+  }>;
+};
+
+export type Medien = {
+  _id: string;
+  _type: "medien";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ueberschrift?: string;
+  dateien?: Array<{
+    titel?: string;
+    typ?: "datei" | "link";
+    datei?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    };
+    link?: string;
+    _type: "dateiOderLink";
     _key: string;
   }>;
 };
@@ -459,127 +552,6 @@ export type Fallbeispiele = {
 export type Auswirkungen = {
   _id: string;
   _type: "auswirkungen";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  grafik?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-};
-
-export type Medien = {
-  _id: string;
-  _type: "medien";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type News = {
-  _id: string;
-  _type: "news";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type Kompetenzerweiterung = {
-  _id: string;
-  _type: "kompetenzerweiterung";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  ueberschrift?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type Zugangswege = {
-  _id: string;
-  _type: "zugangswege";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -873,7 +845,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Netzwerk | Fallbeispiele | Auswirkungen | Medien | News | Kompetenzerweiterung | Zugangswege | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = ErweitertesNetzwerk | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Ansprechpersonen | KontaktSeite | DownloadsSeite | Vision | Kompetenzerweiterung | Zugangswege | Netzwerk | Medien | Fallbeispiele | Auswirkungen | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
@@ -1052,48 +1024,20 @@ export type ZUGANGSWEGE_QUERYResult = {
 } | null;
 // Variable: NEWS_QUERY
 // Query: *[_type == "news"][0]{  ueberschrift,  text}
-export type NEWS_QUERYResult = {
-  ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-} | null;
+export type NEWS_QUERYResult = null;
 // Variable: MEDIEN_QUERY
-// Query: *[_type == "medien"][0]{  ueberschrift,  text}
+// Query: *[_type == "medien"][0]{  ueberschrift,  dateien[]{    titel,    typ,    datei{      asset->{        url      }    },    link  }}
 export type MEDIEN_QUERYResult = {
   ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
+  dateien: Array<{
+    titel: string | null;
+    typ: "datei" | "link" | null;
+    datei: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+    link: string | null;
   }> | null;
 } | null;
 // Variable: AUSWIRKUNGEN_QUERY
@@ -1484,7 +1428,7 @@ declare module "@sanity/client" {
     "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
-    "*[_type == \"medien\"][0]{\n  ueberschrift,\n  text\n}": MEDIEN_QUERYResult;
+    "*[_type == \"medien\"][0]{\n  ueberschrift,\n  dateien[]{\n    titel,\n    typ,\n    datei{\n      asset->{\n        url\n      }\n    },\n    link\n  }\n}": MEDIEN_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"kompetenzerweiterung\"][0]{\n  ueberschrift,\n  text,\n  \n}": KOMPETENZERWEITERUNG_QUERYResult;
     "*[_type == \"fallbeispiele\"][0]{\n  ueberschrift,\n  fallbeispiel[]{\n    ueberschrift,\n    bild{\n      asset->{_id, url},\n      alt\n    },\n    text\n  }\n}": FALLBEISPIELE_QUERYResult;

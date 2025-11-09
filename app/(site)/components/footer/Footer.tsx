@@ -5,11 +5,11 @@ import Copyright from "./Copyright";
 
 export default function Footer() {
   return (
-    <div className="footer">
+    <footer className="footer">
       <Projektfoerderung />
       <Projektartner />
       <ErweitertesNetzwerk />
       <Copyright />
-    </div>
+    </footer>
   );
 }

@@ -19,7 +19,7 @@ export default async function Projektfoerderung() {
       <h3 className="">{projektfoerderung.ueberschrift}</h3>
       <div className="footer-grid">
         {projektfoerderung.logo && (
-          <div className="footer-logo-container flex justify-center items-center">
+          <div className="footer-logo-container">
             <SanityImage
               image={projektfoerderung.logo}
               altFallback="Projektförderung Logo"
@@ -28,7 +28,7 @@ export default async function Projektfoerderung() {
           </div>
         )}
         {projektfoerderung.text && (
-          <div className="portable-text portable-text-footer-link text-xs col-span-2 ">
+          <div className="portable-text portable-text-footer-link col-span-2 text-sm">
             <PortableText value={projektfoerderung.text} />
           </div>
         )}

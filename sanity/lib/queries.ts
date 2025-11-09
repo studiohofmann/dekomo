@@ -77,7 +77,16 @@ export const NEWS_QUERY = defineQuery(`*[_type == "news"][0]{
 
 export const MEDIEN_QUERY = defineQuery(`*[_type == "medien"][0]{
   ueberschrift,
-  text
+  dateien[]{
+    titel,
+    typ,
+    datei{
+      asset->{
+        url
+      }
+    },
+    link
+  }
 }`);
 
 export const AUSWIRKUNGEN_QUERY = defineQuery(`*[_type == "auswirkungen"][0]{

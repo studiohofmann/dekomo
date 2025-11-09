@@ -38,14 +38,14 @@ export default async function Kontakt() {
   }
 
   return (
-    <div id="kontaktSeite">
-      <div className="page-introduction">
+    <div id="kontaktSeite" className="page">
+      <section>
         <h1>{kontaktSeite.seitentitelMenue}</h1>
         <div className="portable-text">
           <PortableText value={kontaktSeite.text ?? []} />
         </div>
-      </div>
-      <div className="page-content">
+      </section>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <Ansprechpersonen />
         <ContactForm />
       </div>

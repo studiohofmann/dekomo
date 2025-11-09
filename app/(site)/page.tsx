@@ -2,15 +2,15 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { HOME_QUERY } from "@/sanity/lib/queries";
 import type { HOME_QUERYResult } from "@/sanity/types";
 import Einleitung from "./components/home/Einleitung";
-import Vision from "./components/home/vision/Vision";
 import Projektbeschreibung from "./components/home/projektbeschreibung/Projektbeschreibung";
 import Teilprojekte from "./components/home/Teilprojekte";
-import Zugangswege from "./components/home/Zugangswege";
-import Medien from "./components/home/Medien";
 import Auswirkungen from "./components/home/Auswirkungen";
 import Fallbeispiele from "./components/home/Fallbeispiele";
+import Medien from "./components/home/Medien";
 import Netzwerk from "./components/home/Netzwerk";
+import Zugangswege from "./components/home/Zugangswege";
 import Kompetenzerweiterung from "./components/home/Kompetenzerweiterung";
+import Vision from "./components/home/vision/Vision";
 import type { Metadata } from "next";
 import { generateSEOMetadata } from "@/lib/seo";
 
@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div>
       <Einleitung />
-      <div className="page-content md:grid-cols-2 2xl:grid-cols-3 xl:gap-16">
+      <div className="landing-page">
         <div id="projektbeschreibung">
           <Projektbeschreibung />
         </div>
@@ -42,14 +42,12 @@ export default function Home() {
         <div id="auswirkungen">
           <Auswirkungen />
         </div>
-
         <div id="fallbeispiele">
           <Fallbeispiele />
         </div>
         <div id="medien">
           <Medien />
         </div>
-
         <div id="netzwerk">
           <Netzwerk />
         </div>

@@ -40,25 +40,25 @@ export default async function Impressum() {
   }
 
   return (
-    <div id="impressumSeite">
-      <div className="page-introduction">
+    <div id="impressumSeite" className="page">
+      <section>
         <h1>{impressumSeite.seitentitelMenue}</h1>
         <div className="portable-text">
           <PortableText value={impressumSeite.impressumText ?? []} />
         </div>
-      </div>
-      <div className="page-content">
-        <div className="card">
+      </section>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <section className="card">
           <h2>{impressumSeite.angabenUeberschrift}</h2>
           <div className="portable-text portable-text-impressum-links">
             <PortableText value={impressumSeite.angabenText ?? []} />
           </div>
-        </div>
-        <div id="datenschutz" className="scroll-mt-24">
+        </section>
+        <section id="datenschutz" className="scroll-mt-24">
           <ExpandableSquareCard className="!bg-[#f7f1a9]">
             <Datenschutz />
           </ExpandableSquareCard>
-        </div>
+        </section>
       </div>
     </div>
   );

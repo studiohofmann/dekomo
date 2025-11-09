@@ -15,13 +15,13 @@ export default async function Ansprechpersonen() {
   }
 
   return (
-    <div className="card background-yellow">
+    <section className="card background-yellow">
       <h2>{ansprechpersonen.ueberschrift}</h2>
       <div className="flex flex-col gap-4">
         {(ansprechpersonen.ansprechperson ?? []).map((person, index) => (
           <div
             key={index}
-            className="flex flex-col w-full gap-4 p-4 items-center bg-gray-100  border border-gray-700"
+            className="flex flex-col w-full gap-4 p-4 items-center bg-gray-100"
           >
             {person.profilbild && person.profilbild.asset && (
               <SanityImage
@@ -40,6 +40,6 @@ export default async function Ansprechpersonen() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

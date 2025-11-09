@@ -285,7 +285,7 @@ export default function ExpandableSquareCard({
           ref={buttonRef}
           onClick={toggle}
           // ensure button sits above the overlay
-          className="relative z-20"
+          className="relative z-20 bg-gray-300 hover:bg-[#5a7cbe] hover:text-gray-100"
         >
           {expanded ? buttonLabelCollapse : buttonLabelExpand}
           {expanded ? <CloseOutlined /> : <RightOutlined />}

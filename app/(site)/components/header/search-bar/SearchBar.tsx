@@ -162,10 +162,10 @@ export default function SearchBar() {
           }
           setIsOpen(true);
         }}
-        className="text-2xl cursor-pointer hover:text-[#5a7cbe] transition-colors duration-300 ease-in-out"
+        className="w-full h-full flex items-center justify-center text-lg cursor-pointer text-[#5a7cbe] hover:text-gray-700 transition-colors duration-300 ease-in-out"
         aria-label="Search"
       >
-        <SearchOutlined className="" />
+        <SearchOutlined />
       </div>
 
       {/* Modal Overlay */}

@@ -97,151 +97,157 @@ export default function ContactForm() {
     formData.message.trim();
 
   return (
-    <form onSubmit={handleSubmit} className="card">
-      <h2>Kontaktformular</h2>
-      <div className="flex flex-col gap-4">
-        {/* 📧 Recipient Cards */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-          {[
-            {
-              label: "Prof. Dr. med. Stefan Klöppel",
-              email: "stefan.kloeppel@upd.ch",
-            },
-            {
-              label: "M.Sc. Giuliana Crippa",
-              email: "giuliana.crippa@unibe.ch",
-            },
-          ].map((person) => (
-            <button
-              key={person.email}
-              onClick={() => handleRecipientClick(person.email)}
-              className={`text-center ${
-                recipientEmail === person.email
-                  ? "bg-[#5a7cbe] text-gray-100"
-                  : ""
-              }`}
-              type="button"
-            >
-              {/* Hidden input for form submission */}
-              <input
-                type="radio"
-                name="recipient"
-                value={person.email}
-                checked={recipientEmail === person.email}
-                onChange={() => {}} // Empty onChange to avoid React warning
-                className="sr-only"
-              />
-              {person.label}
-            </button>
-          ))}
-        </div>
-
-        {/* ✍️ Contact Info */}
+    <section>
+      <form onSubmit={handleSubmit} className="card">
+        <h2>Kontaktformular</h2>
         <div className="flex flex-col gap-4">
-          <div className="relative cursor-pointer">
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              className={`cursor-pointer ${
-                formData.gender ? "text-gray-700" : "text-gray-500"
-              }`} // This only styles the select box itself
-              required
-            >
-              <option value="" disabled>
-                Anrede *
-              </option>
-              <option value="Frau">Frau</option>
-              <option value="Herr">Herr</option>
-              <option value="Neutral">Neutral</option>
-            </select>
-            {formData.gender ? (
+          {/* 📧 Recipient Cards */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            {[
+              {
+                label: "Prof. Dr. med. Stefan Klöppel",
+                email: "stefan.kloeppel@upd.ch",
+              },
+              {
+                label: "M.Sc. Giuliana Crippa",
+                email: "giuliana.crippa@unibe.ch",
+              },
+            ].map((person) => (
               <button
+                key={person.email}
+                onClick={() => handleRecipientClick(person.email)}
+                className={`text-center ${
+                  recipientEmail === person.email
+                    ? "bg-[#5a7cbe] text-gray-100"
+                    : ""
+                }`}
                 type="button"
-                onClick={() => setFormData((prev) => ({ ...prev, gender: "" }))}
-                className="clean-button absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
               >
-                <CloseOutlined />
+                {/* Hidden input for form submission */}
+                <input
+                  type="radio"
+                  name="recipient"
+                  value={person.email}
+                  checked={recipientEmail === person.email}
+                  onChange={() => {}} // Empty onChange to avoid React warning
+                  className="sr-only"
+                />
+                {person.label}
               </button>
-            ) : (
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                <DownOutlined />
-              </span>
+            ))}
+          </div>
+
+          {/* ✍️ Contact Info */}
+          <div className="flex flex-col gap-4">
+            <div className="relative cursor-pointer">
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                className={`cursor-pointer ${
+                  formData.gender ? "text-gray-700" : "text-gray-500"
+                }`} // This only styles the select box itself
+                required
+              >
+                <option value="" disabled>
+                  Anrede *
+                </option>
+                <option value="Frau">Frau</option>
+                <option value="Herr">Herr</option>
+                <option value="Neutral">Neutral</option>
+              </select>
+              {formData.gender ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, gender: "" }))
+                  }
+                  className="clean-button absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
+                >
+                  <CloseOutlined />
+                </button>
+              ) : (
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                  <DownOutlined />
+                </span>
+              )}
+            </div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name *"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="vorname"
+              placeholder="Vorname *"
+              value={formData.vorname}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Adresse *"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Nachricht *"
+              value={formData.message}
+              onChange={handleInputChange}
+              required
+              rows={6}
+            />
+          </div>
+
+          {/* ✅ Submit Button */}
+          <button
+            disabled={!isFormValid || isSubmitting}
+            type="submit"
+            className="disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Wird gesendet..." : "Senden"}
+          </button>
+        </div>
+        {/* Optional: Show validation message */}
+        {!isFormValid && submitStatus === "idle" && (
+          <p className="text-sm text-gray-500 text-center">
+            <span className="text-red-500">*</span> Bitte füllen Sie alle Felder
+            aus und wählen Sie einen Empfänger
+          </p>
+        )}
+
+        {/* Success/Error Messages */}
+        {submitStatus === "success" && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <h3 className="font-bold">Nachricht erfolgreich gesendet!</h3>
+            <p>
+              Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen
+              melden.
+            </p>
+          </div>
+        )}
+
+        {submitStatus === "error" && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <h3 className="font-bold">Fehler beim Senden</h3>
+            <p>
+              Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.
+            </p>
+            {submitErrorDetail && (
+              <div className="mt-2 text-xs border-t border-red-300 pt-2">
+                <p className="font-mono">Fehlerdetails: {submitErrorDetail}</p>
+              </div>
             )}
           </div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name *"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="vorname"
-            placeholder="Vorname *"
-            value={formData.vorname}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Adresse *"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Nachricht *"
-            value={formData.message}
-            onChange={handleInputChange}
-            required
-            rows={6}
-          />
-        </div>
-
-        {/* ✅ Submit Button */}
-        <button
-          disabled={!isFormValid || isSubmitting}
-          type="submit"
-          className="disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? "Wird gesendet..." : "Senden"}
-        </button>
-      </div>
-      {/* Optional: Show validation message */}
-      {!isFormValid && submitStatus === "idle" && (
-        <p className="text-sm text-gray-500 text-center">
-          <span className="text-red-500">*</span> Bitte füllen Sie alle Felder
-          aus und wählen Sie einen Empfänger
-        </p>
-      )}
-
-      {/* Success/Error Messages */}
-      {submitStatus === "success" && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-          <h3 className="font-bold">Nachricht erfolgreich gesendet!</h3>
-          <p>
-            Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen
-            melden.
-          </p>
-        </div>
-      )}
-
-      {submitStatus === "error" && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          <h3 className="font-bold">Fehler beim Senden</h3>
-          <p>Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.</p>
-          {submitErrorDetail && (
-            <div className="mt-2 text-xs border-t border-red-300 pt-2">
-              <p className="font-mono">Fehlerdetails: {submitErrorDetail}</p>
-            </div>
-          )}
-        </div>
-      )}
-    </form>
+        )}
+      </form>
+    </section>
   );
 }

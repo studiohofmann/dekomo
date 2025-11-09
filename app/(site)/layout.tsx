@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default async function RootLayout({
+export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -50,21 +50,14 @@ export default async function RootLayout({
   );
 
   return (
-    <>
-      <div className="antialiased">
-        <header>
-          <Header menuItems={menuItems} />
-        </header>
-
-        <main>
-          <SearchHighlighter />
-          {children}
-          <SpeedInsights />
-        </main>
-        <footer>
-          <Footer />
-        </footer>
-      </div>
-    </>
+    <div className="antialiased">
+      <Header menuItems={menuItems} />
+      <main>
+        <SearchHighlighter />
+        {children}
+        <SpeedInsights />
+      </main>
+      <Footer />
+    </div>
   );
 }

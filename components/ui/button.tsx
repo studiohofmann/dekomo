@@ -19,10 +19,10 @@ const buttonVariants = cva("items-center justify-center transition-all", {
         "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
       link: "text-primary underline-offset-4 hover:underline",
       custom:
-        "bg-[#94b0dd] flex items-center justify-center text-gray-700 text-sm font-bold rounded-md shadow-md hover:bg-[#5a7cbe] hover:text-gray-100 border border-gray-700",
+        "bg-[#94b0dd] flex items-center justify-center text-gray-700 text-sm font-bold rounded-md shadow-md hover:bg-[#5a7cbe] hover:text-gray-100 ",
       // In your button.tsx, add this variant:
       selected:
-        "bg-[#5a7cbe] flex items-center justify-center text-gray-100 font-bold rounded-md shadow-md border border-gray-700",
+        "bg-[#5a7cbe] flex items-center justify-center text-gray-100 font-bold rounded-md shadow-md ",
     },
     size: {
       default: "h-9 px-4 py-2 has-[>svg]:px-3",

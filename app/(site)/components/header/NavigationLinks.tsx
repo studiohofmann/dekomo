@@ -14,11 +14,13 @@ type MenuItem = {
 interface NavigationLinksProps {
   menuItems: MenuItem[];
   onLinkClick?: () => void;
+  isMobile?: boolean; // Add this prop
 }
 
 export default function NavigationLinks({
   menuItems,
   onLinkClick,
+  isMobile = false, // Default to false
 }: NavigationLinksProps) {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("");
@@ -106,46 +108,48 @@ export default function NavigationLinks({
   }, [pathname]);
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
-      {orderedMenuItems.map((item) => {
-        let href =
-          item.slug.current === "" || item.slug.current === "/"
-            ? "/"
-            : `/${item.slug.current}`;
+    <nav>
+      <ul className="flex flex-col md:flex-row gap-4">
+        {orderedMenuItems.map((item) => {
+          let href =
+            item.slug.current === "" || item.slug.current === "/"
+              ? "/"
+              : `/${item.slug.current}`;
 
-        // Point "Datenschutz" to the Impressum section
-        if (item.slug.current === "datenschutz") {
-          href = "/impressum#datenschutz";
-        }
-
-        let isActive = false;
-        if (pathname === "/impressum") {
-          if (item.slug.current === "impressum") {
-            isActive = activeSection === "impressum";
-          } else if (item.slug.current === "datenschutz") {
-            isActive = activeSection === "datenschutz";
+          // Point "Datenschutz" to the Impressum section
+          if (item.slug.current === "datenschutz") {
+            href = "/impressum#datenschutz";
           }
-        } else {
-          isActive =
-            (href === "/" && pathname === "/") || // Home page special case
-            (href !== "/" &&
-              (pathname === href || pathname.startsWith(`${href}/`)));
-        }
 
-        return (
-          <div key={item.slug.current}>
-            <Link
-              href={href}
-              className={isActive ? "active-link" : ""}
-              onClick={() => {
-                if (onLinkClick) onLinkClick();
-              }}
-            >
-              {item.seitentitelMenue}
-            </Link>
-          </div>
-        );
-      })}
-    </ul>
+          let isActive = false;
+          if (pathname === "/impressum") {
+            if (item.slug.current === "impressum") {
+              isActive = activeSection === "impressum";
+            } else if (item.slug.current === "datenschutz") {
+              isActive = activeSection === "datenschutz";
+            }
+          } else {
+            isActive =
+              (href === "/" && pathname === "/") || // Home page special case
+              (href !== "/" &&
+                (pathname === href || pathname.startsWith(`${href}/`)));
+          }
+
+          return (
+            <div key={item.slug.current}>
+              <Link
+                href={href}
+                className={`${isActive ? "active-link" : ""} ${isMobile ? "button" : ""}`}
+                onClick={() => {
+                  if (onLinkClick) onLinkClick();
+                }}
+              >
+                {item.seitentitelMenue}
+              </Link>
+            </div>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
