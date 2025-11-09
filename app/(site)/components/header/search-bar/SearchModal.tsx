@@ -41,7 +41,7 @@ function highlight(text: string, query: string): React.ReactNode {
   const regex = new RegExp(`(${query})`, "gi");
   return text.split(regex).map((part, i) =>
     part.toLowerCase() === query.toLowerCase() ? (
-      <mark key={i} className="bg-[#f7f1a9] px-1 py-1 rounded">
+      <mark key={i} className="bg-[#f7f1a9] p-1 rounded">
         {part}
       </mark>
     ) : (
@@ -172,16 +172,23 @@ export default function SearchModal({
           )}
           {!loading &&
             results.map((item) => {
+              const handleClick = () => {
+                const base = item.slug?.current || "/";
+                const pathname = base.startsWith("/") ? base : `/${base}`;
+                const searchParam = `?search=${encodeURIComponent(query)}`;
+                const hash = item.sectionId ? `#${item.sectionId}` : "";
+                const url = `${pathname}${searchParam}${hash}`;
+                console.log("Navigating to:", url);
+                window.removeAllHighlights?.();
+                window.location.href = url;
+              };
+
               return (
                 <Link
                   key={item._id}
                   href={`/${item.slug?.current || ""}${item.sectionId ? `#${item.sectionId}` : ""}?search=${encodeURIComponent(query)}`}
                   className="block"
-                  onClick={() => {
-                    if (typeof window !== "undefined")
-                      window.removeAllHighlights?.();
-                    onClose();
-                  }}
+                  onClick={handleClick}
                 >
                   <div className="flex flex-col gap-4">
                     <div className="bg-gray-100 p-4">

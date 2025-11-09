@@ -12,7 +12,7 @@ function removeAllHighlights() {
 }
 
 function attemptHighlight() {
-  const main = document.querySelector("main");
+  const main = document.body;
   const urlParams = new URLSearchParams(window.location.search);
   const searchTerm = urlParams.get("search");
 
@@ -30,83 +30,191 @@ function attemptHighlight() {
   console.log(`[Highlight] Highlighting search term: "${searchTerm}"`);
   removeAllHighlights();
 
-  // Expand ALL expandable cards to reveal content
-  const allExpandableCards = document.querySelectorAll(".expandable-card");
-  const expansionPromises: Promise<void>[] = [];
+  // IMPORTANT: Wait for content to load before processing
+  setTimeout(() => {
+    // Handle hash scrolling FIRST
+    const hash = window.location.hash;
+    let highlightScope: Node = main;
 
-  allExpandableCards.forEach((card) => {
-    const isExpanded =
-      card.classList.contains("expanded") ||
-      card.querySelector('[aria-expanded="true"]');
-    if (!isExpanded) {
-      const expandButton = card.querySelector(
-        'button[aria-expanded="false"], button:not([aria-expanded])'
+    if (hash) {
+      const sectionId = hash.substring(1);
+      window.dispatchEvent(
+        new CustomEvent("search:open", { detail: { sectionId } })
       );
-      if (expandButton) {
-        console.log("[Highlight] Expanding card:", card);
-        (expandButton as HTMLButtonElement).click();
-        expansionPromises.push(
-          new Promise((resolve) => setTimeout(resolve, 800))
-        ); // Increased delay for animation
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        highlightScope = targetElement;
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        console.log("[Highlight] Section not found:", hash);
       }
     }
-  });
 
-  // After expansions complete, highlight
-  Promise.all(expansionPromises).then(() => {
-    console.log("[Highlight] All cards expanded, now highlighting");
-
-    let firstMatch: HTMLElement | null = null;
-
-    // Scan for matches in the now-expanded content
-    const highlightWalker = document.createTreeWalker(
-      main || document.body,
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode: (node) =>
-          node.nodeValue &&
-          node.nodeValue.toLowerCase().includes(searchTerm.toLowerCase())
-            ? NodeFilter.FILTER_ACCEPT
-            : NodeFilter.FILTER_SKIP,
-      }
-    );
-
-    const nodesToHighlight: Text[] = [];
-    let highlightNode = highlightWalker.nextNode();
-    while (highlightNode) {
-      nodesToHighlight.push(highlightNode as Text);
-      highlightNode = highlightWalker.nextNode();
+    // Decide which cards need expanding
+    let cardsToExpand: Element[] = [];
+    if (hash && highlightScope instanceof Element) {
+      const parentCard = highlightScope.closest(
+        ".expandable-card, .expandable-square-card"
+      );
+      if (parentCard) cardsToExpand = [parentCard];
+    } else {
+      cardsToExpand = Array.from(
+        document.querySelectorAll(".expandable-card, .expandable-square-card")
+      );
     }
 
-    nodesToHighlight.forEach((textNode) => {
-      const html = textNode.nodeValue!.replace(
-        new RegExp(`(${searchTerm})`, "gi"),
-        '<mark data-search-highlight style="background: #fde68a;">$1</mark>'
-      );
-      const span = document.createElement("span");
-      span.innerHTML = html;
-      textNode.parentElement?.replaceChild(span, textNode);
-      if (!firstMatch) {
-        firstMatch = span.querySelector("mark[data-search-highlight]");
+    cardsToExpand = Array.from(new Set(cardsToExpand));
+
+    const expansionPromises: Promise<void>[] = [];
+
+    console.log("[Highlight] Found expandable cards:", cardsToExpand.length);
+
+    cardsToExpand.forEach((card) => {
+      const wrapper = card.closest(".expandable-wrapper");
+      const isExpanded =
+        card.classList.contains("expanded") ||
+        wrapper?.getAttribute("data-expanded") === "true" ||
+        wrapper?.querySelector('[aria-expanded="true"]');
+
+      if (!isExpanded) {
+        const expandButton =
+          wrapper?.querySelector('button[aria-expanded="false"]') ??
+          wrapper?.querySelector("button:not([aria-expanded])");
+
+        if (expandButton) {
+          console.log("[Highlight] Expanding card:", wrapper);
+          (expandButton as HTMLButtonElement).click();
+          expansionPromises.push(
+            new Promise((resolve) => setTimeout(resolve, 1500))
+          );
+        }
       }
     });
 
-    // Scroll to first match
-    if (firstMatch) {
-      console.log("[Highlight] Scrolling to first match");
-      (firstMatch as HTMLElement).scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    } else {
-      console.log("[Highlight] No matches found");
-    }
+    Promise.all(expansionPromises).then(() => {
+      console.log("[Highlight] Highlighting within scope");
 
-    // Remove search param from URL to prevent persistence
-    const url = new URL(window.location.href);
-    url.searchParams.delete("search");
-    window.history.replaceState({}, "", url.toString());
-  });
+      const createWalker = () =>
+        document.createTreeWalker(highlightScope, NodeFilter.SHOW_TEXT, {
+          acceptNode: (node) => {
+            const parent = (node as Text).parentElement;
+            if (
+              parent &&
+              (parent.tagName === "SCRIPT" || parent.tagName === "STYLE")
+            ) {
+              return NodeFilter.FILTER_SKIP;
+            }
+            return node.nodeValue &&
+              node.nodeValue.toLowerCase().includes(searchTerm.toLowerCase())
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+
+      const collectMatches = () => {
+        const walker = createWalker();
+        const nodes: Text[] = [];
+        let current = walker.nextNode();
+        while (current) {
+          nodes.push(current as Text);
+          current = walker.nextNode();
+        }
+        return nodes;
+      };
+
+      let nodesToHighlight = collectMatches();
+
+      if (nodesToHighlight.length === 0) {
+        console.log("[Highlight] No matches found in page content");
+        return;
+      }
+
+      // Only use the first match (the one the user clicked)
+      nodesToHighlight = [nodesToHighlight[0]];
+
+      const cardsToExpand = Array.from(
+        new Set(
+          nodesToHighlight
+            .map((textNode) =>
+              textNode.parentElement?.closest(
+                ".expandable-card, .expandable-square-card"
+              )
+            )
+            .filter(Boolean) as Element[]
+        )
+      );
+
+      const expansionPromises: Promise<void>[] = [];
+      cardsToExpand.forEach((card) => {
+        const wrapper = card.closest(".expandable-wrapper");
+        const isExpanded =
+          card.classList.contains("expanded") ||
+          wrapper?.getAttribute("data-expanded") === "true" ||
+          wrapper?.querySelector('[aria-expanded="true"]');
+
+        if (!isExpanded) {
+          const expandButton =
+            wrapper?.querySelector('button[aria-expanded="false"]') ??
+            wrapper?.querySelector("button:not([aria-expanded])");
+
+          if (expandButton) {
+            console.log("[Highlight] Expanding card:", wrapper);
+            (expandButton as HTMLButtonElement).click();
+            expansionPromises.push(
+              new Promise((resolve) => setTimeout(resolve, 1500))
+            );
+          }
+        }
+      });
+
+      Promise.all(expansionPromises).then(() => {
+        if (expansionPromises.length > 0) {
+          const updatedMatches = collectMatches();
+          if (updatedMatches.length === 0) {
+            console.log(
+              "[Highlight] No matches found in page content after expansion"
+            );
+            return;
+          }
+          nodesToHighlight = [updatedMatches[0]];
+        }
+
+        let firstMatch: HTMLElement | null = null;
+
+        nodesToHighlight.forEach((textNode) => {
+          if (!textNode.parentElement || !textNode.nodeValue) return;
+
+          const html = textNode.nodeValue.replace(
+            new RegExp(`(${searchTerm})`, "gi"),
+            '<mark data-search-highlight style="background: #f7f1a9; padding: 0.25rem; border-radius: 0.25rem;">$1</mark>'
+          );
+          const span = document.createElement("span");
+          span.innerHTML = html;
+          textNode.parentElement.replaceChild(span, textNode);
+          if (!firstMatch) {
+            const mark = span.querySelector("mark[data-search-highlight]");
+            if (mark && mark instanceof HTMLElement) {
+              firstMatch = mark;
+            }
+          }
+        });
+
+        if (firstMatch !== null && !hash) {
+          console.log("[Highlight] Scrolling to first match");
+          (firstMatch as HTMLElement).scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+
+        setTimeout(() => {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("search");
+          window.history.replaceState({}, "", url.toString());
+        }, 3000);
+      });
+    });
+  }, 500); // Wait 500ms for content to render
 }
 
 // Replace any/NodeJS.Timeout usage with safer types
@@ -120,7 +228,7 @@ function attachObserver(): {
   observer: MutationObserver;
   mutationTimeout: Timeout | null;
 } | null {
-  const main = document.querySelector("main");
+  const main = document.body; // Instead of document.querySelector("main")
   if (!main) return null;
   let mutationTimeout: Timeout | null = null;
   const observer = new MutationObserver(() => {
@@ -159,7 +267,7 @@ export default function SearchHighlighter() {
     let pollTimeout: Timeout | null = null;
 
     function waitForMainAndAttach() {
-      const main = document.querySelector("main");
+      const main = document.body; // Instead of document.querySelector("main")
       if (main) {
         observerData = attachObserver();
         // Remove didInitialRender = true;

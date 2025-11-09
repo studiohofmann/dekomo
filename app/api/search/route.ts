@@ -52,13 +52,17 @@ export async function GET(request: NextRequest) {
       ) | order(_score desc)[0...20] {
         _id,
         _type,
-        slug,
+        "slug": select(
+          _type in ["homeSeite", "einleitung", "projektbeschreibung", "teilprojekte", "auswirkungen", "fallbeispiele", "medien", "netzwerk", "zugangswege", "kompetenzerweiterung", "vision"] => { "current": "/" },
+          _type == "impressumSeite" => { "current": "impressum" },
+          slug
+        ),
         ueberschrift,
         text,
         seitentitelMenue,
         seoTitle,
         metaDescription,
-        "sectionId": _type  // Use _type as sectionId
+        sectionId  // Fetch the document's sectionId
       }`,
       { searchQuery: searchQuery }
     );

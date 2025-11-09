@@ -256,15 +256,19 @@ export default function ExpandableSquareCard({
   }, [expanded, transitionDurationMs, toggle, contentRef]);
 
   return (
-    <div ref={wrapperRef} className="w-full flex flex-col items-center">
+    <div
+      ref={wrapperRef}
+      className={`expandable-wrapper w-full flex flex-col items-center ${
+        expanded ? "is-expanded" : ""
+      }`}
+      data-expanded={expanded}
+    >
       <div
         ref={contentRef}
-        // make this a positioned container so the absolute overlay is contained
-        className={`expandable-card ${className} relative z-0`}
-        style={{
-          // initial inline styles kept minimal; height/overflow handled in effects & animateHeight
-          minHeight: 0,
-        }}
+        className={`expandable-card expandable-square-card ${
+          expanded ? "expanded" : ""
+        } ${className} relative z-0`}
+        style={{ minHeight: 0 }}
       >
         {children}
         {/* overlay: mounted separately so opacity can transition */}
@@ -284,7 +288,7 @@ export default function ExpandableSquareCard({
         <button
           ref={buttonRef}
           onClick={toggle}
-          // ensure button sits above the overlay
+          aria-expanded={expanded} // Add this
           className="relative z-20 bg-gray-300 hover:bg-[#5a7cbe] hover:text-gray-100"
         >
           {expanded ? buttonLabelCollapse : buttonLabelExpand}

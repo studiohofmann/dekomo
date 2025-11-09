@@ -16,7 +16,7 @@ export default async function Netzwerk() {
   }
 
   return (
-    <section id={netzwerk.sectionId ?? undefined}>
+    <section id={netzwerk.sectionId || undefined}>
       <ExpandableSquareCard>
         <h2>{netzwerk.ueberschrift}</h2>
 
