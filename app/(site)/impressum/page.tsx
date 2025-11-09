@@ -40,15 +40,15 @@ export default async function Impressum() {
   }
 
   return (
-    <div id="impressumSeite" className="page">
-      <section>
+    <div className="page">
+      <section id="impressum-main">
         <h1>{impressumSeite.seitentitelMenue}</h1>
         <div className="portable-text">
           <PortableText value={impressumSeite.impressumText ?? []} />
         </div>
       </section>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <section className="card">
+        <section id="angaben" className="card">
           <h2>{impressumSeite.angabenUeberschrift}</h2>
           <div className="portable-text portable-text-impressum-links">
             <PortableText value={impressumSeite.angabenText ?? []} />

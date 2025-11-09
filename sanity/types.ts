@@ -19,6 +19,7 @@ export type ErweitertesNetzwerk = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   logos?: Array<{
     asset?: {
@@ -42,6 +43,7 @@ export type Projektpartner = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   logos?: Array<{
     asset?: {
@@ -65,6 +67,7 @@ export type Projektfoerderung = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -105,6 +108,7 @@ export type Datenschutz = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -135,6 +139,7 @@ export type ImpressumSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
+  sectionId?: string;
   impressumText?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -196,6 +201,7 @@ export type Ansprechpersonen = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   ansprechperson?: Array<{
     text?: Array<{
@@ -242,6 +248,7 @@ export type KontaktSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
+  sectionId?: string;
   text?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -287,6 +294,7 @@ export type DownloadsSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
+  sectionId?: string;
   text?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -344,6 +352,7 @@ export type Vision = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -384,6 +393,7 @@ export type Kompetenzerweiterung = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -411,6 +421,7 @@ export type Zugangswege = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -430,19 +441,6 @@ export type Zugangswege = {
     _type: "block";
     _key: string;
   }>;
-  grafik?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
 };
 
 export type Netzwerk = {
@@ -451,6 +449,7 @@ export type Netzwerk = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -485,6 +484,7 @@ export type Medien = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   dateien?: Array<{
     titel?: string;
@@ -511,6 +511,7 @@ export type Fallbeispiele = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   fallbeispiel?: Array<{
     ueberschrift?: string;
@@ -555,6 +556,7 @@ export type Auswirkungen = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -574,19 +576,6 @@ export type Auswirkungen = {
     _type: "block";
     _key: string;
   }>;
-  grafik?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
 };
 
 export type Teilprojekte = {
@@ -595,6 +584,7 @@ export type Teilprojekte = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   teilprojekt?: Array<{
     ueberschrift?: string;
@@ -626,6 +616,7 @@ export type Projektbeschreibung = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -666,6 +657,7 @@ export type Einleitung = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sectionId?: string;
   ueberschrift?: string;
   text?: Array<{
     children?: Array<{
@@ -709,6 +701,7 @@ export type HomeSeite = {
   seitentitelMenue?: string;
   menuReihenfolge?: number;
   slug?: Slug;
+  sectionId?: string;
   seoTitle?: string;
   metaDescription?: string;
   keywords?: Array<string>;
@@ -856,8 +849,9 @@ export type NAVIGATION_QUERYResult = Array<{
   menuReihenfolge: number | null;
 }>;
 // Variable: HOME_QUERY
-// Query: *[_type == "homeSeite"][0]{  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
+// Query: *[_type == "homeSeite"][0]{  sectionId,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type HOME_QUERYResult = {
+  sectionId: string | null;
   seoTitle: string | null;
   metaDescription: string | null;
   keywords: Array<string> | null;
@@ -877,8 +871,9 @@ export type HOME_QUERYResult = {
   noIndex: boolean | null;
 } | null;
 // Variable: EINLEITUNG_QUERY
-// Query: *[_type == "einleitung"][0]{  ueberschrift,  text,  bild{    asset->{_id, url},    alt  },}
+// Query: *[_type == "einleitung"][0]{  sectionId,  ueberschrift,  text,  bild{    asset->{_id, url},    alt  },}
 export type EINLEITUNG_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -906,39 +901,10 @@ export type EINLEITUNG_QUERYResult = {
     alt: string | null;
   } | null;
 } | null;
-// Variable: VISION_QUERY
-// Query: *[_type == "vision"][0]{  ueberschrift, text, grafik{    asset->{_id, url},    alt  },}
-export type VISION_QUERYResult = {
-  ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  grafik: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-  } | null;
-} | null;
 // Variable: PROJEKTBESCHREIBUNG_QUERY
-// Query: *[_type == "projektbeschreibung"][0]{  ueberschrift,  text,  grafik{    asset->{_id, url},    alt  },}
+// Query: *[_type == "projektbeschreibung"][0]{  sectionId,  ueberschrift,  text,  grafik{    asset->{_id, url},    alt  },}
 export type PROJEKTBESCHREIBUNG_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -967,8 +933,9 @@ export type PROJEKTBESCHREIBUNG_QUERYResult = {
   } | null;
 } | null;
 // Variable: TEILPROJEKTE_QUERY
-// Query: *[_type == "teilprojekte"][0]{  ueberschrift,  teilprojekt[] {    ueberschrift,    text  }}
+// Query: *[_type == "teilprojekte"][0]{  sectionId,  ueberschrift,  teilprojekt[] {    ueberschrift,    text  }}
 export type TEILPROJEKTE_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   teilprojekt: Array<{
     ueberschrift: string | null;
@@ -992,87 +959,10 @@ export type TEILPROJEKTE_QUERYResult = {
     }> | null;
   }> | null;
 } | null;
-// Variable: ZUGANGSWEGE_QUERY
-// Query: *[_type == "zugangswege"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
-export type ZUGANGSWEGE_QUERYResult = {
-  ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  grafik: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-  } | null;
-} | null;
-// Variable: NEWS_QUERY
-// Query: *[_type == "news"][0]{  ueberschrift,  text}
-export type NEWS_QUERYResult = null;
-// Variable: MEDIEN_QUERY
-// Query: *[_type == "medien"][0]{  ueberschrift,  dateien[]{    titel,    typ,    datei{      asset->{        url      }    },    link  }}
-export type MEDIEN_QUERYResult = {
-  ueberschrift: string | null;
-  dateien: Array<{
-    titel: string | null;
-    typ: "datei" | "link" | null;
-    datei: {
-      asset: {
-        url: string | null;
-      } | null;
-    } | null;
-    link: string | null;
-  }> | null;
-} | null;
 // Variable: AUSWIRKUNGEN_QUERY
-// Query: *[_type == "auswirkungen"][0]{  ueberschrift,  text,  grafik{    asset->{      _id,      url    },    alt  }}
+// Query: *[_type == "auswirkungen"][0]{  sectionId,  ueberschrift,  text,}
 export type AUSWIRKUNGEN_QUERYResult = {
-  ueberschrift: string | null;
-  text: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  grafik: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-    alt: string | null;
-  } | null;
-} | null;
-// Variable: KOMPETENZERWEITERUNG_QUERY
-// Query: *[_type == "kompetenzerweiterung"][0]{  ueberschrift,  text,  }
-export type KOMPETENZERWEITERUNG_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -1094,8 +984,9 @@ export type KOMPETENZERWEITERUNG_QUERYResult = {
   }> | null;
 } | null;
 // Variable: FALLBEISPIELE_QUERY
-// Query: *[_type == "fallbeispiele"][0]{  ueberschrift,  fallbeispiel[]{    ueberschrift,    bild{      asset->{_id, url},      alt    },    text  }}
+// Query: *[_type == "fallbeispiele"][0]{  sectionId,  ueberschrift,  fallbeispiel[]{    ueberschrift,    bild{      asset->{_id, url},      alt    },    text  }}
 export type FALLBEISPIELE_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   fallbeispiel: Array<{
     ueberschrift: string | null;
@@ -1126,9 +1017,26 @@ export type FALLBEISPIELE_QUERYResult = {
     }> | null;
   }> | null;
 } | null;
+// Variable: MEDIEN_QUERY
+// Query: *[_type == "medien"][0]{  sectionId,  ueberschrift,  dateien[]{    titel,    typ,    datei{      asset->{        url      }    },    link  }}
+export type MEDIEN_QUERYResult = {
+  sectionId: string | null;
+  ueberschrift: string | null;
+  dateien: Array<{
+    titel: string | null;
+    typ: "datei" | "link" | null;
+    datei: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+    link: string | null;
+  }> | null;
+} | null;
 // Variable: NETZWERK_QUERY
-// Query: *[_type == "netzwerk"][0]{  ueberschrift,  text,  standorte[]{    titel,    latitude,    longitude  }}
+// Query: *[_type == "netzwerk"][0]{  sectionId,  ueberschrift,  text,  standorte[]{    titel,    latitude,    longitude  }}
 export type NETZWERK_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -1154,9 +1062,89 @@ export type NETZWERK_QUERYResult = {
     longitude: number | null;
   }> | null;
 } | null;
+// Variable: ZUGANGSWEGE_QUERY
+// Query: *[_type == "zugangswege"][0]{  sectionId,  ueberschrift,  text, }
+export type ZUGANGSWEGE_QUERYResult = {
+  sectionId: string | null;
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: KOMPETENZERWEITERUNG_QUERY
+// Query: *[_type == "kompetenzerweiterung"][0]{  sectionId,  ueberschrift,  text,}
+export type KOMPETENZERWEITERUNG_QUERYResult = {
+  sectionId: string | null;
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: VISION_QUERY
+// Query: *[_type == "vision"][0]{  sectionId,  ueberschrift, text, grafik{    asset->{_id, url},    alt  },}
+export type VISION_QUERYResult = {
+  sectionId: string | null;
+  ueberschrift: string | null;
+  text: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  grafik: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+  } | null;
+} | null;
 // Variable: DOWNLOADS_SEITE_QUERY
-// Query: *[_type == "downloadsSeite"][0]{  seitentitelMenue,  slug,  text,  dateien[]{    titel,    datei{      asset->{        _id,        url,        originalFilename,        size,        extension      }    }  },  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
+// Query: *[_type == "downloadsSeite"][0]{    sectionId,  seitentitelMenue,  slug,  text,  dateien[]{    titel,    datei{      asset->{        _id,        url,        originalFilename,        size,        extension      }    }  },  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type DOWNLOADS_SEITE_QUERYResult = {
+  sectionId: string | null;
   seitentitelMenue: string | null;
   slug: Slug | null;
   text: Array<{
@@ -1208,8 +1196,9 @@ export type DOWNLOADS_SEITE_QUERYResult = {
   noIndex: boolean | null;
 } | null;
 // Variable: KONTAKT_SEITE_QUERY
-// Query: *[_type == "kontaktSeite"][0]{  seitentitelMenue,  text,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
+// Query: *[_type == "kontaktSeite"][0]{  sectionId,  seitentitelMenue,  text,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type KONTAKT_SEITE_QUERYResult = {
+  sectionId: string | null;
   seitentitelMenue: string | null;
   text: Array<{
     children?: Array<{
@@ -1248,8 +1237,9 @@ export type KONTAKT_SEITE_QUERYResult = {
   noIndex: boolean | null;
 } | null;
 // Variable: ANSPRECHPERSONEN_QUERY
-// Query: *[_type == "ansprechpersonen"][0]{  ueberschrift,  ansprechperson[]{    text,    profilbild{      asset->{        _id,        url      },      alt    }  }}
+// Query: *[_type == "ansprechpersonen"][0]{  sectionId,  ueberschrift,  ansprechperson[]{    text,    profilbild{      asset->{        _id,        url      },      alt    }  }}
 export type ANSPRECHPERSONEN_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   ansprechperson: Array<{
     text: Array<{
@@ -1280,8 +1270,9 @@ export type ANSPRECHPERSONEN_QUERYResult = {
   }> | null;
 } | null;
 // Variable: IMPRESSUM_SEITE_QUERY
-// Query: *[_type == "impressumSeite"][0]{  seitentitelMenue,  angabenUeberschrift,  angabenText,  impressumText,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
+// Query: *[_type == "impressumSeite"][0]{  sectionId,  seitentitelMenue,  angabenUeberschrift,  angabenText,  impressumText,  seoTitle,  metaDescription,  keywords,  openGraphImage{    asset->{      _id,      url,      metadata{        dimensions{          width,          height        }      }    },    alt  },  noIndex}
 export type IMPRESSUM_SEITE_QUERYResult = {
+  sectionId: string | null;
   seitentitelMenue: string | null;
   angabenUeberschrift: string | null;
   angabenText: Array<{
@@ -1339,8 +1330,9 @@ export type IMPRESSUM_SEITE_QUERYResult = {
   noIndex: boolean | null;
 } | null;
 // Variable: DATENSCHUTZ_QUERY
-// Query: *[_type == "datenschutz"][0]{  ueberschrift,  text}
+// Query: *[_type == "datenschutz"][0]{  sectionId,  ueberschrift,  text}
 export type DATENSCHUTZ_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -1362,8 +1354,9 @@ export type DATENSCHUTZ_QUERYResult = {
   }> | null;
 } | null;
 // Variable: PROJEKTFOERDERUNG_QUERY
-// Query: *[_type == "projektfoerderung"][0]{  ueberschrift,  text,  logo{    asset->{_id, url},    alt  }}
+// Query: *[_type == "projektfoerderung"][0]{  sectionId,  ueberschrift,  text,  logo{    asset->{_id, url},    alt  }}
 export type PROJEKTFOERDERUNG_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   text: Array<{
     children?: Array<{
@@ -1392,8 +1385,9 @@ export type PROJEKTFOERDERUNG_QUERYResult = {
   } | null;
 } | null;
 // Variable: PROJEKTPARTNER_QUERY
-// Query: *[_type == "projektpartner"][0]{  ueberschrift,  logos[]{    asset->{_id, url},    alt  }}
+// Query: *[_type == "projektpartner"][0]{  sectionId,  ueberschrift,  logos[]{    asset->{_id, url},    alt  }}
 export type PROJEKTPARTNER_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   logos: Array<{
     asset: {
@@ -1404,8 +1398,9 @@ export type PROJEKTPARTNER_QUERYResult = {
   }> | null;
 } | null;
 // Variable: ERWEITERTES_NETZWERK_QUERY
-// Query: *[_type == "erweitertesNetzwerk"][0]{  ueberschrift,  logos[]{    asset->{_id, url},    alt  }}
+// Query: *[_type == "erweitertesNetzwerk"][0]{  sectionId,  ueberschrift,  logos[]{    asset->{_id, url},    alt  }}
 export type ERWEITERTES_NETZWERK_QUERYResult = {
+  sectionId: string | null;
   ueberschrift: string | null;
   logos: Array<{
     asset: {
@@ -1421,25 +1416,24 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type in [\"homeSeite\", \"downloadsSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
-    "*[_type == \"homeSeite\"][0]{\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
-    "*[_type == \"einleitung\"][0]{\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": EINLEITUNG_QUERYResult;
-    "*[_type == \"vision\"][0]{\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
-    "*[_type == \"projektbeschreibung\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
-    "*[_type == \"teilprojekte\"][0]{\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
-    "*[_type == \"zugangswege\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": ZUGANGSWEGE_QUERYResult;
-    "*[_type == \"news\"][0]{\n  ueberschrift,\n  text\n}": NEWS_QUERYResult;
-    "*[_type == \"medien\"][0]{\n  ueberschrift,\n  dateien[]{\n    titel,\n    typ,\n    datei{\n      asset->{\n        url\n      }\n    },\n    link\n  }\n}": MEDIEN_QUERYResult;
-    "*[_type == \"auswirkungen\"][0]{\n  ueberschrift,\n  text,\n  grafik{\n    asset->{\n      _id,\n      url\n    },\n    alt\n  }\n}": AUSWIRKUNGEN_QUERYResult;
-    "*[_type == \"kompetenzerweiterung\"][0]{\n  ueberschrift,\n  text,\n  \n}": KOMPETENZERWEITERUNG_QUERYResult;
-    "*[_type == \"fallbeispiele\"][0]{\n  ueberschrift,\n  fallbeispiel[]{\n    ueberschrift,\n    bild{\n      asset->{_id, url},\n      alt\n    },\n    text\n  }\n}": FALLBEISPIELE_QUERYResult;
-    "*[_type == \"netzwerk\"][0]{\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
-    "*[_type == \"downloadsSeite\"][0]{\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  },\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": DOWNLOADS_SEITE_QUERYResult;
-    "*[_type == \"kontaktSeite\"][0]{\n  seitentitelMenue,\n  text,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": KONTAKT_SEITE_QUERYResult;
-    "*[_type == \"ansprechpersonen\"][0]{\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
-    "*[_type == \"impressumSeite\"][0]{\n  seitentitelMenue,\n  angabenUeberschrift,\n  angabenText,\n  impressumText,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": IMPRESSUM_SEITE_QUERYResult;
-    "*[_type == \"datenschutz\"][0]{\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;
-    "*[_type == \"projektfoerderung\"][0]{\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
-    "*[_type == \"projektpartner\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
-    "*[_type == \"erweitertesNetzwerk\"][0]{\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": ERWEITERTES_NETZWERK_QUERYResult;
+    "*[_type == \"homeSeite\"][0]{\n  sectionId,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
+    "*[_type == \"einleitung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": EINLEITUNG_QUERYResult;
+    "*[_type == \"projektbeschreibung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;
+    "*[_type == \"teilprojekte\"][0]{\n  sectionId,\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
+    "*[_type == \"auswirkungen\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n}": AUSWIRKUNGEN_QUERYResult;
+    "*[_type == \"fallbeispiele\"][0]{\n  sectionId,\n  ueberschrift,\n  fallbeispiel[]{\n    ueberschrift,\n    bild{\n      asset->{_id, url},\n      alt\n    },\n    text\n  }\n}": FALLBEISPIELE_QUERYResult;
+    "*[_type == \"medien\"][0]{\n  sectionId,\n  ueberschrift,\n  dateien[]{\n    titel,\n    typ,\n    datei{\n      asset->{\n        url\n      }\n    },\n    link\n  }\n}": MEDIEN_QUERYResult;
+    "*[_type == \"netzwerk\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
+    "*[_type == \"zugangswege\"][0]{\n  sectionId,\n  ueberschrift,\n  text, \n}": ZUGANGSWEGE_QUERYResult;
+    "*[_type == \"kompetenzerweiterung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n}": KOMPETENZERWEITERUNG_QUERYResult;
+    "*[_type == \"vision\"][0]{\n  sectionId,\n  ueberschrift, text, grafik{\n    asset->{_id, url},\n    alt\n  },\n}": VISION_QUERYResult;
+    "*[_type == \"downloadsSeite\"][0]{\n    sectionId,\n  seitentitelMenue,\n  slug,\n  text,\n  dateien[]{\n    titel,\n    datei{\n      asset->{\n        _id,\n        url,\n        originalFilename,\n        size,\n        extension\n      }\n    }\n  },\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": DOWNLOADS_SEITE_QUERYResult;
+    "*[_type == \"kontaktSeite\"][0]{\n  sectionId,\n  seitentitelMenue,\n  text,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": KONTAKT_SEITE_QUERYResult;
+    "*[_type == \"ansprechpersonen\"][0]{\n  sectionId,\n  ueberschrift,\n  ansprechperson[]{\n    text,\n    profilbild{\n      asset->{\n        _id,\n        url\n      },\n      alt\n    }\n  }\n}": ANSPRECHPERSONEN_QUERYResult;
+    "*[_type == \"impressumSeite\"][0]{\n  sectionId,\n  seitentitelMenue,\n  angabenUeberschrift,\n  angabenText,\n  impressumText,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": IMPRESSUM_SEITE_QUERYResult;
+    "*[_type == \"datenschutz\"][0]{\n  sectionId,\n  ueberschrift,\n  text\n}": DATENSCHUTZ_QUERYResult;
+    "*[_type == \"projektfoerderung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
+    "*[_type == \"projektpartner\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
+    "*[_type == \"erweitertesNetzwerk\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": ERWEITERTES_NETZWERK_QUERYResult;
   }
 }

@@ -15,25 +15,15 @@ export default async function Zugangswege() {
   }
 
   return (
-    <ExpandableSquareCard>
-      <h2>{zugangswege.ueberschrift}</h2>
-      {zugangswege.text && (
-        <div className="portable-text">
-          <PortableText value={zugangswege.text || []} />
-        </div>
-      )}
-      {/* 
-        {zugangswege.grafik && (
-          <div className="lg:w-1/2">
-            <SanityImage
-              image={zugangswege.grafik}
-              altFallback={zugangswege.grafik.alt || "Grafik"}
-              width={600}
-              height={400}
-              className="w-full h-auto rounded-md shadow-md"
-            />
+    <section id={zugangswege.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        <h2>{zugangswege.ueberschrift}</h2>
+        {zugangswege.text && (
+          <div className="portable-text">
+            <PortableText value={zugangswege.text || []} />
           </div>
-        )}*/}
-    </ExpandableSquareCard>
+        )}
+      </ExpandableSquareCard>
+    </section>
   );
 }

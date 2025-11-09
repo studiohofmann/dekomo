@@ -28,38 +28,25 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const homeSeite: HOME_QUERYResult = await sanityFetch({
+    query: HOME_QUERY,
+    revalidate: 60,
+  });
+
   return (
-    <div>
+    <div id={homeSeite?.sectionId ?? undefined}>
       <Einleitung />
       <div className="landing-page">
-        <div id="projektbeschreibung">
-          <Projektbeschreibung />
-        </div>
-        <div id="teilprojekte">
-          <Teilprojekte />
-        </div>
-        <div id="auswirkungen">
-          <Auswirkungen />
-        </div>
-        <div id="fallbeispiele">
-          <Fallbeispiele />
-        </div>
-        <div id="medien">
-          <Medien />
-        </div>
-        <div id="netzwerk">
-          <Netzwerk />
-        </div>
-        <div id="zugangswege">
-          <Zugangswege />
-        </div>
-        <div id="kompetenzerweiterung">
-          <Kompetenzerweiterung />
-        </div>
-        <div id="vision">
-          <Vision />
-        </div>
+        <Projektbeschreibung />
+        <Teilprojekte />
+        <Auswirkungen />
+        <Fallbeispiele />
+        <Medien />
+        <Netzwerk />
+        <Zugangswege />
+        <Kompetenzerweiterung />
+        <Vision />
       </div>
     </div>
   );

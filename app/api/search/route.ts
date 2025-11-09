@@ -12,11 +12,29 @@ export async function GET(request: NextRequest) {
   try {
     const results = await client.fetch(
       `*[_type in [
-        "homeSeite", "einleitung", "vision", "projektbeschreibung", 
-        "teilprojekte", "zugangswege", "news", "auswirkungen", 
-        "fallbeispiele", "netzwerk", "downloadsSeite", "kontaktSeite", 
-        "ansprechpersonen", "impressumSeite", "datenschutz", 
-        "projektfoerderung", "projektpartner", "erweitertesNetzwerk"
+        "homeSeite",
+        "einleitung",
+        "projektbeschreibung",
+        "teilprojekte",
+        "auswirkungen",
+        "fallbeispiele",
+        "medien",
+        "netzwerk",
+        "zugangswege",
+        "kompetenzerweiterung",
+        "vision", 
+           
+        "downloadsSeite", 
+        
+        "kontaktSeite", 
+        "ansprechpersonen", 
+        
+        "impressumSeite", 
+        "datenschutz", 
+        
+        "projektfoerderung", 
+        "projektpartner", 
+        "erweitertesNetzwerk"
       ]] | score(
         boost(ueberschrift match $searchQuery + "*", 3),
         boost(text match $searchQuery + "*", 2),

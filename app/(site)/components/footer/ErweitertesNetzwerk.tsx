@@ -15,7 +15,7 @@ export default async function ErweitertesNetzwerk() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <section id={erweitertesNetzwerk.sectionId || undefined}>
       <h3 className="">{erweitertesNetzwerk.ueberschrift}</h3>
       <div className="footer-grid">
         {erweitertesNetzwerk.logos?.map((logo, index) => (
@@ -28,6 +28,6 @@ export default async function ErweitertesNetzwerk() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

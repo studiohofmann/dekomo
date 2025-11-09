@@ -41,6 +41,12 @@ const kontaktSeite = {
       options: { source: "seitentitelMenue" },
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: "sectionId",
+      title: "Section ID",
+      type: "string",
+      description: "ID for linking directly to a section from search results",
+    }),
 
     defineField({
       name: "text",

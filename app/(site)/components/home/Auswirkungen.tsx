@@ -15,26 +15,15 @@ export default async function Auswirkungen() {
   }
 
   return (
-    <ExpandableSquareCard>
-      <h2>{auswirkungen.ueberschrift}</h2>
-      {auswirkungen.text && (
-        <div className="portable-text">
-          <PortableText value={auswirkungen.text || []} />
-        </div>
-      )}
-      {/* 
-        {auswirkungen.grafik && (
-          <div className="lg:w-1/2">
-            <SanityImage
-              image={auswirkungen.grafik}
-              altFallback={auswirkungen.grafik.alt || "Grafik"}
-              width={600}
-              height={400}
-              className="w-full h-auto rounded-md shadow-md"
-            />
+    <section id={auswirkungen.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        <h2>{auswirkungen.ueberschrift}</h2>
+        {auswirkungen.text && (
+          <div className="portable-text">
+            <PortableText value={auswirkungen.text || []} />
           </div>
         )}
-      */}
-    </ExpandableSquareCard>
+      </ExpandableSquareCard>
+    </section>
   );
 }

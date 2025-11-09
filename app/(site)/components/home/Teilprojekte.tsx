@@ -16,33 +16,35 @@ export default async function Teilprojekte() {
   }
 
   return (
-    <ExpandableSquareCard>
-      {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
-      <Tabs defaultValue={data.teilprojekt[0].ueberschrift || "tab-0"}>
-        <TabsList>
+    <section id={data.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
+        <Tabs defaultValue={data.teilprojekt[0].ueberschrift || "tab-0"}>
+          <TabsList>
+            {data.teilprojekt.map((teilprojekt, idx) => (
+              <TabsTrigger
+                key={idx}
+                value={teilprojekt.ueberschrift || `tab-${idx}`}
+              >
+                {teilprojekt.ueberschrift || `Teilprojekt ${idx + 1}`}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
           {data.teilprojekt.map((teilprojekt, idx) => (
-            <TabsTrigger
+            <TabsContent
               key={idx}
               value={teilprojekt.ueberschrift || `tab-${idx}`}
             >
-              {teilprojekt.ueberschrift || `Teilprojekt ${idx + 1}`}
-            </TabsTrigger>
+              {teilprojekt.text && (
+                <div className="portable-text">
+                  <PortableText value={teilprojekt.text || []} />
+                </div>
+              )}
+            </TabsContent>
           ))}
-        </TabsList>
-
-        {data.teilprojekt.map((teilprojekt, idx) => (
-          <TabsContent
-            key={idx}
-            value={teilprojekt.ueberschrift || `tab-${idx}`}
-          >
-            {teilprojekt.text && (
-              <div className="portable-text">
-                <PortableText value={teilprojekt.text || []} />
-              </div>
-            )}
-          </TabsContent>
-        ))}
-      </Tabs>
-    </ExpandableSquareCard>
+        </Tabs>
+      </ExpandableSquareCard>
+    </section>
   );
 }

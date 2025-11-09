@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import LogoDeKoMo from "./LogoDeKoMo";
 import SearchBar from "./search-bar/SearchBar";
 import NavigationLinks from "./NavigationLinks";
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import MobileMenu from "./MobileMenu"; // Add this
 
 type MenuItem = {
   slug: { current: string };
@@ -47,59 +47,24 @@ export default function Header({ menuItems }: HeaderProps) {
         <LogoDeKoMo
           className={`transition-all duration-300 ${isShrunk ? "h-12" : "h-24"}`}
         />
-        {/* position this row so absolute dropdowns inside can use right:0 */}
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-4 relative">
           <div className="flex-none">
             <NavigationLinks menuItems={menuItems} />
           </div>
           <div className="hidden md:block relative">
-            <SearchBar />
+            <SearchBar isShrunk={isShrunk} />
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu bar at the bottom */}
-      <div className="md:hidden">
-        <div className="fixed p-4 inset-x-0 bottom-0 z-[9999] bg-gray-300  shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.06)]">
-          <div>
-            <button
-              type="button"
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-navigation-full"
-              onClick={() => setMobileOpen((s) => !s)}
-            >
-              {mobileOpen ? (
-                <>
-                  <CloseOutlined />
-                  <span>Close</span>
-                </>
-              ) : (
-                <>
-                  <MenuOutlined />
-                  <span>Menu</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {mobileOpen && (
-        <div
-          id="mobile-navigation-full"
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 bg-gray-300 flex items-end pb-21"
-        >
-          <div className="flex flex-col gap-4 p-4 w-full">
-            <NavigationLinks
-              menuItems={menuItems}
-              onLinkClick={() => setMobileOpen(false)}
-              isMobile={true} // Add this for mobile styling
-            />
-          </div>
-        </div>
-      )}
+      {/* Mobile Menu */}
+      <MobileMenu
+        menuItems={menuItems}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+        isShrunk={isShrunk}
+      />
     </>
   );
 }

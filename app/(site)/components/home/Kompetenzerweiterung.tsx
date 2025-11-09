@@ -16,13 +16,15 @@ export default async function Kompetenzerweiterung() {
   }
 
   return (
-    <ExpandableSquareCard>
-      <h2>{kompetenzerweiterung.ueberschrift}</h2>
-      {kompetenzerweiterung.text && (
-        <div className="portable-text">
-          <PortableText value={kompetenzerweiterung.text || []} />
-        </div>
-      )}
-    </ExpandableSquareCard>
+    <section id={kompetenzerweiterung.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        <h2>{kompetenzerweiterung.ueberschrift}</h2>
+        {kompetenzerweiterung.text && (
+          <div className="portable-text">
+            <PortableText value={kompetenzerweiterung.text || []} />
+          </div>
+        )}
+      </ExpandableSquareCard>
+    </section>
   );
 }

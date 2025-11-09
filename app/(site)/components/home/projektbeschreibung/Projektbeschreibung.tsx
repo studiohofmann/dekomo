@@ -17,14 +17,16 @@ export default async function Projektbeschreibung() {
   }
 
   return (
-    <ExpandableSquareCard>
-      <h2>{projektbeschreibung.ueberschrift}</h2>
-      <div className="w-full">
-        <GrafikProjektbeschreibung />
-      </div>
-      <div className="portable-text">
-        <PortableText value={projektbeschreibung.text || []} />
-      </div>
-    </ExpandableSquareCard>
+    <section id={projektbeschreibung.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        <h2>{projektbeschreibung.ueberschrift}</h2>
+        <div className="w-full">
+          <GrafikProjektbeschreibung />
+        </div>
+        <div className="portable-text">
+          <PortableText value={projektbeschreibung.text || []} />
+        </div>
+      </ExpandableSquareCard>
+    </section>
   );
 }

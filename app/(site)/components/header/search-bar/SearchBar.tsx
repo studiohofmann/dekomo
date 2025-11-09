@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
+import SearchModal from "./SearchModal";
 
 // add global declaration so we can use window.removeAllHighlights without `any`
 declare global {
@@ -18,6 +18,7 @@ type PTBlock = { children?: PTChild[] };
 // Shape of a search result item (only the fields we use)
 type SearchResult = {
   _id: string;
+  _type: string;
   slug?: { current?: string };
   sectionId?: string;
   text?: string | PTBlock[];
@@ -30,81 +31,11 @@ type SearchResult = {
   seoTitle?: string;
 };
 
-// Highlight the search term in the preview text
-function highlight(text: string, query: string): React.ReactNode {
-  if (!text || !query) return text;
-  const regex = new RegExp(`(${query})`, "gi");
-  return text.split(regex).map((part, i) =>
-    part.toLowerCase() === query.toLowerCase() ? (
-      <mark key={i} className="bg-yellow-200">
-        {part}
-      </mark>
-    ) : (
-      part
-    )
-  );
+interface SearchBarProps {
+  isShrunk?: boolean;
 }
 
-// Get a preview snippet from the first matching field
-function getPreview(item: SearchResult, query: string): string {
-  const fields: (string | PTBlock[] | undefined)[] = [
-    item.text,
-    item.angabenText,
-    item.impressumText,
-    // flatten ansprechperson.text arrays if present
-    item.ansprechperson?.flatMap((p) => p.text) as PTBlock[] | undefined,
-    item.metaDescription,
-    item.ueberschrift,
-    item.seitentitelMenue,
-    item.seoTitle,
-  ];
-
-  for (const field of fields) {
-    if (Array.isArray(field)) {
-      for (const block of field) {
-        if (block && block.children) {
-          for (const child of block.children) {
-            const childText = child?.text ?? "";
-            if (
-              childText &&
-              childText.toLowerCase().includes(query.toLowerCase())
-            ) {
-              const idx = childText.toLowerCase().indexOf(query.toLowerCase());
-              if (idx !== -1) {
-                // increase context: show more chars before/after match
-                const start = Math.max(0, idx - 100); // was 30
-                const end = Math.min(
-                  childText.length,
-                  idx + query.length + 200
-                ); // was +70
-                let snippet = childText.slice(start, end);
-                if (start > 0) snippet = "…" + snippet;
-                if (end < childText.length) snippet = snippet + "…";
-                return snippet;
-              }
-            }
-          }
-        }
-      }
-    } else if (
-      typeof field === "string" &&
-      field.toLowerCase().includes(query.toLowerCase())
-    ) {
-      const idx = field.toLowerCase().indexOf(query.toLowerCase());
-      if (idx !== -1) {
-        const start = Math.max(0, idx - 100); // was 30
-        const end = Math.min(field.length, idx + query.length + 200); // was +70
-        let snippet = field.slice(start, end);
-        if (start > 0) snippet = "…" + snippet;
-        if (end < field.length) snippet = snippet + "…";
-        return snippet;
-      }
-    }
-  }
-  return "";
-}
-
-export default function SearchBar() {
+export default function SearchBar({ isShrunk = false }: SearchBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -152,90 +83,93 @@ export default function SearchBar() {
     setResults([]);
   };
 
+  // Get a preview snippet from the first matching field (moved to SearchModal, but kept here for filtering)
+  function getPreview(item: SearchResult, query: string): string {
+    const fields: (string | PTBlock[] | undefined)[] = [
+      item.text,
+      item.angabenText,
+      item.impressumText,
+      // flatten ansprechperson.text arrays if present
+      item.ansprechperson?.flatMap((p) => p.text) as PTBlock[] | undefined,
+      item.metaDescription,
+      item.ueberschrift,
+      item.seitentitelMenue,
+      item.seoTitle,
+    ];
+
+    for (const field of fields) {
+      if (Array.isArray(field)) {
+        for (const block of field) {
+          if (block && block.children) {
+            for (const child of block.children) {
+              const childText = child?.text ?? "";
+              if (
+                childText &&
+                childText.toLowerCase().includes(query.toLowerCase())
+              ) {
+                const idx = childText
+                  .toLowerCase()
+                  .indexOf(query.toLowerCase());
+                if (idx !== -1) {
+                  // increase context: show more chars before/after match
+                  const start = Math.max(0, idx - 100); // was 30
+                  const end = Math.min(
+                    childText.length,
+                    idx + query.length + 200
+                  ); // was +70
+                  let snippet = childText.slice(start, end);
+                  if (start > 0) snippet = "…" + snippet;
+                  if (end < childText.length) snippet = snippet + "…";
+                  return snippet;
+                }
+              }
+            }
+          }
+        }
+      } else if (
+        typeof field === "string" &&
+        field.toLowerCase().includes(query.toLowerCase())
+      ) {
+        const idx = field.toLowerCase().indexOf(query.toLowerCase());
+        if (idx !== -1) {
+          const start = Math.max(0, idx - 100); // was 30
+          const end = Math.min(field.length, idx + query.length + 200); // was +70
+          let snippet = field.slice(start, end);
+          if (start > 0) snippet = "…" + snippet;
+          if (end < field.length) snippet = snippet + "…";
+          return snippet;
+        }
+      }
+    }
+    return "";
+  }
   return (
     <>
       {/* Search Icon */}
-      <div
+      <button
         onClick={() => {
           if (typeof window !== "undefined") {
             window.removeAllHighlights?.();
           }
           setIsOpen(true);
         }}
-        className="w-full h-full flex items-center justify-center text-lg cursor-pointer text-[#5a7cbe] hover:text-gray-700 transition-colors duration-300 ease-in-out"
         aria-label="Search"
+        className="md:text-lg md:bg-transparent md:shadow-none md:p-0 md:text-[#5a7cbe] md:hover:text-gray-700"
       >
         <SearchOutlined />
-      </div>
+        <span className="md:hidden">Suche</span>
+      </button>
 
-      {/* Modal Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-gray-100 z-50 flex justify-center p-4 md:px-8 xl:px-16 2xl:px-32"
-          onClick={closeModal}
-        >
-          <div
-            className="search-bar"
-            style={{
-              height: results.length > 0 ? "auto" : "8rem", // Dynamic height
-              maxHeight: "100vh", // Limit max height
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <input
-              type="search"
-              value={query}
-              onChange={handleSearch}
-              placeholder="Suche..."
-              autoFocus
-            />
-
-            {/* Results */}
-            <div
-              className={`flex flex-col flex-1 overflow-y-auto gap-4 ${
-                results.length > 0 ? "block" : "hidden"
-              }`}
-            >
-              {loading && <div className="p-4 text-center">Lädt...</div>}
-              {!loading && results.length === 0 && query.length > 1 && (
-                <div className="p-4 text-center text-gray-500">
-                  Keine Treffer
-                </div>
-              )}
-              {!loading &&
-                results.map((item) => {
-                  return (
-                    <Link
-                      key={item._id}
-                      href={`${item.slug?.current || ""}?search=${encodeURIComponent(query)}`}
-                      className="block"
-                      onClick={() => {
-                        if (typeof window !== "undefined")
-                          window.removeAllHighlights?.();
-                        closeModal();
-                      }}
-                    >
-                      <div className="flex flex-col gap-2">
-                        <div className="font-semibold">
-                          {item.seitentitelMenue ||
-                            item.seoTitle ||
-                            item.ueberschrift ||
-                            item.metaDescription}
-                        </div>
-                        <div className="font-normal">
-                          {highlight(getPreview(item, query), query)}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-            </div>
-            <button onClick={closeModal} aria-label="Close search">
-              <CloseOutlined />
-            </button>
-          </div>
-        </div>
-      )}
+      <SearchModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        query={query}
+        setQuery={setQuery}
+        results={results}
+        loading={loading}
+        handleSearch={handleSearch}
+        isShrunk={isShrunk}
+      />
     </>
   );
 }

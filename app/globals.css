@@ -165,6 +165,7 @@
     @apply font-bold text-base text-[#5a7cbe] hover:text-gray-700;
     @apply transition-colors duration-300 ease-in-out;
   }
+
   a.active-link:not(.logo-link) {
     @apply text-gray-700;
   }
@@ -213,7 +214,7 @@
   /* landing */
   .hero {
     @apply relative;
-    @apply flex justify-center items-center;
+    @apply justify-center items-center;
     @apply w-full h-[75vh] md:h-[50vh];
   }
   .hero-text {
@@ -252,9 +253,9 @@
   .search-bar {
     @apply w-full;
     @apply p-4;
-    @apply flex flex-col gap-4;
+    @apply flex flex-col  gap-4;
     @apply bg-gray-300;
-    @apply border border-gray-700 rounded-md shadow-md;
+    @apply shadow-md;
   }
 
   /* CARDS */

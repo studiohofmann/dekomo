@@ -16,14 +16,16 @@ export default async function Vision() {
   }
 
   return (
-    <ExpandableSquareCard>
-      <h2>{vision.ueberschrift}</h2>
-      <div className="w-full">
-        <GrafikVision />
-      </div>
-      <div className="portable-text">
-        <PortableText value={vision.text || []} />
-      </div>
-    </ExpandableSquareCard>
+    <section id={vision.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        <h2>{vision.ueberschrift}</h2>
+        <div className="w-full">
+          <GrafikVision />
+        </div>
+        <div className="portable-text">
+          <PortableText value={vision.text || []} />
+        </div>
+      </ExpandableSquareCard>
+    </section>
   );
 }

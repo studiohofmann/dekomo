@@ -19,7 +19,7 @@ export default async function Einleitung() {
   }
 
   return (
-    <div className="hero">
+    <section id={einleitung.sectionId ?? undefined} className="hero">
       {einleitung.bild && (
         <SanityImage
           image={einleitung.bild}
@@ -40,6 +40,6 @@ export default async function Einleitung() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

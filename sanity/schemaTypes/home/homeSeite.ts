@@ -37,6 +37,13 @@ const homeSeite = {
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "sectionId",
+      title: "Section ID",
+      type: "string",
+      description:
+        "ID for linking directly to this section from search results",
+    }),
+    defineField({
       name: "seoTitle",
       title: "SEO Titel",
       type: "string",

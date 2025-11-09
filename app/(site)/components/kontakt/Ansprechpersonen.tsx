@@ -15,7 +15,10 @@ export default async function Ansprechpersonen() {
   }
 
   return (
-    <section className="card background-yellow">
+    <section
+      id={ansprechpersonen.sectionId || undefined}
+      className="card background-yellow"
+    >
       <h2>{ansprechpersonen.ueberschrift}</h2>
       <div className="flex flex-col gap-4">
         {(ansprechpersonen.ansprechperson ?? []).map((person, index) => (

@@ -48,8 +48,8 @@ export default async function DownloadsPage() {
   };
 
   return (
-    <div id="downloads" className="page">
-      <section>
+    <div className="page">
+      <section id={downloadsSeite.sectionId ?? undefined}>
         <h1>{downloadsSeite.seitentitelMenue || "Downloads"}</h1>
         {downloadsSeite.text && (
           <div className="portable-text">

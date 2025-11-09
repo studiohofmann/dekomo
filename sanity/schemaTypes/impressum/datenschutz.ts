@@ -9,6 +9,14 @@ const datenschutz = {
 
   fields: [
     defineField({
+      name: "sectionId",
+      title: "Section ID",
+      type: "string",
+      description:
+        "ID for linking directly to this section from search results",
+    }),
+
+    defineField({
       name: "ueberschrift",
       title: "Überschrift",
       type: "string",

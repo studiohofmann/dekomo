@@ -17,44 +17,46 @@ export default async function Fallbeispiele() {
   }
 
   return (
-    <ExpandableSquareCard>
-      {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
-      <Tabs defaultValue={data.fallbeispiel[0].ueberschrift || "tab-0"}>
-        <TabsList>
+    <section id={data.sectionId ?? undefined}>
+      <ExpandableSquareCard>
+        {data.ueberschrift && <h2>{data.ueberschrift}</h2>}
+        <Tabs defaultValue={data.fallbeispiel[0].ueberschrift || "tab-0"}>
+          <TabsList>
+            {data.fallbeispiel.map((fallbeispiel, idx) => (
+              <TabsTrigger
+                key={idx}
+                value={fallbeispiel.ueberschrift || `tab-${idx}`}
+              >
+                {fallbeispiel.ueberschrift || `Teilprojekt ${idx + 1}`}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
           {data.fallbeispiel.map((fallbeispiel, idx) => (
-            <TabsTrigger
+            <TabsContent
               key={idx}
               value={fallbeispiel.ueberschrift || `tab-${idx}`}
             >
-              {fallbeispiel.ueberschrift || `Teilprojekt ${idx + 1}`}
-            </TabsTrigger>
+              {fallbeispiel.bild && (
+                <div className="mb-4">
+                  <SanityImage
+                    image={fallbeispiel.bild}
+                    altFallback={fallbeispiel.bild.alt || "Bild"}
+                    width={800}
+                    height={500}
+                    className="w-full h-auto"
+                  />
+                </div>
+              )}
+              {fallbeispiel.text && (
+                <div className="portable-text">
+                  <PortableText value={fallbeispiel.text || []} />
+                </div>
+              )}
+            </TabsContent>
           ))}
-        </TabsList>
-
-        {data.fallbeispiel.map((fallbeispiel, idx) => (
-          <TabsContent
-            key={idx}
-            value={fallbeispiel.ueberschrift || `tab-${idx}`}
-          >
-            {fallbeispiel.bild && (
-              <div className="mb-4">
-                <SanityImage
-                  image={fallbeispiel.bild}
-                  altFallback={fallbeispiel.bild.alt || "Bild"}
-                  width={800}
-                  height={500}
-                  className="w-full h-auto"
-                />
-              </div>
-            )}
-            {fallbeispiel.text && (
-              <div className="portable-text">
-                <PortableText value={fallbeispiel.text || []} />
-              </div>
-            )}
-          </TabsContent>
-        ))}
-      </Tabs>
-    </ExpandableSquareCard>
+        </Tabs>
+      </ExpandableSquareCard>
+    </section>
   );
 }

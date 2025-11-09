@@ -42,6 +42,13 @@ const downloadsSeite = {
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "sectionId",
+      title: "Section ID",
+      type: "string",
+      description:
+        "ID for linking directly to this section from search results",
+    }),
+    defineField({
       name: "text",
       title: "Text",
       type: "array",

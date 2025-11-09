@@ -15,7 +15,7 @@ export default async function Projektfoerderung() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <section id={projektfoerderung.sectionId || undefined}>
       <h3 className="">{projektfoerderung.ueberschrift}</h3>
       <div className="footer-grid">
         {projektfoerderung.logo && (
@@ -33,6 +33,6 @@ export default async function Projektfoerderung() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

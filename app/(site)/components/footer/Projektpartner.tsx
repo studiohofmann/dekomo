@@ -14,7 +14,7 @@ export default async function Projektpartner() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <section id={partner.sectionId || undefined}>
       <h3 className="">{partner.ueberschrift}</h3>
       <div className="footer-grid">
         {partner.logos?.map((logo, index) => (
@@ -27,6 +27,6 @@ export default async function Projektpartner() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

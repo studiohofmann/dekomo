@@ -14,13 +14,13 @@ export default async function Datenschutz() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <section id={datenschutz.sectionId || undefined}>
       <h2>{datenschutz.ueberschrift}</h2>
       {datenschutz.text && (
         <div className="portable-text">
           <PortableText value={datenschutz.text || []} />
         </div>
       )}
-    </div>
+    </section>
   );
 }

@@ -34,6 +34,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -168,6 +175,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -301,6 +315,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -601,6 +622,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -843,6 +871,13 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -1348,6 +1383,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -1692,6 +1734,13 @@
         },
         "optional": true
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "text": {
         "type": "objectAttribute",
         "value": {
@@ -2027,6 +2076,13 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -2436,6 +2492,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -2735,6 +2798,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -2958,6 +3028,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -3143,82 +3220,6 @@
           }
         },
         "optional": true
-      },
-      "grafik": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "asset": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "object",
-                "attributes": {
-                  "_ref": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "_type": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string",
-                      "value": "reference"
-                    }
-                  },
-                  "_weak": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "boolean"
-                    },
-                    "optional": true
-                  }
-                },
-                "dereferencesTo": "sanity.imageAsset"
-              },
-              "optional": true
-            },
-            "media": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "unknown"
-              },
-              "optional": true
-            },
-            "hotspot": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageHotspot"
-              },
-              "optional": true
-            },
-            "crop": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageCrop"
-              },
-              "optional": true
-            },
-            "alt": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": true
-            },
-            "_type": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string",
-                "value": "image"
-              }
-            }
-          }
-        },
-        "optional": true
       }
     }
   },
@@ -3256,6 +3257,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -3531,6 +3539,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -3688,6 +3703,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -4018,6 +4040,13 @@
           "type": "string"
         }
       },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "ueberschrift": {
         "type": "objectAttribute",
         "value": {
@@ -4203,82 +4232,6 @@
           }
         },
         "optional": true
-      },
-      "grafik": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "asset": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "object",
-                "attributes": {
-                  "_ref": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "_type": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string",
-                      "value": "reference"
-                    }
-                  },
-                  "_weak": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "boolean"
-                    },
-                    "optional": true
-                  }
-                },
-                "dereferencesTo": "sanity.imageAsset"
-              },
-              "optional": true
-            },
-            "media": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "unknown"
-              },
-              "optional": true
-            },
-            "hotspot": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageHotspot"
-              },
-              "optional": true
-            },
-            "crop": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageCrop"
-              },
-              "optional": true
-            },
-            "alt": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": true
-            },
-            "_type": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string",
-                "value": "image"
-              }
-            }
-          }
-        },
-        "optional": true
       }
     }
   },
@@ -4316,6 +4269,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -4569,6 +4529,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -4868,6 +4835,13 @@
         "value": {
           "type": "string"
         }
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "ueberschrift": {
         "type": "objectAttribute",
@@ -5187,6 +5161,13 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": true
+      },
+      "sectionId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
