@@ -73,6 +73,8 @@ export const MEDIEN_QUERY = defineQuery(`*[_type == "medien"][0]{
   ueberschrift,
   dateien[]{
     titel,
+    datum,
+    medium,
     typ,
     datei{
       asset->{

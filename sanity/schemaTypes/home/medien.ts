@@ -34,8 +34,45 @@ const medien = {
               name: "titel",
               title: "Titel",
               type: "string",
-              description: "Anzeigetitel",
+              description: "Titel",
             }),
+            defineField({
+              name: "datum",
+              title: "Datum",
+              type: "string",
+              description:
+                "Datum der Veröffentlichung (YYYY-MM-DD oder YYYY-MM für Monat/Jahr)",
+              validation: (Rule) =>
+                Rule.custom((value) => {
+                  if (!value) return true; // Optional field
+                  const dateRegex = /^\d{4}-\d{2}(-\d{2})?$/;
+                  if (!dateRegex.test(value)) {
+                    return "Datum muss im Format YYYY-MM oder YYYY-MM-DD sein (z.B. 2023-10 oder 2023-10-15)";
+                  }
+                  // Additional validation for valid dates
+                  const parts = value.split("-");
+                  const year = parseInt(parts[0], 10);
+                  const month = parseInt(parts[1], 10);
+                  if (month < 1 || month > 12) {
+                    return "Ungültiger Monat (1-12)";
+                  }
+                  if (parts[2]) {
+                    const day = parseInt(parts[2], 10);
+                    const daysInMonth = new Date(year, month, 0).getDate();
+                    if (day < 1 || day > daysInMonth) {
+                      return `Ungültiger Tag für ${month}/${year}`;
+                    }
+                  }
+                  return true;
+                }),
+            }),
+            defineField({
+              name: "medium",
+              title: "Medium",
+              type: "string",
+              description: "Name der Zeitschrift, Website, etc.",
+            }),
+
             defineField({
               name: "typ",
               title: "Typ",

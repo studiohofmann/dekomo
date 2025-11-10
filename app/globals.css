@@ -215,7 +215,7 @@
   .hero {
     @apply relative;
     @apply justify-center items-center;
-    @apply w-full h-[75vh] md:h-[50vh];
+    @apply w-full h-[100vh] md:h-[50vh];
   }
   .hero-text {
     @apply absolute inset-0;

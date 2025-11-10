@@ -3567,6 +3567,20 @@
                 },
                 "optional": true
               },
+              "datum": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "medium": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
               "typ": {
                 "type": "objectAttribute",
                 "value": {

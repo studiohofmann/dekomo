@@ -488,6 +488,8 @@ export type Medien = {
   ueberschrift?: string;
   dateien?: Array<{
     titel?: string;
+    datum?: string;
+    medium?: string;
     typ?: "datei" | "link";
     datei?: {
       asset?: {
@@ -1018,12 +1020,14 @@ export type FALLBEISPIELE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: MEDIEN_QUERY
-// Query: *[_type == "medien"][0]{  sectionId,  ueberschrift,  dateien[]{    titel,    typ,    datei{      asset->{        url      }    },    link  }}
+// Query: *[_type == "medien"][0]{  sectionId,  ueberschrift,  dateien[]{    titel,    datum,    medium,    typ,    datei{      asset->{        url      }    },    link  }}
 export type MEDIEN_QUERYResult = {
   sectionId: string | null;
   ueberschrift: string | null;
   dateien: Array<{
     titel: string | null;
+    datum: string | null;
+    medium: string | null;
     typ: "datei" | "link" | null;
     datei: {
       asset: {
@@ -1422,7 +1426,7 @@ declare module "@sanity/client" {
     "*[_type == \"teilprojekte\"][0]{\n  sectionId,\n  ueberschrift,\n  teilprojekt[] {\n    ueberschrift,\n    text\n  }\n}": TEILPROJEKTE_QUERYResult;
     "*[_type == \"auswirkungen\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n}": AUSWIRKUNGEN_QUERYResult;
     "*[_type == \"fallbeispiele\"][0]{\n  sectionId,\n  ueberschrift,\n  fallbeispiel[]{\n    ueberschrift,\n    bild{\n      asset->{_id, url},\n      alt\n    },\n    text\n  }\n}": FALLBEISPIELE_QUERYResult;
-    "*[_type == \"medien\"][0]{\n  sectionId,\n  ueberschrift,\n  dateien[]{\n    titel,\n    typ,\n    datei{\n      asset->{\n        url\n      }\n    },\n    link\n  }\n}": MEDIEN_QUERYResult;
+    "*[_type == \"medien\"][0]{\n  sectionId,\n  ueberschrift,\n  dateien[]{\n    titel,\n    datum,\n    medium,\n    typ,\n    datei{\n      asset->{\n        url\n      }\n    },\n    link\n  }\n}": MEDIEN_QUERYResult;
     "*[_type == \"netzwerk\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  standorte[]{\n    titel,\n    latitude,\n    longitude\n  }\n}": NETZWERK_QUERYResult;
     "*[_type == \"zugangswege\"][0]{\n  sectionId,\n  ueberschrift,\n  text, \n}": ZUGANGSWEGE_QUERYResult;
     "*[_type == \"kompetenzerweiterung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n}": KOMPETENZERWEITERUNG_QUERYResult;
