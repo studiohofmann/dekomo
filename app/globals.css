@@ -1,0 +1,650 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: "Eau Sans";
+  src: url("/fonts/eau_sans_book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eau Sans";
+  src: url("/fonts/eau_sans_bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eau Sans";
+  src: url("/fonts/eau_sans_black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-montserrat);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    font-family: "Eau Sans", sans-serif;
+    @apply bg-gray-100 text-gray-700;
+  }
+
+  h1 {
+    @apply text-2xl font-black text-center;
+    @apply md:text-2xl;
+  }
+
+  h2 {
+    @apply w-full;
+    @apply px-4 py-4;
+    @apply bg-gray-100;
+    @apply text-lg  font-bold text-center;
+  }
+
+  h3 {
+    @apply text-sm font-bold;
+  }
+
+  /* LINKS */
+  a:not(.logo-link) {
+    @apply font-bold text-base text-[#5a7cbe] hover:text-gray-700;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  a.active-link:not(.logo-link) {
+    @apply text-gray-700;
+  }
+  .portable-text a {
+    @apply text-[#5a7cbe]  font-bold;
+    @apply transition-colors duration-200;
+    @apply hover:text-gray-700;
+  }
+  .portable-text-footer-link a {
+    @apply text-gray-100 text-sm font-bold hover:text-gray-700;
+    @apply transition-colors duration-200;
+  }
+
+  /* BUTTON */
+  button:not(.clean-button) {
+    @apply px-4 py-2;
+    @apply w-full;
+    @apply flex items-center justify-center gap-2;
+    @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+    @apply text-sm font-bold text-gray-700 hover:text-gray-100;
+    @apply rounded-full;
+    @apply shadow-md;
+    @apply cursor-pointer;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  .button {
+    @apply px-4 py-2;
+    @apply w-full;
+    @apply flex items-center justify-center gap-2;
+    @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+    @apply !text-sm font-bold !text-gray-700 hover:!text-gray-100;
+    @apply rounded-full;
+    @apply shadow-md;
+    @apply cursor-pointer;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  /* TABS */
+
+  .tab-trigger-btn[data-state="active"] {
+    @apply bg-[#5a7cbe] text-gray-100;
+  }
+
+  /* LAYOUT */
+
+  /* landing */
+  .hero {
+    @apply relative;
+    @apply justify-center items-center;
+    @apply w-full h-[100vh] md:h-[50vh];
+  }
+  .hero-text {
+    @apply absolute inset-0;
+    @apply z-20;
+    @apply pt-32;
+    @apply px-4 md:px-8 xl:px-16 2xl:px-32;
+    @apply flex flex-col items-center justify-center gap-8;
+  }
+
+  .page {
+    @apply mt-32;
+    @apply px-4 md:px-8  2xl:px-32 py-16;
+    @apply flex flex-col gap-16;
+  }
+
+  section {
+    @apply flex flex-col gap-4;
+  }
+
+  .landing-page {
+    @apply px-4 md:px-8 py-16 2xl:py-16 2xl:px-24;
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-16;
+  }
+
+  .not-found-page {
+    @apply h-screen; /* Full height of the viewport */
+    @apply px-4;
+    @apply flex items-center justify-center;
+    @apply bg-red-300;
+    @apply bg-gradient-to-b from-gray-300 to-gray-100;
+    @apply md:px-8;
+    @apply xl:px-16;
+    @apply 2xl:px-32;
+  }
+  .search-bar {
+    @apply w-full;
+    @apply p-4;
+    @apply flex flex-col  gap-4;
+    @apply bg-gray-300;
+    @apply shadow-md;
+  }
+
+  /* CARDS */
+  .card {
+    @apply p-4;
+    @apply h-full;
+    @apply flex flex-col gap-4;
+    @apply bg-gray-300;
+    @apply shadow-md;
+  }
+  .expandable-card {
+    @apply relative;
+    @apply w-full;
+    @apply p-4;
+    @apply flex flex-col gap-4 items-center justify-start;
+    @apply bg-gray-300;
+
+    @apply shadow-md;
+  }
+
+  .background-blue {
+    @apply bg-[#5a7cbe] text-gray-100;
+  }
+  .background-yellow {
+    @apply bg-[#f7f1a9];
+  }
+
+  .backgroundcolor {
+    @apply bg-gray-300;
+  }
+
+  /* HEADER */
+  .header {
+    @apply fixed;
+    @apply top-0  left-0;
+    @apply px-4 md:px-8 2xl:px-24;
+    @apply w-full;
+    @apply z-[9999];
+    @apply flex gap-4 items-center justify-center;
+    @apply bg-gray-300;
+    @apply shadow-md;
+    @apply transition-all duration-300;
+    @apply md:justify-between;
+  }
+  .mobile-navigation {
+    @apply fixed;
+    @apply w-full h-18;
+    @apply z-[9999];
+    @apply px-4;
+    @apply left-0 bottom-0;
+    @apply flex items-center justify-center;
+    @apply bg-gray-300;
+    @apply border-t border-gray-700;
+    @apply shadow-md;
+    @apply md:hidden;
+  }
+
+  /* CONTACT FORM */
+  input,
+  textarea {
+    @apply px-4 py-2;
+    @apply bg-gray-200 text-gray-700;
+
+    @apply focus:outline-none focus:bg-gray-100 focus:border-gray-700;
+    @apply transition-colors duration-200;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-gray-500;
+  }
+  select {
+    @apply px-4 py-2;
+    @apply w-full;
+    @apply appearance-none;
+    @apply text-gray-500;
+    @apply bg-gray-200;
+
+    @apply focus:outline-none focus:bg-gray-100 focus:border-gray-700;
+    @apply transition-colors duration-200;
+  }
+
+  /* Override autofill styling */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #e5e7eb inset !important; /* <-- Change this color */
+    -webkit-text-fill-color: #374151 !important;
+    font-size: 1rem !important; /* <-- Change this value to set autofill font size */
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* FOOTER */
+  .footer {
+    @apply px-4 md:px-8 2xl:px-24 pt-16 pb-16;
+    @apply flex flex-col gap-8;
+    @apply bg-[#94b0dd];
+
+    @apply lg:pb-0;
+  }
+  .footer-grid {
+    @apply grid grid-cols-3 gap-4;
+    @apply md:grid-cols-4;
+    @apply lg:grid-cols-5 lg:gap-8;
+  }
+  .footer-logo-container {
+    @apply p-4;
+    @apply bg-gray-300;
+    @apply shadow-md;
+  }
+
+  /* PORTABLE TEXT */
+  .portable-text h1,
+  .portable-text h2,
+  .portable-text h3 {
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .portable-text h1 {
+    font-size: 2rem;
+  }
+  .portable-text h2 {
+    font-size: 1.5rem;
+  }
+  .portable-text h3 {
+    font-size: 1.25rem;
+  }
+  .portable-text p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  .portable-text p:last-child {
+    margin-bottom: 0;
+  }
+  .portable-text ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .portable-text ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .portable-text li {
+    display: list-item;
+    margin-bottom: 0.5rem;
+  }
+  .portable-text strong {
+    font-weight: bold;
+  }
+  .portable-text em {
+    font-style: italic;
+  }
+}
+
+.leaflet-map .leaflet-control-zoom {
+  @apply flex flex-col gap-2;
+  @apply absolute left-1 top-1 z-10;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Buttons: remove their own border so only the container shows an outline */
+.leaflet-map .leaflet-control-zoom a,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-out {
+  @apply px-2 py-2;
+  @apply w-full;
+  @apply flex items-center justify-center;
+  @apply bg-[#94b0dd] hover:bg-[#5a7cbe];
+  @applyxs text- font-bold text-gray-700 hover:text-gray-100;
+  @apply border border-gray-700;
+  @apply rounded-md;
+  @apply shadow-md;
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* ensure any SVG inside scales up */
+.leaflet-map .leaflet-control-zoom a svg {
+  @apply w-6 h-6; /* 24px */
+  fill: currentColor;
+}
+
+/* adjust stacked layout spacing if needed */
+.leaflet-map .leaflet-control-zoom {
+  @apply flex flex-col gap-2;
+}
+
+/* Toned-down link styles inside maps to avoid inheriting .portable-text link rules */
+.leaflet-map a {
+  @apply text-[#94b0dd] font-medium no-underline;
+  @apply transition-colors duration-200;
+}
+.leaflet-map a:hover {
+  @apply text-[#5a7cbe];
+}
+
+/* Attribution / OSM link: smaller and less bold than portable-text links */
+.leaflet-map .leaflet-control-attribution a,
+.leaflet-map .leaflet-custom-attribution .leaflet-osm a {
+  @apply text-xs font-normal underline underline-offset-2 text-gray-700;
+  @apply transition-colors duration-200;
+}
+.leaflet-map .leaflet-control-attribution a:hover,
+.leaflet-map .leaflet-custom-attribution .leaflet-osm a:hover {
+  @apply text-[#5a7cbe];
+}
+
+/* Reset boxed link styles INSIDE the Leaflet map (attribution, popups, custom control) */
+.leaflet-map
+  :is(
+    .leaflet-control-attribution a,
+    .leaflet-custom-attribution a,
+    .leaflet-popup-content a
+  ) {
+  @apply inline-block; /* not full-width / not flex */
+  @apply px-0 py-0; /* remove site button padding */
+  @apply w-auto; /* allow intrinsic width */
+  @apply bg-transparent; /* remove background */
+  @apply border-0; /* remove border */
+  @apply rounded-none; /* remove radius */
+  @apply shadow-none; /* remove shadow */
+  @apply text-[#94b0dd] font-medium; /* keep gentle color & weight */
+  @apply underline underline-offset-2;
+  @apply transition-colors duration-200;
+}
+/* hover color */
+.leaflet-map
+  :is(
+    .leaflet-control-attribution a,
+    .leaflet-custom-attribution a,
+    .leaflet-popup-content a
+  ):hover {
+  @apply text-[#5a7cbe];
+}
+
+/* If the global rule still wins because of specificity, force with !important fallbacks */
+.leaflet-map .leaflet-control-attribution a,
+.leaflet-map .leaflet-custom-attribution a,
+.leaflet-map .leaflet-popup-content a {
+  background: transparent !important;
+  padding: 0 !important;
+  width: auto !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: inline-block !important;
+}
+
+/* remove all borders / outlines for Leaflet zoom control */
+.leaflet-map .leaflet-control-zoom,
+.leaflet-map .leaflet-control-zoom a,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom .leaflet-control-zoom-out {
+  @apply border-0 bg-transparent shadow-none;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  outline: 0 !important;
+}
+
+/* remove any separator lines between stacked buttons */
+.leaflet-map .leaflet-control-zoom a:not(:first-child) {
+  border-top: 0 !important;
+}
+
+/* ensure buttons keep their size and layout but no border */
+.leaflet-map .leaflet-control-zoom a {
+  @apply inline-flex items-center justify-center w-9 h-9 p-0 m-0;
+  border-radius: 0;
+}
+.leaflet-map .leaflet-bottom.leaflet-right {
+  /* offset from the viewport edges — adjust values to taste */
+  right: 0.5rem; /* distance from right edge */
+  bottom: 0.5rem; /* distance from bottom edge */
+  pointer-events: none; /* container only; controls keep pointer events */
+}
+
+/* ensure the actual control element still accepts pointer events */
+.leaflet-map .leaflet-bottom.leaflet-right > * {
+  pointer-events: auto;
+}
+
+/* Leaflet tooltip styling used by .custom-tooltip (keeps text clean + styled) */
+.leaflet-map .leaflet-tooltip.custom-tooltip {
+  @apply bg-[#f7f1a9] text-gray-700 rounded-md px-4 py-2 shadow-md border border-gray-700;
+  @apply text-xs; /* change here: text-xs | text-sm | text-base | text-lg */
+  white-space: nowrap;
+  font-weight: 600; /* fallback if no Tailwind on inner span */
+}
+
+/* tooltip arrow color */
+.leaflet-map .leaflet-tooltip.custom-tooltip:before {
+  @apply border-t-gray-700;
+}
+
+/* Override all previous zoom control styles with exact link styling */
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-out {
+  /* Exact link styling without anything extra */
+  @apply px-3 py-2;
+  @apply w-full;
+  @apply flex items-center justify-center;
+  @apply !bg-[#94b0dd] hover:!bg-[#5a7cbe];
+  @apply text-xs font-bold text-gray-700 hover:text-gray-100;
+  @apply !border !border-gray-700;
+  @apply rounded-md;
+  @apply !shadow-md;
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* Fix parent container to not interfere */
+.leaflet-map .leaflet-control-zoom {
+  @apply bg-transparent border-0 shadow-none;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  @apply flex flex-col gap-2;
+}
+
+/* Fix zoom button corners and ensure rounded edges on both buttons */
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-in,
+.leaflet-map .leaflet-control-zoom a.leaflet-control-zoom-out {
+  /* Force rounded corners with important flag */
+  border-radius: 0.375rem !important; /* rounded-md = 0.375rem */
+  overflow: hidden !important;
+}
+
+/* Prevent Leaflet from expanding its parent */
+.leaflet-map,
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Block any focus styles that might cause expansion */
+.leaflet-container:focus,
+.leaflet-container:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Nuclear containment for Leaflet map */
+.map-containment-wrapper {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  contain: strict !important;
+  pointer-events: auto !important;
+}
+
+/* Force Leaflet to stay within bounds */
+.map-containment-wrapper .leaflet-map,
+.map-containment-wrapper .leaflet-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Prevent any focus or active states from affecting layout */
+.map-containment-wrapper .leaflet-container:focus,
+.map-containment-wrapper .leaflet-container:active,
+.map-containment-wrapper .leaflet-container:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Kill all transitions that might cause layout shifts */
+.map-containment-wrapper .leaflet-fade-anim .leaflet-tile,
+.map-containment-wrapper .leaflet-zoom-anim .leaflet-zoom-animated {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Ensure controls don't break containment */
+.map-containment-wrapper .leaflet-control-container {
+  position: absolute !important;
+  z-index: 1000 !important;
+}
