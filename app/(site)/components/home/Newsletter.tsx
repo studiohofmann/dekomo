@@ -8,6 +8,7 @@ export default function Newsletter() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorDetail, setErrorDetail] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   const isValid = email.trim() && consent;
 
@@ -21,7 +22,7 @@ export default function Newsletter() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, website: honeypot }),
       });
 
       if (response.ok) {
@@ -47,6 +48,16 @@ export default function Newsletter() {
       <div className="footer-grid">
       <form onSubmit={handleSubmit} className="col-span-full lg:col-span-2">
         <div className="flex flex-col gap-2">
+          {/* Honeypot — hidden from real users, bots fill it in */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            aria-hidden="true"
+            style={{ display: "none" }}
+          />
           <input
             type="email"
             placeholder="E-Mail-Adresse *"

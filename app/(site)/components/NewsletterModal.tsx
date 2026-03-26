@@ -11,6 +11,7 @@ export default function NewsletterModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorDetail, setErrorDetail] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem(STORAGE_KEY)) {
@@ -35,7 +36,7 @@ export default function NewsletterModal() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, website: honeypot }),
       });
 
       if (response.ok) {
@@ -70,6 +71,16 @@ export default function NewsletterModal() {
         <h3>Newsletter</h3>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
+            {/* Honeypot — hidden from real users, bots fill it in */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              aria-hidden="true"
+              style={{ display: "none" }}
+            />
             <input
               type="email"
               placeholder="E-Mail-Adresse *"

@@ -3,7 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email } = body;
+    const { email, website } = body;
+
+    // Honeypot check — bots fill this in, real users don't
+    if (website) {
+      return NextResponse.json(
+        { message: "Erfolgreich angemeldet" },
+        { status: 200 }
+      );
+    }
 
     if (!email || typeof email !== "string") {
       return NextResponse.json(
