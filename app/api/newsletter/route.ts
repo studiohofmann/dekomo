@@ -47,6 +47,28 @@ export async function POST(request: NextRequest) {
 
     // 201 = created, 204 = already exists and updated
     if (response.status === 201 || response.status === 204) {
+      await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "api-key": apiKey,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          sender: { name: "DeKoMo", email: "info@dekomo.ch" },
+          to: [{ email }],
+          subject: "Willkommen beim DeKoMo-Newsletter",
+          htmlContent: `
+            <p>Guten Tag</p>
+            <p>Vielen Dank für Ihre Anmeldung zum DeKoMo-Newsletter.</p>
+            <p>Wir halten Sie über aktuelle Entwicklungen, Veranstaltungen und Ergebnisse des DeKoMo-Projekts auf dem Laufenden.</p>
+            <p>Sie können sich jederzeit vom Newsletter abmelden.</p>
+            <br>
+            <p>Freundliche Grüsse<br>Das DeKoMo-Team</p>
+          `,
+        }),
+      });
+
       return NextResponse.json(
         { message: "Erfolgreich angemeldet" },
         { status: 200 }
