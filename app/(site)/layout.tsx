@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { sanityFetch } from "@/sanity/lib/client";
-import { NAVIGATION_QUERY } from "@/sanity/lib/queries";
-import type { NAVIGATION_QUERYResult } from "@/sanity/types";
+import { NAVIGATION_QUERY, NEWSLETTER_QUERY } from "@/sanity/lib/queries";
+import type { NAVIGATION_QUERYResult, NEWSLETTER_QUERYResult } from "@/sanity/types";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import SearchHighlighter from "./components/header/search-bar/SearchHighlighter";
@@ -38,6 +38,10 @@ export default async function SiteLayout({
     query: NAVIGATION_QUERY,
     revalidate: 60,
   });
+  const newsletter: NEWSLETTER_QUERYResult = await sanityFetch({
+    query: NEWSLETTER_QUERY,
+    revalidate: 60,
+  });
 
   // Filter out items where slug is null
   const menuItems = menuItemsRaw.filter(
@@ -51,8 +55,15 @@ export default async function SiteLayout({
   );
 
   return (
+    <>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossOrigin=""
+    />
     <div className="antialiased">
-      <NewsletterModal />
+      <NewsletterModal text={newsletter?.text} />
       <Header menuItems={menuItems} />
       <main>
         <SearchHighlighter />
@@ -61,5 +72,6 @@ export default async function SiteLayout({
       </main>
       <Footer />
     </div>
+    </>
   );
 }

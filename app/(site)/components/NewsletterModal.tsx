@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "newsletter-popup-seen";
 
-export default function NewsletterModal() {
+export default function NewsletterModal({ text }: { text?: string | null }) {
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -69,6 +69,7 @@ export default function NewsletterModal() {
         onClick={(e) => e.stopPropagation()}
       >
         <h3>Newsletter</h3>
+        {text && <p className="text-sm mb-4">{text}</p>}
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
             {/* Honeypot — hidden from real users, bots fill it in */}

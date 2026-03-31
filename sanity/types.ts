@@ -118,6 +118,17 @@ export type Projektfoerderung = {
   };
 };
 
+export type Newsletter = {
+  _id: string;
+  _type: "newsletter";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sectionId?: string;
+  ueberschrift?: string;
+  text?: string;
+};
+
 export type Datenschutz = {
   _id: string;
   _type: "datenschutz";
@@ -881,7 +892,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = ErweitertesNetzwerk | SanityImageCrop | SanityImageHotspot | Projektpartner | Projektfoerderung | Datenschutz | ImpressumSeite | Slug | Ansprechpersonen | KontaktSeite | DownloadsSeite | Leitbild | Vision | Kompetenzerweiterung | Zugangswege | Netzwerk | Medien | Fallbeispiele | Auswirkungen | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = ErweitertesNetzwerk | SanityImageCrop | SanityImageHotspot | Projektpartner | Projektfoerderung | Newsletter | Datenschutz | ImpressumSeite | Slug | Ansprechpersonen | KontaktSeite | DownloadsSeite | Leitbild | Vision | Kompetenzerweiterung | Zugangswege | Netzwerk | Medien | Fallbeispiele | Auswirkungen | Teilprojekte | Projektbeschreibung | Einleitung | HomeSeite | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
@@ -1486,6 +1497,13 @@ export type ERWEITERTES_NETZWERK_QUERYResult = {
     alt: string | null;
   }> | null;
 } | null;
+// Variable: NEWSLETTER_QUERY
+// Query: *[_type == "newsletter"][0]{  sectionId,  ueberschrift,  text}
+export type NEWSLETTER_QUERYResult = {
+  sectionId: string | null;
+  ueberschrift: string | null;
+  text: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1512,5 +1530,6 @@ declare module "@sanity/client" {
     "*[_type == \"projektfoerderung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
     "*[_type == \"projektpartner\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
     "*[_type == \"erweitertesNetzwerk\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": ERWEITERTES_NETZWERK_QUERYResult;
+    "*[_type == \"newsletter\"][0]{\n  sectionId,\n  ueberschrift,\n  text\n}": NEWSLETTER_QUERYResult;
   }
 }

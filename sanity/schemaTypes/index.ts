@@ -23,6 +23,7 @@ import datenschutz from "./impressum/datenschutz";
 import projektfoerderung from "./footer/projektfoerderung";
 import projektpartner from "./footer/projektpartner";
 import erweitertesNetzwerk from "./footer/erweitertesNetzwerk";
+import newsletter from "./footer/newsletter";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -47,6 +48,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     impressumSeite,
     datenschutz,
 
+    newsletter,
     projektfoerderung,
     projektpartner,
     erweitertesNetzwerk,
