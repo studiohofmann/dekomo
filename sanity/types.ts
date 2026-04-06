@@ -127,6 +127,8 @@ export type Newsletter = {
   sectionId?: string;
   ueberschrift?: string;
   text?: string;
+  emailBetreff?: string;
+  emailText?: string;
 };
 
 export type Datenschutz = {
@@ -1498,11 +1500,13 @@ export type ERWEITERTES_NETZWERK_QUERYResult = {
   }> | null;
 } | null;
 // Variable: NEWSLETTER_QUERY
-// Query: *[_type == "newsletter"][0]{  sectionId,  ueberschrift,  text}
+// Query: *[_type == "newsletter"][0]{  sectionId,  ueberschrift,  text,  emailBetreff,  emailText}
 export type NEWSLETTER_QUERYResult = {
   sectionId: string | null;
   ueberschrift: string | null;
   text: string | null;
+  emailBetreff: string | null;
+  emailText: string | null;
 } | null;
 
 // Query TypeMap
@@ -1530,6 +1534,6 @@ declare module "@sanity/client" {
     "*[_type == \"projektfoerderung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  logo{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTFOERDERUNG_QUERYResult;
     "*[_type == \"projektpartner\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": PROJEKTPARTNER_QUERYResult;
     "*[_type == \"erweitertesNetzwerk\"][0]{\n  sectionId,\n  ueberschrift,\n  logos[]{\n    asset->{_id, url},\n    alt\n  }\n}": ERWEITERTES_NETZWERK_QUERYResult;
-    "*[_type == \"newsletter\"][0]{\n  sectionId,\n  ueberschrift,\n  text\n}": NEWSLETTER_QUERYResult;
+    "*[_type == \"newsletter\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  emailBetreff,\n  emailText\n}": NEWSLETTER_QUERYResult;
   }
 }

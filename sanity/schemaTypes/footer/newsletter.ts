@@ -26,6 +26,19 @@ const newsletter = {
       type: "text",
       description: "Kurzbeschreibung unter der Überschrift",
     }),
+    defineField({
+      name: "emailBetreff",
+      title: "Bestätigungs-E-Mail: Betreff",
+      type: "string",
+      description: "Betreff der automatischen Bestätigungsmail nach Anmeldung",
+    }),
+    defineField({
+      name: "emailText",
+      title: "Bestätigungs-E-Mail: Text (HTML)",
+      type: "text",
+      description:
+        "Inhalt der Bestätigungsmail als HTML. Wird leer gelassen, gilt der Standardtext.",
+    }),
   ],
 };
 

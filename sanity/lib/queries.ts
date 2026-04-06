@@ -256,5 +256,7 @@ export const ERWEITERTES_NETZWERK_QUERY =
 export const NEWSLETTER_QUERY = defineQuery(`*[_type == "newsletter"][0]{
   sectionId,
   ueberschrift,
-  text
+  text,
+  emailBetreff,
+  emailText
 }`);
