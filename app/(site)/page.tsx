@@ -6,8 +6,8 @@ import Projektbeschreibung from "./components/home/projektbeschreibung/Projektbe
 import Teilprojekte from "./components/home/Teilprojekte";
 import Auswirkungen from "./components/home/Auswirkungen";
 import Fallbeispiele from "./components/home/Fallbeispiele";
-import Medien from "./components/home/Medien";
-import Netzwerk from "./components/home/Netzwerk";
+// import Medien from "./components/home/Medien";
+// import Netzwerk from "./components/home/Netzwerk";
 import Zugangswege from "./components/home/Zugangswege";
 import Kompetenzerweiterung from "./components/home/Kompetenzerweiterung";
 import Vision from "./components/home/vision/Vision";
@@ -43,8 +43,8 @@ export default async function Home() {
         <Teilprojekte />
         <Auswirkungen />
         <Fallbeispiele />
-        <Medien />
-        <Netzwerk />
+        {/* <Medien />*/}
+         {/* <Netzwerk />*/}
         <Zugangswege />
         <Kompetenzerweiterung />
         <Vision />
