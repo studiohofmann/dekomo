@@ -9,6 +9,24 @@ const medien = {
 
   fields: [
     defineField({
+      name: "seitentitelMenue",
+      title: "Seitentitel / Menü",
+      type: "string",
+    }),
+    defineField({
+      name: "menuReihenfolge",
+      title: "Menü Reihenfolge",
+      type: "number",
+      description:
+        "Steuert die Position im Menü (höhere Zahlen erscheinen später)",
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "seitentitelMenue" },
+    }),
+    defineField({
       name: "sectionId",
       title: "Section ID",
       type: "string",

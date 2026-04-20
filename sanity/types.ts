@@ -560,6 +560,9 @@ export type Medien = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seitentitelMenue?: string;
+  menuReihenfolge?: number;
+  slug?: Slug;
   sectionId?: string;
   ueberschrift?: string;
   dateien?: Array<{
@@ -898,7 +901,7 @@ export type AllSanitySchemaTypes = ErweitertesNetzwerk | SanityImageCrop | Sanit
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: NAVIGATION_QUERY
-// Query: *[_type in ["homeSeite", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge  }
+// Query: *[_type in ["homeSeite", "medien", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge  }
 export type NAVIGATION_QUERYResult = Array<{
   seitentitelMenue: string | null;
   slug: Slug | null;
@@ -1513,7 +1516,7 @@ export type NEWSLETTER_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type in [\"homeSeite\", \"downloadsSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
+    "\n  *[_type in [\"homeSeite\", \"medien\", \"downloadsSeite\", \"kontaktSeite\", \"impressumSeite\", \"datenschutzSeite\"]] {seitentitelMenue, slug, menuReihenfolge\n  }\n": NAVIGATION_QUERYResult;
     "*[_type == \"homeSeite\"][0]{\n  sectionId,\n  seoTitle,\n  metaDescription,\n  keywords,\n  openGraphImage{\n    asset->{\n      _id,\n      url,\n      metadata{\n        dimensions{\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  noIndex\n}": HOME_QUERYResult;
     "*[_type == \"einleitung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  bild{\n    asset->{_id, url},\n    alt\n  },\n}": EINLEITUNG_QUERYResult;
     "*[_type == \"projektbeschreibung\"][0]{\n  sectionId,\n  ueberschrift,\n  text,\n  grafik{\n    asset->{_id, url},\n    alt\n  },\n}": PROJEKTBESCHREIBUNG_QUERYResult;

@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const NAVIGATION_QUERY = defineQuery(`
-  *[_type in ["homeSeite", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge
+  *[_type in ["homeSeite", "medien", "downloadsSeite", "kontaktSeite", "impressumSeite", "datenschutzSeite"]] {seitentitelMenue, slug, menuReihenfolge
   }
 `);
 export const HOME_QUERY = defineQuery(`*[_type == "homeSeite"][0]{
